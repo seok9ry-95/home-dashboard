@@ -1,0 +1,53 @@
+# 청약홈 공고 자동 수집 — 매일 06:20·18:20(한국 시간)
+# 순서: 코드 테스트 → 수집 → 받은 데이터 검사 → 통과할 때만 저장
+# 어느 단계든 실패하면 저장하지 않고 멈추며, GitHub가 저장소 주인에게 메일로 알린다.
+name: 청약 데이터 수집
+
+on:
+  schedule:
+    - cron: "20 21 * * *" # 06:20 KST (GitHub 시간은 UTC)
+    - cron: "20 9 * * *"  # 18:20 KST
+  workflow_dispatch: # Actions 화면의 'Run workflow' 버튼으로 지금 바로 실행
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect-cheongyak
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: 1. 코드 테스트
+        run: npm test
+
+      - name: 2. 수집
+        env:
+          CHEONGYAK_API_KEY: ${{ secrets.CHEONGYAK_API_KEY }}
+        run: node scripts/collect-cheongyak.mjs data/cheongyak.next.json
+
+      - name: 3. 받은 데이터 검사
+        run: node scripts/check-cheongyak.mjs data/cheongyak.next.json data/cheongyak.json
+
+      - name: 4. 저장
+        run: |
+          mv data/cheongyak.next.json data/cheongyak.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cheongyak.json
+          git commit -m "청약 데이터 수집 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            sleep $((i * 5))
+          done
+          exit 1
