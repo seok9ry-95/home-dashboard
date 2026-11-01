@@ -205,3 +205,16 @@ test("가짜 서버: 인증키가 틀리면 파일을 쓰지 않고 실패한다
     server.close();
   }
 });
+
+test("APT 공고: 지역별 1·2순위 접수일을 따로 남긴다", () => {
+  const it = buildItem({
+    HOUSE_MANAGE_NO: "1", PBLANC_NO: "1", HOUSE_NM: "공공", HSSPLY_ADRES: "서울특별시 강동구 1",
+    GNRL_RNK1_CRSPAREA_RCPTDE: "2026-11-04", GNRL_RNK1_CRSPAREA_ENDDE: "2026-11-05",
+    GNRL_RNK1_ETC_AREA_RCPTDE: "2026-10-26", GNRL_RNK1_ETC_AREA_ENDDE: "2026-10-27",
+  }, APT, []);
+  assert.deepEqual(it.schedule.rank1_by_area, {
+    해당지역: { start: "2026-11-04", end: "2026-11-05" },
+    기타지역: { start: "2026-10-26", end: "2026-10-27" },
+  });
+  assert.equal(it.schedule.rank2_by_area, null);
+});

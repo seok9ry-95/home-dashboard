@@ -111,7 +111,19 @@ function scheduleOf(row, kindKey) {
       toIsoDate(row.RCEPT_BGNDE) ?? minDate(special?.start, rank1?.start, rank2?.start),
       toIsoDate(row.RCEPT_ENDDE) ?? maxDate(special?.end, rank1?.end, rank2?.end),
     );
-    return { receipt, special, rank1, rank2, general: null, winner_date, contract };
+    // 공공분양은 지역별 접수일이 서로 다를 수 있어 따로도 남긴다(해당지역·경기·기타지역)
+    const byArea = (rank) => {
+      const out = {};
+      for (const [label, code] of [["해당지역", "CRSPAREA"], ["경기", "ETC_GG"], ["기타지역", "ETC_AREA"]]) {
+        const r = range(toIsoDate(row[`GNRL_${rank}_${code}_RCPTDE`]), toIsoDate(row[`GNRL_${rank}_${code}_ENDDE`]));
+        if (r) out[label] = r;
+      }
+      return Object.keys(out).length ? out : null;
+    };
+    return {
+      receipt, special, rank1, rank2, general: null, winner_date, contract,
+      rank1_by_area: byArea("RNK1"), rank2_by_area: byArea("RNK2"),
+    };
   }
 
   // 무순위·임의공급: 접수일 필드가 공고마다 한쪽만 채워져 있어 우선순위로 고른다
