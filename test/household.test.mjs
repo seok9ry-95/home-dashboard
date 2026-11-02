@@ -2,7 +2,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { assemble, fillNames } from "../scripts/lib/household.mjs";
+import { assemble, fillNames, splitList } from "../scripts/lib/household.mjs";
 import { createKeys, seal, unlock, openLog, emptyLog } from "../scripts/lib/vault.mjs";
 
 const FAKE = [
@@ -35,6 +35,29 @@ test("새 달 결산은 지난 기록을 몰라도 줄만 추가하면 반영된
   assert.equal(D.asOf, "2026-11-30");
   assert.equal(D.months.at(-1).m, "2026-11");
   assert.equal(D.months.length, 3);
+});
+
+test("할부 목록: 새 할부는 한 줄 추가, 끝난 할부는 null 한 줄 — 다른 할부는 그대로", async () => {
+  const keys = await createKeys("test-password-1234", { iter: 1000 });
+  const log = emptyLog();
+  const put = async (r, at) => log.entries.push(await seal(keys, { ...r, at, by: "test" }));
+  const [a, b] = splitList("installments", [{ name: "가전 할부", monthly: 1 }, { name: "가구 할부", monthly: 2 }]);
+  await put(a, "2026-11-01T00:00:00Z"); await put(b, "2026-11-01T00:00:01Z");
+  for (const r of splitList("fixedEnds", { "가전 할부": "2027-09 마지막" })) await put(r, "2026-11-01T00:00:02Z");
+  await put({ key: "hh:installments:휴대폰 할부", type: "hh", data: { name: "휴대폰 할부", monthly: 3 } }, "2026-12-01T00:00:00Z");
+  const priv = await unlock(keys, "test-password-1234");
+  let D = assemble((await openLog(priv, log)).state);
+  assert.deepEqual(D.installments.map((x) => x.name), ["가전 할부", "가구 할부", "휴대폰 할부"]); // 추가해도 사라지지 않음
+  assert.deepEqual(D.fixedEnds, { "가전 할부": "2027-09 마지막" });
+  await put({ key: "hh:installments:가구 할부", type: "hh", data: null }, "2027-01-01T00:00:00Z");
+  D = assemble((await openLog(priv, log)).state);
+  assert.deepEqual(D.installments.map((x) => x.name), ["가전 할부", "휴대폰 할부"]); // 끝난 건만 빠짐
+});
+
+test("목록 쪼개기는 이름이 겹치거나 비면 멈춘다(덮어쓰기·누락 방지)", () => {
+  assert.throws(() => splitList("installments", [{ name: "A" }, { name: "A" }]), /같은 이름/);
+  assert.throws(() => splitList("annual", [["", "H", 1]]), /이름 없는/);
+  assert.equal(splitList("annual", [["자동차보험", "H", 1]])[0].key, "hh:annual:자동차보험");
 });
 
 test("청약 등 다른 기록만 있으면 가계 데이터는 없음", () => {
