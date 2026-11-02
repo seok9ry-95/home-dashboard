@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-02T19:24:59+09:00",
- "base_date": "2026-11-02",
- "window_from": "2026-09-03",
+ "collected_at": "2026-11-03T06:57:37+09:00",
+ "base_date": "2026-11-03",
+ "window_from": "2026-09-04",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 41,
+  "apt": 40,
   "remndr": 34,
   "opt": 44,
-  "total": 119
+  "total": 118
  },
  "coverage": {
-  "with_types": 119,
-  "with_price": 119
+  "with_types": 118,
+  "with_price": 118
  },
  "items": [
   {
@@ -1304,145 +1304,6 @@
    ]
   },
   {
-   "id": "opt-2026940185-2026940185",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "고촌센트럴자이(13차)",
-   "sido": "경기",
-   "sigungu": "김포시",
-   "address": "경기도 김포시 고촌읍 신곡리 김포신곡6지구 도시개발사업구역 A3BL",
-   "total_households": 10,
-   "announce_date": "2026-09-03",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-07",
-     "end": "2026-09-08"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-11",
-    "contract": {
-     "start": "2026-09-13",
-     "end": "2026-09-13"
-    }
-   },
-   "move_in": "2027-05",
-   "flags": null,
-   "builder": "(주)일레븐건설",
-   "phone": "16443318",
-   "homepage": "https://www.xi.co.kr/kps",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940185&pblancNo=2026940185",
-   "price_max_manwon": 93780,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.9109A",
-     "area_m2": null,
-     "general_households": 5,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 75840
-    },
-    {
-     "model_no": "02",
-     "type": "084.3506B",
-     "area_m2": null,
-     "general_households": 3,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 74520
-    },
-    {
-     "model_no": "03",
-     "type": "105.9852",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 93780
-    }
-   ]
-  },
-  {
-   "id": "opt-2026940192-2026940192",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "엘리프 한신더휴 수원 D3블록 (2차)",
-   "sido": "경기",
-   "sigungu": "수원시",
-   "address": "경기도 수원시 권선구 당수동 당수1지구 공공주택지구 내 D3블록",
-   "total_households": 19,
-   "announce_date": "2026-09-03",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-07",
-     "end": "2026-09-08"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-11",
-    "contract": {
-     "start": "2026-09-12",
-     "end": "2026-09-12"
-    }
-   },
-   "move_in": "2028-04",
-   "flags": null,
-   "builder": "수원당수피에프브이(주),계룡건설산업(주)",
-   "phone": "0312987001",
-   "homepage": "http://www.엘리프한신더휴수원.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940192&pblancNo=2026940192",
-   "price_max_manwon": 79900,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.9900B",
-     "area_m2": null,
-     "general_households": 3,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 76100
-    },
-    {
-     "model_no": "02",
-     "type": "084.9900C",
-     "area_m2": null,
-     "general_households": 6,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 75800
-    },
-    {
-     "model_no": "03",
-     "type": "084.9900D",
-     "area_m2": null,
-     "general_households": 6,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 79500
-    },
-    {
-     "model_no": "04",
-     "type": "106.9900A",
-     "area_m2": null,
-     "general_households": 4,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 79900
-    }
-   ]
-  },
-  {
    "id": "apt-2026000409-2026000409",
    "kind": "apt",
    "kind_label": "APT",
@@ -1547,80 +1408,6 @@
       "기타": 6
      },
      "price_top_manwon": 40419
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026910228-2026910228",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "무순위",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "남양주 진접 서한이다음(S1BL)",
-   "sido": "경기",
-   "sigungu": "남양주시",
-   "address": "경기도 남양주시 진접2 공공주택지구 S1BL",
-   "total_households": 141,
-   "announce_date": "2026-09-03",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-08",
-     "end": "2026-09-08"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-11",
-    "contract": {
-     "start": "2026-09-18",
-     "end": "2026-09-18"
-    }
-   },
-   "move_in": "2029-01",
-   "flags": null,
-   "builder": "(주) 서한",
-   "phone": "0315688900",
-   "homepage": "https://nj-seohan.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910228&pblancNo=2026910228",
-   "price_max_manwon": 71330,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.4746A",
-     "area_m2": null,
-     "general_households": 43,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 66190
-    },
-    {
-     "model_no": "02",
-     "type": "084.7614B",
-     "area_m2": null,
-     "general_households": 19,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 66740
-    },
-    {
-     "model_no": "03",
-     "type": "095.2508A",
-     "area_m2": null,
-     "general_households": 69,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 71330
-    },
-    {
-     "model_no": "04",
-     "type": "095.3102B",
-     "area_m2": null,
-     "general_households": 10,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 67430
     }
    ]
   },
@@ -2137,136 +1924,6 @@
      "special_households": null,
      "special_by_kind": null,
      "price_top_manwon": 79600
-    }
-   ]
-  },
-  {
-   "id": "apt-2026000394-2026000394",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "APT",
-   "house_detail": "민영",
-   "sale_type": "분양주택",
-   "name": "더샵 여주역더퍼스트",
-   "sido": "경기",
-   "sigungu": "여주시",
-   "address": "경기도 여주시 홍문동 332-2번지 일원",
-   "total_households": 696,
-   "announce_date": "2026-09-03",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-14",
-     "end": "2026-09-16"
-    },
-    "special": {
-     "start": "2026-09-14",
-     "end": "2026-09-14"
-    },
-    "rank1": {
-     "start": "2026-09-15",
-     "end": "2026-09-15"
-    },
-    "rank2": {
-     "start": "2026-09-16",
-     "end": "2026-09-16"
-    },
-    "general": null,
-    "winner_date": "2026-09-22",
-    "contract": {
-     "start": "2026-10-06",
-     "end": "2026-10-08"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-09-15",
-      "end": "2026-09-15"
-     },
-     "기타지역": {
-      "start": "2026-09-15",
-      "end": "2026-09-15"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-09-16",
-      "end": "2026-09-16"
-     },
-     "기타지역": {
-      "start": "2026-09-16",
-      "end": "2026-09-16"
-     }
-    }
-   },
-   "move_in": "2029-08",
-   "flags": {
-    "투기과열": false,
-    "조정대상": false,
-    "분양가상한제": false,
-    "공공주택지구": false,
-    "대규모택지": false
-   },
-   "builder": "(주)포스코이앤씨",
-   "phone": "18336961",
-   "homepage": "https://더샵여주역더퍼스트.kr",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000394&pblancNo=2026000394",
-   "price_max_manwon": 51965,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.6536A",
-     "area_m2": 112.4076,
-     "general_households": 247,
-     "special_households": 299,
-     "special_by_kind": {
-      "다자녀": 54,
-      "신혼부부": 82,
-      "생애최초": 38,
-      "청년": 0,
-      "신생아": 55,
-      "노부모부양": 16,
-      "기관추천": 54,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 51965
-    },
-    {
-     "model_no": "02",
-     "type": "084.0452B",
-     "area_m2": 113.0481,
-     "general_households": 56,
-     "special_households": 68,
-     "special_by_kind": {
-      "다자녀": 12,
-      "신혼부부": 19,
-      "생애최초": 9,
-      "청년": 0,
-      "신생아": 12,
-      "노부모부양": 4,
-      "기관추천": 12,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 51860
-    },
-    {
-     "model_no": "03",
-     "type": "084.8414C",
-     "area_m2": 112.3926,
-     "general_households": 10,
-     "special_households": 16,
-     "special_by_kind": {
-      "다자녀": 4,
-      "신혼부부": 4,
-      "생애최초": 2,
-      "청년": 0,
-      "신생아": 3,
-      "노부모부양": 1,
-      "기관추천": 2,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 50786
     }
    ]
   },
@@ -10702,6 +10359,145 @@
    ]
   },
   {
+   "id": "opt-2026940245-2026940245",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "고강휴먼빌",
+   "sido": "경기",
+   "sigungu": "부천시",
+   "address": "경기도 부천시 오정구 고강동 293-2번지 외 7필지",
+   "total_households": 26,
+   "announce_date": "2026-11-02",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-04",
+     "end": "2026-11-05"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-10",
+    "contract": {
+     "start": "2026-11-16",
+     "end": "2026-11-18"
+    }
+   },
+   "move_in": "2026-11",
+   "flags": null,
+   "builder": "삼하동호진주가로주택정비사업조합",
+   "phone": "0326849868",
+   "homepage": "http://www.고강휴먼빌아파트.shop",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940245&pblancNo=2026940245",
+   "price_max_manwon": 67600,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "046.9340",
+     "area_m2": null,
+     "general_households": 17,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 38548
+    },
+    {
+     "model_no": "02",
+     "type": "048.9071",
+     "area_m2": null,
+     "general_households": 4,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 40934
+    },
+    {
+     "model_no": "03",
+     "type": "059.9788C",
+     "area_m2": null,
+     "general_households": 3,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 51543
+    },
+    {
+     "model_no": "04",
+     "type": "078.8866",
+     "area_m2": null,
+     "general_households": 2,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 67600
+    }
+   ]
+  },
+  {
+   "id": "opt-2026940246-2026940246",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "고촌센트럴자이(14차)",
+   "sido": "경기",
+   "sigungu": "김포시",
+   "address": "경기도 김포시 고촌읍 신곡리 김포신곡6지구 도시개발사업구역 A3BL",
+   "total_households": 10,
+   "announce_date": "2026-11-02",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-04",
+     "end": "2026-11-05"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-10",
+    "contract": {
+     "start": "2026-11-12",
+     "end": "2026-11-12"
+    }
+   },
+   "move_in": "2027-05",
+   "flags": null,
+   "builder": "(주)일레븐건설",
+   "phone": "16443318",
+   "homepage": "https://www.xi.co.kr/kps",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940246&pblancNo=2026940246",
+   "price_max_manwon": 93780,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9109A",
+     "area_m2": null,
+     "general_households": 5,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 75840
+    },
+    {
+     "model_no": "02",
+     "type": "084.3506B",
+     "area_m2": null,
+     "general_households": 4,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 74520
+    },
+    {
+     "model_no": "03",
+     "type": "105.9852",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 93780
+    }
+   ]
+  },
+  {
    "id": "apt-2026000528-2026000528",
    "kind": "apt",
    "kind_label": "APT",
@@ -11112,6 +10908,62 @@
       "기타": 0
      },
      "price_top_manwon": 78500
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910281-2026910281",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "빌리브센트하이(2차)",
+   "sido": "경기",
+   "sigungu": "남양주시",
+   "address": "경기도 남양주시 화도읍 마석우리 295-32번지 일원",
+   "total_households": 5,
+   "announce_date": "2026-11-02",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-09",
+     "end": "2026-11-09"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-12",
+    "contract": {
+     "start": "2026-11-14",
+     "end": "2026-11-14"
+    }
+   },
+   "move_in": "2026-12",
+   "flags": null,
+   "builder": "(주)에코월드이엔씨",
+   "phone": "15884940",
+   "homepage": "https://cent.villiv.co.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910281&pblancNo=2026910281",
+   "price_max_manwon": 78200,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9760B",
+     "area_m2": null,
+     "general_households": 4,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 67700
+    },
+    {
+     "model_no": "02",
+     "type": "098.9850B",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 78200
     }
    ]
   },
