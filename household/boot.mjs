@@ -1,6 +1,7 @@
 // 가계 화면 잠금 해제 (현황판 15번). 청약 탭과 같은 자물쇠·열쇠, 같은 '이 기기에서 기억'을 쓴다.
-import { unlock, openLog } from "../scripts/lib/vault.mjs";
-import { assemble, fillNames } from "../scripts/lib/household.mjs";
+import { unlock } from "../scripts/lib/vault.mjs";
+// 데이터는 늘 최신본을 읽으므로, 데이터를 합치는 코드도 캐시 없이 최신본을 쓴다(코드·데이터 버전 어긋남 방지)
+const fresh = (p) => import(`${p}?v=${Date.now()}`);
 
 const REPO = "seok9ry-95/home-dashboard";
 const RAW = `https://raw.githubusercontent.com/${REPO}/main/`;
@@ -36,8 +37,15 @@ let KEYS = null, LOG = null, started = false;
 
 async function start(priv) {
   if (started) return;
+  const [{ openLog }, { assemble, fillNames, ITEM_LISTS }] = await Promise.all([fresh("../scripts/lib/vault.mjs"), fresh("../scripts/lib/household.mjs")]);
   const { state, broken } = await openLog(priv, LOG || { entries: [] });
   const D = assemble(state);
+  // 모양 검사: 목록이 목록 모양이 아니면 틀린 숫자를 보여주지 않고 멈춘다
+  for (const [f, def] of Object.entries(ITEM_LISTS || {})) {
+    if (D && f in D && (def.kind === "array" ? !Array.isArray(D[f]) : (typeof D[f] !== "object" || Array.isArray(D[f])))) {
+      throw new Error("화면 코드가 아직 새 버전이 아니에요. 1~2분 뒤 새로고침해 주세요");
+    }
+  }
   if (!D) throw new Error("가계 기록이 아직 없습니다. Claude에게 이전 작업을 요청해 주세요");
   window.__HH = D;
   window.__HH_BROKEN = broken;
