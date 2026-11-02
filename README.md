@@ -40,3 +40,20 @@ npm test                       # 가짜 서버로 수집·검사 로직 테스�
 - 기록 종류: `profile`(판정용 부부 정보) · `sub:*`(넣은 청약) · `manual:*`(확정 매뉴얼) · `interest:*`(관심 표시) · `token`(관심 표시 저장용 GitHub 토큰)
 - Claude는 비밀번호 없이 잠가서 추가: `node scripts/seal.mjs <기록.plain.json>` (`*.plain.json`은 커밋 금지)
 - 화면은 비밀번호로 열고, '이 기기에서 기억'은 꺼낼 수 없는 열쇠만 브라우저에 보관(비밀번호는 저장하지 않음)
+
+## 가계 화면 (현황판 15번)
+
+- 주소: https://seok9ry-95.github.io/home-dashboard/ — 청약 탭과 같은 부부 비밀번호로 연다. 한 기기에서 한 번 '기억'하면 두 화면 다 바로 열림
+- 공개 코드: `index.html`(화면 모양 + 잠금 화면), `household/app.js`(계산·화면 코드), `household/boot.mjs`(잠금 해제·데이터 합치기). **숫자와 실명은 없다** — 이름 자리는 `⟦H⟧ ⟦W⟧ ⟦h⟧ ⟦w⟧`로 두고 잠금을 풀면 채운다
+- 데이터: `data/private/log.json`의 `hh:*` 기록 (`scripts/lib/household.mjs`가 합침)
+  - `hh:<항목>` — asOf·names·target·income·savingTarget·assets·annual·fixedEnds·installments·fixed·pledges·pledgeDate·settledBy·settleStart 등. 바뀌면 그 항목 전체를 새 줄로
+  - `hh:months:<YYYY-MM>` — 월별 수입·소비 한 줄
+  - `hh:detail|fixedList|oneOff|settlements:<YYYY-MM>` — 그달 가맹점 상세·고정비 목록·일회성·결산 기록
+- 테스트: `test/household.test.mjs` — 잠갔다 풀어 합치기, 새 달 추가, 공개 파일에 데이터·실명이 없는지
+
+### 월 결산 반영 (Claude)
+
+1. 채팅으로 받은 뱅크샐러드 파일·가계부 합계를 분류해 **바뀐 항목과 새 달 줄만** `*.plain.json`(저장소 밖)으로 만든다
+2. `node scripts/seal.mjs <파일.plain.json>` → `log.json`에 잠긴 줄 추가 (비밀번호 불필요)
+3. `npm test` 통과 후 커밋·푸시. 화면은 잠긴 기록을 최신본으로 바로 읽는다
+4. 지난 값이 필요한 항목(예: 할부 목록)은 석환이 화면에서 확인해 채팅으로 알려 준다 — Claude는 잠긴 기록을 열 수 없다
