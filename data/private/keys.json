@@ -1,0 +1,18 @@
+{
+ "schema": 1,
+ "note": "자물쇠(public)는 공개, 열쇠(private)는 부부 비밀번호로 잠김. 비밀번호 없이는 열 수 없다.",
+ "created": "2026-11-02T15:25:58.398Z",
+ "public": {
+  "kty": "EC",
+  "crv": "P-256",
+  "x": "YmRXnZRVMY6ObPAdZ96fpd0D2v5xhHpPrivFItZ_dBo",
+  "y": "6EDcQIh0gwKVJRtU2pqzTcMrzA_aNIzKQh8KfvTi140"
+ },
+ "private": {
+  "kdf": "PBKDF2-SHA256",
+  "iter": 600000,
+  "salt": "p56Pro2g+tSoXxobsCXHiQ==",
+  "iv": "Xd0yJL4qDB/1XT4h",
+  "ct": "SOBQkMSsTSGnwbkTwkDIngQS3Adry6goh0PeNTdkVzbhA4lM1qySeq7Wj7qFs/ibf+gh9kvQape3h4B75KfUJOQw3DYcKtEtXjHSpBJsRL01RoDjTb8Xe+zY9H8FS6k9bNFUnVXw+D3nqQiS4dszvQWpSHyQmwrCQxZ35TChP2TONelPLS/DRFt1ISAhhr+hm28j6eX/53bEmA=="
+ }
+}
