@@ -1,2 +1,5 @@
 node_modules/
 data/*.next.json
+# 평문 개인 정보는 절대 커밋하지 않는다(잠그기 전 입력 파일)
+*.plain.json
+private-input/

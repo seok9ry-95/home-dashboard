@@ -29,4 +29,14 @@ npm test                       # 가짜 서버로 수집·검사 로직 테스�
 - 판정: `scripts/lib/judge.mjs` — 부부 각자 넣을 수 있는 유형, 민영 가점, 추천 1개와 이유 (브라우저·Node 공용)
 - 공공분양 날짜 보정: `data/cheongyak-overrides.json` — 청약홈 데이터에 특공 일정이 없어서, 넣을 단지만 공고문 날짜로 덮어쓴다(D22)
 - 기준값 테스트: `test/judge.test.mjs` — 고덕강일3단지 판정. 공개 저장소라 실제 개인 정보 대신 조건만 같은 가상 인물을 쓴다
-- 부부의 실제 판정 정보와 넣은 청약 기록은 암호화 파일로만 올린다(16번 2차)
+- 화면: `cheongyak/` (GitHub Pages: https://seok9ry-95.github.io/home-dashboard/cheongyak/) — 1차 미리보기와 같은 화면, 공고는 저장소 데이터를 실시간으로 읽는다
+
+## 잠긴 기록 (16번 2차, 15번 재사용)
+
+공개 저장소이므로 개인 정보는 평문으로 올리지 않는다. 자물쇠·열쇠 방식(ECDH P-256 + AES-GCM, 열쇠는 PBKDF2-SHA256 60만 회로 부부 비밀번호에 잠김).
+
+- `data/private/keys.json` — 자물쇠(공개)와 비밀번호로 잠긴 열쇠. `setup.html`에서 부부가 만든다
+- `data/private/log.json` — 잠긴 기록. 한 줄 = 한 번의 변경, 같은 key는 가장 최근 줄이 현재 값(data:null은 삭제)
+- 기록 종류: `profile`(판정용 부부 정보) · `sub:*`(넣은 청약) · `manual:*`(확정 매뉴얼) · `interest:*`(관심 표시) · `token`(관심 표시 저장용 GitHub 토큰)
+- Claude는 비밀번호 없이 잠가서 추가: `node scripts/seal.mjs <기록.plain.json>` (`*.plain.json`은 커밋 금지)
+- 화면은 비밀번호로 열고, '이 기기에서 기억'은 꺼낼 수 없는 열쇠만 브라우저에 보관(비밀번호는 저장하지 않음)

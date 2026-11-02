@@ -40,8 +40,8 @@ const labels = (r, key) => r.people.find((p) => p.key === key).options.filter((o
 const pick = (r, key) => r.people.find((p) => p.key === key).pick.label;
 
 test("만 나이와 개월 수", () => {
-  assert.equal(ageOn("1995-04-08", "2026-04-07"), 30);
-  assert.equal(ageOn("1995-04-08", "2026-04-08"), 31);
+  assert.equal(ageOn("1994-06-15", "2025-06-14"), 30);
+  assert.equal(ageOn("1994-06-15", "2025-06-15"), 31);
   assert.equal(monthsBetween("2024-10-16", "2026-10-16"), 24);
   assert.equal(monthsBetween("2024-10-17", "2026-10-16"), 23);
 });
