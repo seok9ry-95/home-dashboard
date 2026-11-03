@@ -54,6 +54,19 @@ test("할부 목록: 새 할부는 한 줄 추가, 끝난 할부는 null 한 줄
   assert.deepEqual(D.installments.map((x) => x.name), ["가전 할부", "휴대폰 할부"]); // 끝난 건만 빠짐
 });
 
+test("용돈(현황판 20): 달마다 한 줄 hh:pocket:<YYYY-MM> → DATA.pocket[달], 새 달은 지난 달을 건드리지 않음", async () => {
+  const keys = await createKeys("test-password-1234", { iter: 1000 });
+  const log = emptyLog();
+  const oct = { plan: { H: 400000, W: 500000 }, H: [["10.02", "가게A", 7000, "생활", ""]], W: [["10.01", "가게B", 90000, "꾸미기", ""]] };
+  log.entries.push(await seal(keys, { key: "hh:pocket:2026-10", type: "hh", data: oct, by: "test" }));
+  log.entries.push(await seal(keys, { key: "hh:pocket:2026-11", type: "hh", data: { plan: { H: 400000, W: 500000 }, H: [], W: [] }, by: "test" }));
+  const D = assemble((await openLog(await unlock(keys, "test-password-1234"), log)).state);
+  assert.deepEqual(Object.keys(D.pocket), ["2026-10", "2026-11"]);
+  assert.deepEqual(D.pocket["2026-10"], oct);
+  const tot = (rows) => rows.reduce((a, x) => a + x[2], 0);
+  assert.equal(tot(D.pocket["2026-10"].W), 90000);
+});
+
 test("목록 쪼개기는 이름이 겹치거나 비면 멈춘다(덮어쓰기·누락 방지)", () => {
   assert.throws(() => splitList("installments", [{ name: "A" }, { name: "A" }]), /같은 이름/);
   assert.throws(() => splitList("annual", [["", "H", 1]]), /이름 없는/);

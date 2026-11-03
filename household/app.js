@@ -447,6 +447,7 @@ const TIPS = {
   pay: ['페이머니', '간편결제 앱에 충전해 둔 돈이에요.'],
   pension: ['묶인 자산 (퇴직연금)', 'DC · IRP 퇴직연금. 중도인출 조건과 세금이 있어 순자산 · 집값 계산에서 빼요.'],
   legacy: ['결산 방식 도입 전 기록', '10월 전에는 자산을 달마다 기록하지 않아 집값 변화를 알 수 없어요. 쓸 수 있는 저축은 홈과 같은 값이에요.'],
+  pocket: ['용돈', '혼자 먹고 쓰는 돈이에요(개인 카드·계좌). 둘이 쓰는 돈은 생활비, 교통비(대중교통·택시·주유·통행료)와 건강(병원·약국)은 따로 봐요. 같이 먹고 돌려받은 돈은 뺀 금액이에요.'],
 };
 const ii = id => `<button type="button" class="ii" data-tip="${id}" aria-label="설명"><span>i</span></button>`;
 
@@ -509,6 +510,7 @@ function stateFor(hash) {
 
 // ----- 화면 상태 (이 기기에서만) -----
 let ans = {}, notes = {}, openRec = null, guideOpen = false, memoEdit = false, draft = '', lastKey = '';
+let pkOpen = {}; // 용돈 카드에서 펼친 분류 (사람별: 분류 이름 · 'all' · 없음)
 
 function header(X) {
   const got = X.vm ? X.vm.files : { H: false, W: false };
@@ -603,6 +605,30 @@ function resultCards(X, rows) {
     <div style="margin-top:8px;border-radius:12px;background:var(--sub);padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:4px 12px;flex-wrap:wrap"><span style="display:flex;align-items:center;font-size:13px;color:var(--desc)">묶인 자산 · 퇴직연금${ii('pension')}</span><span style="font-size:13px;color:var(--ink2);white-space:nowrap;margin-left:auto"><b>${em(M(V.assets.emergency))}</b> · 순자산에서 빠져요</span></div></section>`;
   return res + buckets + checks + snap;
 }
+// ----- 용돈 (현황판 20 · 11/03): 잠긴 기록 hh:pocket:<YYYY-MM> = { plan:{H,W}, H:[[날짜, 가게, 원, 분류, 메모]], W:[...] } -----
+const PKG = [['외식·카페', 'var(--orange)', '식당·배달·카페·술'], ['쇼핑', 'var(--orange2)', '온라인 쇼핑·구독'], ['꾸미기', 'var(--lemon)', '네일·헤어·옷'], ['생활', 'var(--lime2)', '편의점·마트·다이소'], ['기타', '#CFC8B8', '문화·우편·송금']];
+const won = v => v < 10000 ? v.toLocaleString('ko-KR') + '원' : (v / 10000).toFixed(1).replace(/\.0$/, '') + '만';
+function pocketCard(m) {
+  const P = (DATA.pocket || {})[m];
+  const head = `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><div class="h2" style="display:flex;align-items:center">용돈${ii('pocket')}</div><span class="s12">${mon(m)}월 · 혼자 쓴 돈 · 교통비·건강은 따로</span></div>`;
+  if (!P) return `<section class="cd full">${head}<div class="dash" style="margin-top:12px;padding:20px 16px">${mon(m)}월 용돈 기록이 아직 없어요 · 결산 때 Claude가 함께 채워요</div></section>`;
+  const col = w => {
+    const items = P[w] || [], plan = (P.plan || {})[w] || 0, tot = items.reduce((a, x) => a + x[2], 0), over = tot - plan;
+    const scale = Math.max(plan, tot) || 1, fill = Math.min(tot, plan) / scale * 100, ovr = Math.max(0, over) / scale * 100, tick = plan / scale * 100;
+    const open = pkOpen[w] || null;
+    const stores = g => { const by = {}; for (const [d, n, a, gg, note] of items) { if (g !== 'all' && gg !== g) continue; const s = by[n] ||= { n, a: 0, c: 0, ds: [], notes: [] }; s.a += a; s.c++; if (!s.ds.includes(d)) s.ds.push(d); if (note && !s.notes.includes(note)) s.notes.push(note); } return Object.values(by).sort((x, y) => y.a - x.a); };
+    const list = g => { const ss = stores(g); return `<div class="pkl">${ss.map(s => `<div class="di"><span class="nm">${esc(s.n)}<span class="nt">${s.ds.length > 3 ? s.ds[0] + ' ~ ' + s.ds[s.ds.length - 1] : s.ds.join(', ')}${s.notes.length ? ' · ' + esc(s.notes.join(' · ')) : ''}</span></span>${s.c > 1 ? `<span class="cnt">${s.c}건</span>` : ''}<span class="am">${won(s.a)}</span></div>`).join('')}</div>`; };
+    const groups = PKG.map(([g, color, hint]) => ({ g, color, hint, v: items.filter(x => x[3] === g).reduce((a, x) => a + x[2], 0) })).filter(x => x.v > 0).sort((a, b) => b.v - a.v);
+    return `<div class="pkp"><div class="pkh">${whoTag(w)}${esc(DATA.names[w])}</div>
+      <div class="pkv"><b>${won(tot)}</b><span class="sub">/ 계획 ${won(plan)}</span><span class="bdg ${over > 0 ? 'sh' : 'ok'}" style="margin-left:auto">${over > 0 ? won(over) + ' 넘음' : won(-over) + ' 남음'}</span></div>
+      <div style="position:relative;margin:12px 0 14px"><div class="pbar"><div style="width:${fill}%;background:var(--lime)"></div><div style="width:${ovr}%;background:var(--orange2)"></div></div>
+        <div style="position:absolute;left:${tick}%;top:-4px;width:2px;height:20px;margin-left:-2px;background:var(--ink);border-radius:1px"></div></div>
+      <div>${groups.map(x => `<button type="button" class="pkg" data-pk="${w}" data-g="${x.g}" aria-expanded="${open === x.g}"><i style="background:${x.color}"></i><span class="gl">${x.g}<span class="s12" style="display:block">${x.hint}</span></span><span class="gp">${Math.round(x.v / tot * 100)}%</span><b>${won(x.v)}</b><span class="chev" style="display:inline-flex;transform:${open === x.g ? 'rotate(180deg)' : 'none'}">${IC.chev}</span></button>${open === x.g ? list(x.g) : ''}`).join('')}</div>
+      <button type="button" class="pka" data-pk="${w}" data-g="all" aria-expanded="${open === 'all'}">${open === 'all' ? '가게 목록 접기' : `가게 전체 보기 · ${stores('all').length}곳 ${items.length}건`}</button>${open === 'all' ? list('all') : ''}</div>`;
+  };
+  return `<section class="cd full">${head}<div class="pk2">${col('H')}${col('W')}</div><div class="s12" style="margin-top:10px">분류를 누르면 가게별 금액이 펼쳐져요 · 큰 순서</div></section>`;
+}
+
 function memoCard(V) {
   const who = V.memoBy ? DATA.names[V.memoBy] : '';
   return `<section class="cd"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><div class="h2">이번 달 메모</div>${memoEdit ? '' : `<button type="button" class="btn-s" data-memo style="margin-right:-6px">${IC.pen}${V.memo ? '메모 고치기' : '메모 쓰기'}</button>`}</div>
@@ -638,7 +664,7 @@ function render() {
         <div class="tile"><div class="s12">순자산 · ${md(DATA.asOf)}</div><b>${em(netNow)}</b></div></div></section>`;
     h += recCard(rows, false) + `<div class="side">${guideCard(X.m, false)}</div>`;
   } else {
-    h += resultCards(X, rows) + recCard(rows, false) + `<div class="side">${memoCard(X.vm)}${guideCard(ymAdd(X.m, 1), false)}</div>`;
+    h += resultCards(X, rows) + (X.vm.real ? pocketCard(X.vm.m) : '') + recCard(rows, false) + `<div class="side">${memoCard(X.vm)}${guideCard(ymAdd(X.m, 1), false)}</div>`;
   }
   const cur = X.demo || 'real';
   h += `<div class="demos full"><span>다른 상태 미리 보기</span>${[['real', '지금'], ['pre', '첫 결산 전'], ['pending', '결산 미입력'], ['short', '부족'], ['ok', '달성']].map(([k, l]) => `<a href="${k === 'real' ? '#settle' : '#settle-demo-' + k}"${cur === k ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</div>`;
@@ -662,6 +688,7 @@ STL.addEventListener('click', e => {
     return;
   }
   const rc = t.closest('[data-rec]'); if (rc) { openRec = openRec === rc.dataset.rec ? null : rc.dataset.rec; render(); return; }
+  const pkb = t.closest('[data-pk]'); if (pkb) { const w = pkb.dataset.pk, g = pkb.dataset.g; pkOpen[w] = pkOpen[w] === g ? null : g; render(); return; }
   if (t.closest('[data-guide]')) { guideOpen = !guideOpen; render(); return; }
   if (t.closest('[data-openguide]')) { guideOpen = true; render(); const g = $('#stlGuide'); if (g) g.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   if (t.closest('[data-memo]')) { const X = stateFor(location.hash); memoEdit = true; draft = X.vm ? X.vm.memo : ''; render(); const i = $('#stlDraft'); if (i) i.focus(); return; }

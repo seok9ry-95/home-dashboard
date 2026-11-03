@@ -580,6 +580,25 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
 #stl .demos{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:4px 4px 0;font-size:12px;color:var(--desc)}
 #stl .demos a{height:32px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:var(--card);display:inline-flex;align-items:center;font-size:12px;text-decoration:none;color:var(--ink2)}
 #stl .demos a[aria-current]{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* 용돈 카드 (현황판 20) */
+#stl .pk2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px;align-items:start}
+#stl .pkp{background:var(--sub);border-radius:14px;padding:16px;min-width:0}
+#stl .pkh{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700}
+#stl .pkv{display:flex;align-items:baseline;gap:2px 8px;flex-wrap:wrap;margin-top:8px}
+#stl .pkv b{font-size:28px;font-weight:800;letter-spacing:-0.03em;white-space:nowrap}
+#stl .pkg{width:100%;min-height:44px;display:flex;align-items:center;gap:8px;padding:6px 4px;border:0;border-top:1px solid var(--line2);background:transparent;font:inherit;font-size:14px;color:var(--ink);text-align:left;cursor:pointer}
+#stl .pkg:first-child{border-top:0}
+#stl .pkg i{width:10px;height:10px;border-radius:3px;flex:none}
+#stl .pkg .gl{flex:1;min-width:0}
+#stl .pkg .gp{font-size:12px;color:var(--desc);white-space:nowrap;min-width:32px;text-align:right}
+#stl .pkg b{white-space:nowrap;min-width:52px;text-align:right}
+#stl .pkg[aria-expanded="true"]{background:var(--card);border-radius:10px}
+#stl .pkg[aria-expanded="true"] + .pkg{border-top-color:transparent}
+#stl .pkl{margin:4px 0 8px;background:var(--card);border-radius:10px;padding:2px 12px}
+#stl .pkl .di:last-child{border-bottom:0}
+#stl .pkl .nt{display:block;font-size:12px;color:var(--desc);margin-top:2px}
+#stl .pka{width:100%;min-height:44px;margin-top:8px;border:1px solid var(--line);border-radius:10px;background:var(--card);font:inherit;font-size:13px;font-weight:600;color:var(--ink2);cursor:pointer}
+@container (max-width:640px){#stl .pk2{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:560px){
   #stl{padding:12px 16px}
   #stl .h1{font-size:28px}
