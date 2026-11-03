@@ -1,9 +1,9 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-03T19:14:22+09:00",
- "base_date": "2026-11-03",
- "window_from": "2026-09-04",
+ "collected_at": "2026-11-04T07:02:47+09:00",
+ "base_date": "2026-11-04",
+ "window_from": "2026-09-05",
  "sido": [
   "서울",
   "경기"
@@ -2386,231 +2386,6 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 148640
-    }
-   ]
-  },
-  {
-   "id": "apt-2026000393-2026000393",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "APT",
-   "house_detail": "민영",
-   "sale_type": "분양주택",
-   "name": "시흥 은계 에피트(조합원 취소분)",
-   "sido": "경기",
-   "sigungu": "시흥시",
-   "address": "경기도 시흥시 은행동 289-31번지 일원",
-   "total_households": 24,
-   "announce_date": "2026-09-04",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-15",
-     "end": "2026-09-17"
-    },
-    "special": {
-     "start": "2026-09-15",
-     "end": "2026-09-15"
-    },
-    "rank1": {
-     "start": "2026-09-16",
-     "end": "2026-09-16"
-    },
-    "rank2": {
-     "start": "2026-09-17",
-     "end": "2026-09-17"
-    },
-    "general": null,
-    "winner_date": "2026-09-23",
-    "contract": {
-     "start": "2026-10-04",
-     "end": "2026-10-06"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-09-16",
-      "end": "2026-09-16"
-     },
-     "기타지역": {
-      "start": "2026-09-16",
-      "end": "2026-09-16"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-09-17",
-      "end": "2026-09-17"
-     },
-     "기타지역": {
-      "start": "2026-09-17",
-      "end": "2026-09-17"
-     }
-    }
-   },
-   "move_in": "2026-10",
-   "flags": {
-    "투기과열": false,
-    "조정대상": false,
-    "분양가상한제": false,
-    "공공주택지구": false,
-    "대규모택지": false
-   },
-   "builder": "에이치엘디앤아이한라 주식회사",
-   "phone": "0313184998",
-   "homepage": "http://efete-eungye.com/",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000393&pblancNo=2026000393",
-   "price_max_manwon": 48500,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "039.1570",
-     "area_m2": 54.899,
-     "general_households": 2,
-     "special_households": 0,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 30760
-    },
-    {
-     "model_no": "02",
-     "type": "048.8190",
-     "area_m2": 68.714,
-     "general_households": 1,
-     "special_households": 0,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 37900
-    },
-    {
-     "model_no": "03",
-     "type": "052.1850A",
-     "area_m2": 72.525,
-     "general_households": 3,
-     "special_households": 7,
-     "special_by_kind": {
-      "다자녀": 1,
-      "신혼부부": 2,
-      "생애최초": 1,
-      "청년": 0,
-      "신생아": 1,
-      "노부모부양": 1,
-      "기관추천": 1,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 42500
-    },
-    {
-     "model_no": "04",
-     "type": "052.7840B",
-     "area_m2": 73.33,
-     "general_households": 2,
-     "special_households": 1,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 1,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 42400
-    },
-    {
-     "model_no": "05",
-     "type": "052.4300C",
-     "area_m2": 74.413,
-     "general_households": 2,
-     "special_households": 0,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 41400
-    },
-    {
-     "model_no": "06",
-     "type": "059.6120A",
-     "area_m2": 82.714,
-     "general_households": 2,
-     "special_households": 1,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 1,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 48500
-    },
-    {
-     "model_no": "07",
-     "type": "059.0050B",
-     "area_m2": 83.546,
-     "general_households": 1,
-     "special_households": 0,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 46400
-    },
-    {
-     "model_no": "08",
-     "type": "059.0570C",
-     "area_m2": 83.381,
-     "general_households": 2,
-     "special_households": 0,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 45900
     }
    ]
   },
@@ -11939,6 +11714,122 @@
       "기타": 0
      },
      "price_top_manwon": 96845
+    }
+   ]
+  },
+  {
+   "id": "apt-2026820014-2026820014",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "신혼희망타운",
+   "house_detail": "국민",
+   "sale_type": "분양주택",
+   "name": "남양주왕숙 A-2블록 신혼희망타운(공공분양) 잔여세대 추가입주자모집공고",
+   "sido": "경기",
+   "sigungu": "남양주시",
+   "address": "경기도 남양주시 진접읍, 진건읍, 퇴계원읍 일원, 남양주왕숙 공공주택지구 내 A-2블록",
+   "total_households": 32,
+   "announce_date": "2026-11-03",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-11",
+     "end": "2026-11-12"
+    },
+    "special": null,
+    "rank1": {
+     "start": "2026-11-11",
+     "end": "2026-11-11"
+    },
+    "rank2": {
+     "start": "2026-11-12",
+     "end": "2026-11-12"
+    },
+    "general": null,
+    "winner_date": "2026-11-19",
+    "contract": {
+     "start": "2027-02-01",
+     "end": "2027-02-02"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-11-11",
+      "end": "2026-11-11"
+     },
+     "경기": {
+      "start": "2026-11-11",
+      "end": "2026-11-11"
+     },
+     "기타지역": {
+      "start": "2026-11-11",
+      "end": "2026-11-11"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-11-12",
+      "end": "2026-11-12"
+     },
+     "경기": {
+      "start": "2026-11-12",
+      "end": "2026-11-12"
+     },
+     "기타지역": {
+      "start": "2026-11-12",
+      "end": "2026-11-12"
+     }
+    }
+   },
+   "move_in": "2028-08",
+   "flags": {
+    "투기과열": false,
+    "조정대상": false,
+    "분양가상한제": true,
+    "공공주택지구": true,
+    "대규모택지": true
+   },
+   "builder": "계룡건설산업(주), 미래이앤시(주), (주)오스코",
+   "phone": "16001004",
+   "homepage": "https://apply.lh.or.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026820014&pblancNo=2026820014",
+   "price_max_manwon": 41908,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "046.0000O",
+     "area_m2": 67.1669,
+     "general_households": 0,
+     "special_households": 18,
+     "special_by_kind": {
+      "다자녀": 0,
+      "신혼부부": 0,
+      "생애최초": 0,
+      "청년": 0,
+      "신생아": 0,
+      "노부모부양": 0,
+      "기관추천": 0,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 35276
+    },
+    {
+     "model_no": "02",
+     "type": "055.0000O",
+     "area_m2": 79.7936,
+     "general_households": 0,
+     "special_households": 14,
+     "special_by_kind": {
+      "다자녀": 0,
+      "신혼부부": 0,
+      "생애최초": 0,
+      "청년": 0,
+      "신생아": 0,
+      "노부모부양": 0,
+      "기관추천": 0,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 41908
     }
    ]
   },
