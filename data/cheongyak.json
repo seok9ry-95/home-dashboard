@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-05T19:24:14+09:00",
- "base_date": "2026-11-05",
- "window_from": "2026-09-06",
+ "collected_at": "2026-11-06T07:03:01+09:00",
+ "base_date": "2026-11-06",
+ "window_from": "2026-09-07",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
   "apt": 40,
-  "remndr": 34,
+  "remndr": 36,
   "opt": 44,
-  "total": 118
+  "total": 120
  },
  "coverage": {
-  "with_types": 118,
-  "with_price": 118
+  "with_types": 120,
+  "with_price": 120
  },
  "items": [
   {
@@ -11714,6 +11714,118 @@
       "기타": 0
      },
      "price_top_manwon": 96845
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910282-2026910282",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "광명 시티프라디움 에듀하임",
+   "sido": "경기",
+   "sigungu": "광명시",
+   "address": "경기도 광명시 소하동 광명 구름산지구 도시개발사업지구 A6BL",
+   "total_households": 21,
+   "announce_date": "2026-11-05",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-10",
+     "end": "2026-11-10"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-13",
+    "contract": {
+     "start": "2026-11-20",
+     "end": "2026-11-20"
+    }
+   },
+   "move_in": "2029-03",
+   "flags": null,
+   "builder": "(주)시티글로벌",
+   "phone": "18996851",
+   "homepage": "https://광명시티프라디움.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910282&pblancNo=2026910282",
+   "price_max_manwon": 119800,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.7421B",
+     "area_m2": null,
+     "general_households": 4,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 82700
+    },
+    {
+     "model_no": "02",
+     "type": "084.9796D",
+     "area_m2": null,
+     "general_households": 17,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 119800
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910279-2026910279",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "봉담자이 프라이드시티",
+   "sido": "경기",
+   "sigungu": "화성특례시",
+   "address": "경기도 화성특례시 효행구 봉담읍 삼봉안길 30 (봉담내리지구 A1블록 봉담자이 프라이드시티)",
+   "total_households": 2,
+   "announce_date": "2026-11-05",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-10",
+     "end": "2026-11-10"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-13",
+    "contract": {
+     "start": "2026-11-20",
+     "end": "2026-11-20"
+    }
+   },
+   "move_in": "2026-12",
+   "flags": null,
+   "builder": "디에스디삼호(주)",
+   "phone": "0312784145",
+   "homepage": "https://www.idsd.co.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910279&pblancNo=2026910279",
+   "price_max_manwon": 46220,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.7822A",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 46220
+    },
+    {
+     "model_no": "02",
+     "type": "084.3879B",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 45770
     }
    ]
   },
