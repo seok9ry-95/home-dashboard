@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-07T19:04:45+09:00",
- "base_date": "2026-11-07",
- "window_from": "2026-09-08",
+ "collected_at": "2026-11-08T06:53:20+09:00",
+ "base_date": "2026-11-08",
+ "window_from": "2026-09-09",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
   "apt": 44,
-  "remndr": 37,
-  "opt": 42,
-  "total": 123
+  "remndr": 35,
+  "opt": 39,
+  "total": 118
  },
  "coverage": {
-  "with_types": 123,
-  "with_price": 123
+  "with_types": 118,
+  "with_price": 118
  },
  "items": [
   {
@@ -1509,127 +1509,6 @@
    ]
   },
   {
-   "id": "opt-2026940197-2026940197",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "수원역 아너스빌 타임원",
-   "sido": "경기",
-   "sigungu": "수원시",
-   "address": "경기도 수원시 권선구 평동 135-1번지 일원",
-   "total_households": 10,
-   "announce_date": "2026-09-08",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-10",
-     "end": "2026-09-11"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-16",
-    "contract": {
-     "start": "2026-09-17",
-     "end": "2026-09-17"
-    }
-   },
-   "move_in": "2028-11",
-   "flags": null,
-   "builder": "에스엠하이플러스(주),(주)아주엠앤씨",
-   "phone": "15446236",
-   "homepage": "https://www.수원역아너스빌.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940197&pblancNo=2026940197",
-   "price_max_manwon": 77200,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.6388A",
-     "area_m2": null,
-     "general_households": 4,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 76350
-    },
-    {
-     "model_no": "02",
-     "type": "084.8874B",
-     "area_m2": null,
-     "general_households": 6,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 77200
-    }
-   ]
-  },
-  {
-   "id": "opt-2026940186-2026940186",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "야목역 서희스타힐스 그랜드힐(조합원 취소분)",
-   "sido": "경기",
-   "sigungu": "화성시",
-   "address": "경기도 화성시 효행구 비봉면 구포리 614-18번지 일원",
-   "total_households": 23,
-   "announce_date": "2026-09-08",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-10",
-     "end": "2026-09-15"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-18",
-    "contract": {
-     "start": "2026-09-19",
-     "end": "2026-09-19"
-    }
-   },
-   "move_in": "2029-10",
-   "flags": null,
-   "builder": "비봉지역주택조합",
-   "phone": "15512148",
-   "homepage": "https://www.야목역서희스타힐스그랜드힐.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940186&pblancNo=2026940186",
-   "price_max_manwon": 57600,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "059.9567A",
-     "area_m2": null,
-     "general_households": 10,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 41900
-    },
-    {
-     "model_no": "02",
-     "type": "084.9501A",
-     "area_m2": null,
-     "general_households": 5,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 57600
-    },
-    {
-     "model_no": "03",
-     "type": "084.9553B",
-     "area_m2": null,
-     "general_households": 8,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 56600
-    }
-   ]
-  },
-  {
    "id": "opt-2026940195-2026940195",
    "kind": "opt",
    "kind_label": "임의공급",
@@ -1738,118 +1617,6 @@
      "special_households": null,
      "special_by_kind": null,
      "price_top_manwon": 51800
-    }
-   ]
-  },
-  {
-   "id": "opt-2026940196-2026940196",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "의정부역 센트럴 아이파크 (4차)",
-   "sido": "경기",
-   "sigungu": "의정부시",
-   "address": "경기도 의정부시 의정부동 253-19번지 일원",
-   "total_households": 11,
-   "announce_date": "2026-09-08",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-11",
-     "end": "2026-09-11"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-16",
-    "contract": {
-     "start": "2026-09-18",
-     "end": "2026-09-18"
-    }
-   },
-   "move_in": "2029-12",
-   "flags": null,
-   "builder": "아이파크현대산업개발(주)",
-   "phone": "15660431",
-   "homepage": "https://www.i-park.com/uijeongbucentral",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940196&pblancNo=2026940196",
-   "price_max_manwon": 82600,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.8422A",
-     "area_m2": null,
-     "general_households": 5,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 82600
-    },
-    {
-     "model_no": "02",
-     "type": "084.7200B",
-     "area_m2": null,
-     "general_households": 6,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 79600
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026910233-2026910233",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "무순위",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "드파인 아르티아(2차)",
-   "sido": "서울",
-   "sigungu": "동작구",
-   "address": "서울특별시 동작구 노량진동 312-75번지 일대",
-   "total_households": 7,
-   "announce_date": "2026-09-08",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-14",
-     "end": "2026-09-14"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-17",
-    "contract": {
-     "start": "2026-09-19",
-     "end": "2026-09-19"
-    }
-   },
-   "move_in": "2029-11",
-   "flags": null,
-   "builder": "노량진2재정비촉진구역재개발정비사업조합",
-   "phone": "16444041",
-   "homepage": "https://altia.skdefine.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910233&pblancNo=2026910233",
-   "price_max_manwon": 306000,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.0000B",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 266000
-    },
-    {
-     "model_no": "02",
-     "type": "109.8652A",
-     "area_m2": null,
-     "general_households": 5,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 306000
     }
    ]
   },
@@ -2088,53 +1855,6 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 65500
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026910235-2026910235",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "무순위",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "청계 노르웨이숲(12차)",
-   "sido": "서울",
-   "sigungu": "중구",
-   "address": "서울특별시 중구 황학동 1756번지 일원",
-   "total_households": 13,
-   "announce_date": "2026-09-08",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-14",
-     "end": "2026-09-14"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-17",
-    "contract": {
-     "start": "2026-09-22",
-     "end": "2026-09-24"
-    }
-   },
-   "move_in": "2028-07",
-   "flags": null,
-   "builder": "황학동청계지역주택조합",
-   "phone": "15550807",
-   "homepage": "https://청계노르웨이숲.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910235&pblancNo=2026910235",
-   "price_max_manwon": 76112,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "039.6950",
-     "area_m2": null,
-     "general_households": 13,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 76112
     }
    ]
   },
