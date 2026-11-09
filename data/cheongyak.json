@@ -1,17 +1,17 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-09T19:18:25+09:00",
- "base_date": "2026-11-09",
- "window_from": "2026-09-10",
+ "collected_at": "2026-11-10T07:03:05+09:00",
+ "base_date": "2026-11-10",
+ "window_from": "2026-09-11",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 43,
+  "apt": 42,
   "remndr": 33,
-  "opt": 37,
+  "opt": 38,
   "total": 113
  },
  "coverage": {
@@ -1682,53 +1682,6 @@
    ]
   },
   {
-   "id": "remndr-2026910238-2026910238",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "무순위",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "북오산자이 드포레",
-   "sido": "경기",
-   "sigungu": "오산시",
-   "address": "경기도 오산시 내삼미동 288번지 일원",
-   "total_households": 2,
-   "announce_date": "2026-09-10",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-15",
-     "end": "2026-09-15"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-18",
-    "contract": {
-     "start": "2026-09-29",
-     "end": "2026-09-29"
-    }
-   },
-   "move_in": "2029-10",
-   "flags": null,
-   "builder": "한국투자부동산신탁 주식회사",
-   "phone": "16602792",
-   "homepage": "https://www.xi.co.kr/osantf",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910238&pblancNo=2026910238",
-   "price_max_manwon": 148640,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "124.4008P",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 148640
-    }
-   ]
-  },
-  {
    "id": "opt-2026940189-2026940189",
    "kind": "opt",
    "kind_label": "임의공급",
@@ -2574,193 +2527,6 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 53400
-    }
-   ]
-  },
-  {
-   "id": "apt-2026000314-2026000314",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "APT",
-   "house_detail": "민영",
-   "sale_type": "분양주택",
-   "name": "중동역 다채로움 더원",
-   "sido": "경기",
-   "sigungu": "부천시",
-   "address": "경기도 부천시 소사구 송내동 365-1번지 일원",
-   "total_households": 39,
-   "announce_date": "2026-09-10",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-21",
-     "end": "2026-09-23"
-    },
-    "special": {
-     "start": "2026-09-21",
-     "end": "2026-09-21"
-    },
-    "rank1": {
-     "start": "2026-09-22",
-     "end": "2026-09-22"
-    },
-    "rank2": {
-     "start": "2026-09-23",
-     "end": "2026-09-23"
-    },
-    "general": null,
-    "winner_date": "2026-10-08",
-    "contract": {
-     "start": "2026-10-19",
-     "end": "2026-10-21"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-09-22",
-      "end": "2026-09-22"
-     },
-     "기타지역": {
-      "start": "2026-09-22",
-      "end": "2026-09-22"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-09-23",
-      "end": "2026-09-23"
-     },
-     "기타지역": {
-      "start": "2026-09-23",
-      "end": "2026-09-23"
-     }
-    }
-   },
-   "move_in": "2028-08",
-   "flags": {
-    "투기과열": false,
-    "조정대상": false,
-    "분양가상한제": false,
-    "공공주택지구": false,
-    "대규모택지": false
-   },
-   "builder": "주식회사 부성종합건설",
-   "phone": "0326132355",
-   "homepage": "http://중동역다채로움더원.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000314&pblancNo=2026000314",
-   "price_max_manwon": 79600,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "054.8244",
-     "area_m2": 73.4647,
-     "general_households": 3,
-     "special_households": 4,
-     "special_by_kind": {
-      "다자녀": 1,
-      "신혼부부": 1,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 1,
-      "노부모부양": 0,
-      "기관추천": 1,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 54900
-    },
-    {
-     "model_no": "02",
-     "type": "059.9935B",
-     "area_m2": 81.5363,
-     "general_households": 3,
-     "special_households": 1,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 1,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 61000
-    },
-    {
-     "model_no": "03",
-     "type": "060.7403",
-     "area_m2": 81.7324,
-     "general_households": 3,
-     "special_households": 5,
-     "special_by_kind": {
-      "다자녀": 1,
-      "신혼부부": 1,
-      "생애최초": 1,
-      "청년": 0,
-      "신생아": 1,
-      "노부모부양": 0,
-      "기관추천": 1,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 61200
-    },
-    {
-     "model_no": "04",
-     "type": "084.9888A",
-     "area_m2": 112.4623,
-     "general_households": 2,
-     "special_households": 0,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 75300
-    },
-    {
-     "model_no": "05",
-     "type": "084.9933B",
-     "area_m2": 112.4677,
-     "general_households": 2,
-     "special_households": 5,
-     "special_by_kind": {
-      "다자녀": 1,
-      "신혼부부": 1,
-      "생애최초": 1,
-      "청년": 0,
-      "신생아": 1,
-      "노부모부양": 0,
-      "기관추천": 1,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 79300
-    },
-    {
-     "model_no": "06",
-     "type": "084.9894C",
-     "area_m2": 112.8753,
-     "general_households": 5,
-     "special_households": 6,
-     "special_by_kind": {
-      "다자녀": 1,
-      "신혼부부": 2,
-      "생애최초": 1,
-      "청년": 0,
-      "신생아": 1,
-      "노부모부양": 0,
-      "기관추천": 1,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 79600
     }
    ]
   },
@@ -11136,6 +10902,71 @@
    ]
   },
   {
+   "id": "opt-2026940252-2026940252",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "신월동 한양립스(3차)",
+   "sido": "서울",
+   "sigungu": "양천구",
+   "address": "서울특별시 양천구 신월동 118-14외 2필지 일대",
+   "total_households": 5,
+   "announce_date": "2026-11-09",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-11",
+     "end": "2026-11-12"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-17",
+    "contract": {
+     "start": "2026-11-20",
+     "end": "2026-11-22"
+    }
+   },
+   "move_in": "2026-12",
+   "flags": null,
+   "builder": "덕화주택가로주택정비사업조합",
+   "phone": "0226960990",
+   "homepage": null,
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940252&pblancNo=2026940252",
+   "price_max_manwon": 52500,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "045.8300",
+     "area_m2": null,
+     "general_households": 2,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 45480
+    },
+    {
+     "model_no": "02",
+     "type": "053.8100A",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 52500
+    },
+    {
+     "model_no": "03",
+     "type": "053.7200B",
+     "area_m2": null,
+     "general_households": 2,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 51800
+    }
+   ]
+  },
+  {
    "id": "remndr-2026910280-2026910280",
    "kind": "remndr",
    "kind_label": "무순위·잔여세대",
@@ -11981,6 +11812,53 @@
       "기타": 0
      },
      "price_top_manwon": 202100
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910290-2026910290",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "청계 노르웨이숲(14차)",
+   "sido": "서울",
+   "sigungu": "중구",
+   "address": "서울특별시 중구 황학동 1756번지 일원",
+   "total_households": 6,
+   "announce_date": "2026-11-09",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-16",
+     "end": "2026-11-17"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-20",
+    "contract": {
+     "start": "2026-11-23",
+     "end": "2026-11-25"
+    }
+   },
+   "move_in": "2028-07",
+   "flags": null,
+   "builder": "황학동청계지역주택조합",
+   "phone": "15550807",
+   "homepage": "https://청계노르웨이숲.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910290&pblancNo=2026910290",
+   "price_max_manwon": 73826,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "039.6950",
+     "area_m2": null,
+     "general_households": 6,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 73826
     }
    ]
   }
