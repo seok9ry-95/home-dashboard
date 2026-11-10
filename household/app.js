@@ -6,11 +6,14 @@
 const DATA = window.__HH;
 
 const RULES = { LTV: { 서울: { 일반: .4, 생애최초: .7, 신생아특례: .7 }, 경기: { 일반: .7, 생애최초: .7, 신생아특례: .7 } }, cap: 60000, DSR: .4, stress: .03, nbCap: 40000, nbHouse: 90000, nbIncome: 13000, nbDTI: .6 };
-const ASSUME = { rate: .0466, nbRate: .03, years: 30, cost: .04, rateAsOf: '2026-08 은행 주담대 평균(한국은행)', rateChecked: '2026-10-11', rulesChecked: '2026-10-05' };   // 10/11 A안: 4.2% → 4.66%
+const ASSUME = { rate: .0488, nbRate: .03, years: 30, cost: .04, rateAsOf: '2026-09 은행 주담대 평균(한국은행)', rateChecked: '2026-11-01', rulesChecked: '2026-10-05' };   // 11/01 계산 기준 10-3: 4.66% → 4.88% (10/11 A안: 4.2% → 4.66%)
 // ===== 계산 기준 버전 (현황판 11 · 기준이 바뀔 때만 올림, 화면 수정과 분리) — 집값은 같은 자산(assetsAsOf)에서 다시 계산한 기록값(만원) =====
 const BASIS = {
   zoneChecked: '2026-10-10', creditChecked: '2026-10-11', savingDecided: '2026-10-10',
   history: [
+    { v: '2026.10-3', from: '2026-11-01', assetsAsOf: '2026-10-09', buy: 71000,
+      changes: ['주담대 금리 가정 4.66% → 4.88% (2026-09 한국은행 평균)', '월 상환 예측 중간 금리 4.66% → 4.88%'],
+      why: '최신 공식 평균을 따름 (11/01 월간 금리 점검)' },
     { v: '2026.10-2', from: '2026-10-11', assetsAsOf: '2026-10-09', buy: 71900,
       changes: ['주담대 금리 가정 4.2% → 4.66% (2026-08 한국은행 평균)', '신용대출 규칙 추가: 연소득 100%·1억 상한, 시뮬레이터 토글(기본 꺼짐이라 기본 집값엔 영향 없음)', '월 상환 예측 금리(최소·중간·최대) 추가'],
       why: '4.2%는 근거가 오래됐고 낙관적이라 집값이 실제보다 높게 나왔음' },
@@ -33,6 +36,13 @@ function loan(s, inc) {
 }
 function affordable(s, inc, future) { let lo = 0, hi = 300000; for (let i = 0; i < 60; i++) { const mid = (lo + hi) / 2; if (loan({ ...s, price: mid }, inc).cash <= future) lo = mid; else hi = mid; } return lo; }
 
+// ===== 화면 공통 숫자 (11/11 숫자 통일) — 홈·시뮬레이터·결산이 같은 함수·같은 반올림을 쓴다 =====
+const R2 = v => Math.round(v / 100) * 100;                          // 만원 → 0.01억 단위(화면에 보이는 집값)
+const e2 = v => (v / 10000).toFixed(2) + '억';                       // 살 수 있는 집값·격차·대출은 소수 둘째 자리
+const priceGap = (buy, price) => Math.max(0, price - R2(buy));       // 격차 = 목표 − 살 수 있는 집값(보이는 값끼리 빼서 화면 숫자와 맞춤)
+const needOf = (cash, own, months) => Math.round(Math.max(0, cash - own) / months);   // 월 필요 저축(만원, 반올림 — PRD 검증용 기준값과 같은 방식)
+const pctOf = (buy, price) => buy >= price ? Math.floor(buy / price * 100) : Math.min(99, Math.floor(buy / price * 100));   // 진행률은 내림, 못 미치면 최대 99%
+
 // ===== 파생 값 =====
 const M = v => v / 10000;                                   // 원 → 만원
 const A = DATA.assets;
@@ -50,10 +60,12 @@ const future = netNow + save * monthsLeft;
 const L8 = loan(T, inc);
 const canBuy = affordable(T, inc, future);
 const needNow = Math.max(0, L8.cash - netNow);
-const needPerMonth = needNow / monthsLeft;
+const needPerMonth = needOf(L8.cash, netNow, monthsLeft);   // 월 필요 저축 — 시뮬레이터·결산과 같은 needOf
 const gapAtTarget = Math.max(0, L8.cash - future);
 const monthsToGoal = save > 0 ? Math.ceil(needNow / save) : Infinity;
 const extraMonths = Math.max(0, monthsToGoal - monthsLeft);
+// 전세 연장(2030.1) 시 살 수 있는 집값 — 도우미 답변용, 계획 월 저축 기준
+const canBuyExt = affordable(T, inc, netNow + save * Math.max(1, (2030 - asOf.getFullYear()) * 12 + 1 - (asOf.getMonth() + 1)));
 
 // ===== 포맷 =====
 const eok = v => (v / 10000).toFixed(Math.abs(v) >= 100000 ? 1 : 2).replace(/\.?0+$/, '') + '억';
@@ -125,25 +137,31 @@ $('#pledges').innerHTML = [['H', '남편', 'h'], ['W', '아내', 'w']].map(([k, 
     <span class="pl-text ${t ? 'set' : 'empty'}">${t ? esc(t) + ` <span style="font-size:11px;color:var(--ph);font-weight:400">${DATA.pledgeDate}</span>` : `아직 없어요 · ${DATA.names[k]}의 다짐 한 가지를 채팅에 알려주세요`}</span></div>`;
 }).join('');
 const nextM = curMonth === 12 ? 1 : curMonth + 1;
-$('#ctaT1').textContent = `${curMonth}월 결산 · ${String(nextM).padStart(2, '0')}.01~${String(nextM).padStart(2, '0')}.03`;
+const curY = asOf.getFullYear() + (settledNow && asOf.getMonth() === 11 ? 1 : 0), p2 = n => String(n).padStart(2, '0');
+// PRD 흐름 1: 말일 ~ 다음 달 3일 (결산 화면 window3와 같은 표기, 예: 11.30~12.03)
+$('#ctaT1').textContent = `${curMonth}월 결산 · ${p2(curMonth)}.${new Date(curY, curMonth, 0).getDate()}~${p2(nextM)}.03`;
 
 // ===== 히어로 =====
-const pct = Math.round(canBuy / T.price * 100);
+const pct = pctOf(canBuy, T.price);
 $('#goalLegend').textContent = `목표 ${eok(T.price)}`;
 $('#goalSentence').innerHTML = `<span class="hl">${ty}년 ${tm}월</span>까지 <span class="hl">${esc(T.label)}</span> <span class="amt">${eok(T.price)}</span> <span class="rest">아파트</span>`;
 $('#leftPill').textContent = `${monthsLeft}개월 남음`;
-const gap = Math.max(0, T.price - canBuy);
-$('#eq').innerHTML = `
+const gap = priceGap(canBuy, T.price);
+function renderEq() {
+  const trend = TREND === null ? `<div class="s">실제 추세는 첫 결산 뒤에 나와요</div>`
+    : `<div class="s" style="color:var(--ink2)">실제 추세면 <b style="color:var(--ink)">${e2(canBuyTrend)}</b> · ${mon(TREND_FROM)}월부터 ${TR.length}달 평균 월 ${man(TREND)}</div>`;
+  $('#eq').innerHTML = `
   <div class="eqi"><span class="op" aria-hidden="true"></span><div><div class="t">목표</div><div class="v">${eok(T.price)}</div><div class="s">${T.type} · 소득 ${T.incomeBasis}</div></div></div>
-  <div class="eqi"><span class="op" aria-hidden="true">−</span><div><div class="t">지금 추세로 살 수 있는 집</div><div class="v" style="color:var(--good)">${eok1(canBuy)}</div><div class="s">월 ${man(save)} 저축 가정 · 목표의 ${pct}%</div></div></div>
-  <div class="eqi"><span class="op" aria-hidden="true">=</span><div><div class="t">목표와의 격차</div><div class="v" style="color:${gap ? 'var(--warn)' : 'var(--good)'}">${gap ? eok1(gap) : '달성'}</div><div class="s">${extraMonths ? `이 추세면 <b style="color:var(--warn)">+${yearsMonths(extraMonths)}</b> · ` : ''}월 <b style="color:var(--ink)">${man(Math.ceil(needPerMonth))}</b>이면 제때</div></div></div>`;
+  <div class="eqi"><span class="op" aria-hidden="true">−</span><div><div class="t">계획(월 ${man(save)})대로면 살 수 있는 집</div><div class="v" style="color:var(--good)">${e2(canBuy)}</div><div class="s">목표의 ${pct}% · 내림 표시</div>${trend}</div></div>
+  <div class="eqi"><span class="op" aria-hidden="true">=</span><div><div class="t">목표와의 격차</div><div class="v" style="color:${gap ? 'var(--warn)' : 'var(--good)'}">${gap ? e2(gap) : '달성'}</div><div class="s">${extraMonths ? `계획대로면 <b style="color:var(--warn)">+${yearsMonths(extraMonths)}</b> · ` : ''}월 <b style="color:var(--ink)">${man(needPerMonth)}</b>이면 제때</div></div></div>`;
+}
 
 // 집값 추이: 지금부터 목표일까지 3개월 간격 예상
 const steps = []; for (let k = 0; k <= monthsLeft; k += 3) steps.push(k); if (steps[steps.length - 1] !== monthsLeft) steps.push(monthsLeft);
 const gData = steps.map(k => {
   const d = new Date(asOf.getFullYear(), asOf.getMonth() + k, 1);
   const a = netNow + save * k, price = affordable(T, inc, a), ln = loan({ ...T, price }, inc).amount;
-  return { k, label: `${String(d.getFullYear()).slice(2)}.${String(d.getMonth() + 1).padStart(2, '0')}`, title: k === 0 ? `${asOf.getFullYear()}년 ${asOf.getMonth() + 1}월 · 현재 (지금 산다면)` : `${d.getFullYear()}년 ${d.getMonth() + 1}월 · 예상`, a, price, ln };
+  return { k, label: `${String(d.getFullYear()).slice(2)}.${String(d.getMonth() + 1).padStart(2, '0')}`, title: k === 0 ? `${asOf.getFullYear()}년 ${asOf.getMonth() + 1}월 · 오늘 산다면` : `${d.getFullYear()}년 ${d.getMonth() + 1}월 · 계획대로 모으면`, a, price, ln };
 });
 let gHover = null;
 function renderG() {
@@ -157,21 +175,21 @@ function renderG() {
     const ha = g.a / GMAX * H, hn = Math.max(0, g.ln / GMAX * H - 3);
     const tipSide = i >= gData.length - 2 ? 'right' : 'left';
     return `<div class="cl${on ? ' on' : ''}${now ? ' cur' : ' future'}" data-g="${i}">
-      <div class="vtop" style="bottom:${24 + ha + hn + 9}px">${now ? '지금 ' + eok1(g.price) : Math.round(g.price / T.price * 100) + '%'}</div>
+      <div class="vtop" style="bottom:${24 + ha + hn + 9}px">${now ? '오늘 산다면 ' + e2(g.price) : pctOf(g.price, T.price) + '%'}</div>
       <div class="stack" style="bottom:24px"><div style="height:${ha}px;background-color:${hl ? 'var(--lime)' : 'var(--lime2)'};background-image:${now ? 'var(--hatch)' : 'none'};opacity:${now || on ? 1 : .75}"></div><div style="height:${hn}px;background:${hl ? 'var(--ink)' : '#C9C9C6'};opacity:${now || on ? 1 : .75}"></div></div>
       <div class="lab">${now ? '현재' : g.label}</div>
       <div class="tip" style="top:${Math.max(0, y(g.a + g.ln) - 70)}px;${tipSide}:calc(50% + 34px)">
         <div class="tt">${g.title}</div>
-        <div class="tg"><i style="background:var(--good)"></i><span>살 수 있는 집</span><b>${eok1(g.price)}</b>
-          <i></i><span>목표 달성률</span><b style="color:var(--good)">${Math.round(g.price / T.price * 100)}%</b>
+        <div class="tg"><i style="background:var(--good)"></i><span>살 수 있는 집</span><b>${e2(g.price)}</b>
+          <i></i><span>목표 달성률</span><b style="color:var(--good)">${pctOf(g.price, T.price)}%</b>
           <i style="background:var(--lime)"></i><span>${g.k ? '예상 자산' : '현재 자산'}</span><b>${eok(g.a)}</b>
-          <i style="background:var(--ink)"></i><span>대출 가능</span><b>${eok1(g.ln)}</b></div></div></div>`;
+          <i style="background:var(--ink)"></i><span>대출 가능</span><b>${e2(g.ln)}</b></div></div></div>`;
   }).join('') + `</div>`;
   box.innerHTML = h;
   clampTip('#gChart');
 }
 hoverable('#gChart', 'g', () => gHover, v => { gHover = v; renderG(); });
-$('#gNote').textContent = `현재 순자산 ${eok(netNow)}(${DATA.asOf.replace(/-/g, '.')} 기준)에 월 ${man(save)}씩 더한 예상이에요. 대출은 ${T.region} ${T.type}·소득 ${T.incomeBasis}, DSR 40%·스트레스 금리 3%p 기준. 규칙은 2026-10 2차 자료라 계약 전 은행 확인이 필요해요.`;
+$('#gNote').textContent = `현재 순자산 ${eok(netNow)}(${DATA.asOf.replace(/-/g, '.')} 기준)에 계획대로 월 ${man(save)}씩 더한 예상이에요. 맨 왼쪽은 오늘 산다면이에요. 대출은 ${T.region} ${T.type}·소득 ${T.incomeBasis}, DSR 40%·스트레스 금리 3%p 기준. 규칙은 2026-10 2차 자료라 계약 전 은행 확인이 필요해요.`;
 
 // ===== 월별 =====
 const ANN_M = M((DATA.annual || []).reduce((a, x) => a + x[2], 0) / 12);   // 연간 정기비용 ÷ 12 (만원)
@@ -182,6 +200,11 @@ const MS = DATA.months.map(r => { const g = M((r.giftH || 0) + (r.giftW || 0)), 
 const SET = MS.filter(r => !r.partial);
 const last = SET[SET.length - 1], prev = SET[SET.length - 2];
 const R3 = SET.slice(-3), base3 = R3.reduce((a, r) => a + r.base, 0) / R3.length;
+// 실제 추세 = 결산 시작(settleStart, 10월) 이후 결산된 달의 쓸 수 있는 저축 평균 (11/11 숫자 통일 ①)
+const TREND_FROM = DATA.settleStart || '2026-10';
+const TR = SET.filter(r => r.m >= TREND_FROM);
+const TREND = TR.length ? TR.reduce((a, r) => a + r.base, 0) / TR.length : null;
+const canBuyTrend = TREND === null ? null : affordable(T, inc, netNow + TREND * monthsLeft);
 const dpct = (a, b) => b ? (a - b) / Math.abs(b) * 100 : 0;
 const arrow = (up) => `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="${up ? 'M4 17l6-6 4 4 6-8M14 7h6v6' : 'M4 7l6 6 4-4 6 8M14 17h6v-6'}"/></svg>`;
 function kpi(label, v, p, goodWhenUp) {
@@ -373,15 +396,15 @@ const top2 = (() => { const r = last, t = M(r.expH + r.expW); return CATS.map(([
 const Lsolo = loan({ ...T, incomeBasis: '남편 단독' }, inc);
 function reply(q) {
   const t = q.replace(/\s/g, '');
-  if (/대출|DSR|한도|LTV|상환/.test(t)) return `${T.region} ${eok(T.price)} ${T.type} 기준, 두 사람 소득 합산(${man(inc.H + inc.W)})이면 대출 ${eok1(L8.amount)}까지 가능해요. LTV 한도(${eok1(L8.ltv)})보다 소득 한도에 먼저 막혀요. 월 상환은 약 ${man(Math.round(L8.monthly))}이에요.\n⟦H⟧ 단독 소득이면 ${eok1(Lsolo.amount)}로 줄어서, 혼인신고 후 합산이 유리해요.`;
-  if (/목표|달성|언제|가능|얼마나|집값/.test(t)) return `월 ${man(save)}씩 모으면 ${ym(T.date)}에 살 수 있는 집은 ${eok1(canBuy)}, 목표의 ${pct}%예요.\n${eok(T.price)}에 제때 닿으려면 월 ${man(Math.ceil(needPerMonth))}이 필요하고, 지금 페이스면 ${yearsMonths(extraMonths) || '0개월'} 더 걸려요. 레버는 월 저축 늘리기, 전세 연장(${eok1(canBuyExt)}), 목표 조정 순으로 보세요.`;
+  if (/대출|DSR|한도|LTV|상환/.test(t)) return `${T.region} ${eok(T.price)} ${T.type} 기준, 두 사람 소득 합산(${man(inc.H + inc.W)})이면 대출 ${e2(L8.amount)}까지 가능해요. LTV 한도(${e2(L8.ltv)})보다 소득 한도에 먼저 막혀요. 월 상환은 약 ${man(Math.round(L8.monthly))}이에요.\n⟦H⟧ 단독 소득이면 ${e2(Lsolo.amount)}로 줄어서, 혼인신고 후 합산이 유리해요.`;
+  if (/목표|달성|언제|가능|얼마나|집값/.test(t)) return `계획대로 월 ${man(save)}씩 모으면 ${ym(T.date)}에 살 수 있는 집은 ${e2(canBuy)}, 목표의 ${pct}%예요.${TREND === null ? '' : ` 실제 추세(${mon(TREND_FROM)}월부터 평균 월 ${man(TREND)})면 ${e2(canBuyTrend)}이에요.`}\n${eok(T.price)}에 제때 닿으려면 월 ${man(needPerMonth)}이 필요하고, 계획대로면 ${yearsMonths(extraMonths) || '0개월'} 더 걸려요. 레버는 월 저축 늘리기, 전세 연장(${e2(canBuyExt)}), 목표 조정 순으로 보세요.`;
   if (/저축|모아|모으/.test(t)) return `${mon(last.m)}월 쓸 수 있는 저축은 ${sman(last.base)}이에요(축의금 ${man(last.gift)}·일회성 지출 ${man(last.one)} 제외). 축의금·일회성까지 넣은 실제 저축은 ${sman(last.sav)}이에요.\n최근 3개월 평균 쓸 수 있는 저축은 ${sman(base3)}로 목표 ${man(save)} ${base3 >= save ? '달성' : '미달'}이에요. 고정비는 월 약 ${man(M(DATA.fixed.total) + ANN_M)}이고, 10월에 할부 4건이 끝나요.`;
   if (/소비|지출|줄이|식비|고정비|관리비/.test(t)) return `${mon(last.m)}월 소비 ${man(last.exp)} 중 ${top2}가 가장 커요.\n고정비(사라지는 돈)는 월 약 ${man(M(DATA.fixed.total))}: ${DATA.fixed.items.map(([l, v]) => `${l} ${man(M(v))}`).join(', ')}. 변동비는 부부 가계부로 관리해요.`;
   if (/자산|예적금|적금|투자|주식|청약|연금/.test(t)) return `순자산은 ${eok(netNow)}이에요. 전세 자기자금 ${eok(jeonseNet)}, 예·적금·통장 ${eok(ASEG[1].v)}, 주식 ${eok(ASEG[2].v)}, 청약 ${eok(ASEG[3].v)}.\n퇴직연금 ${eok(M(A.emergency))}는 묶인 자산이라 순자산에서 뺐어요.`;
   if (/결산|입력|갱신|파일/.test(t)) return `매달 말일~다음 달 3일에 뱅크샐러드 가계부 탭 → 톱니바퀴 → 파일로 받기(지난달 1일~말일)로 받은 파일 2개를 Claude 채팅에 올려주세요. 이 화면이 같은 링크로 갱신돼요.`;
   return `목표·대출·저축·소비·자산 중 무엇이 궁금하세요? "대출 한도 얼마야?"나 "고정비 얼마야?"처럼 물어보셔도 돼요.`;
 }
-const chat = [{ me: false, text: `안녕하세요, 빔글석굴이에요. ${DATA.asOf.slice(5).replace('-', '월 ')}일 기준으로 ${ym(T.date)}에 살 수 있는 집은 ${eok1(canBuy)}이고, 목표 ${eok(T.price)}까지 ${eok1(Math.max(0, T.price - canBuy))} 남았어요. 뭐가 궁금하세요?` }];
+const chat = [{ me: false, text: `안녕하세요, 빔글석굴이에요. ${DATA.asOf.slice(5).replace('-', '월 ')}일 기준으로 ${ym(T.date)}에 계획대로면 살 수 있는 집은 ${e2(canBuy)}이고, 목표 ${eok(T.price)}까지 ${e2(gap)} 남았어요. 뭐가 궁금하세요?` }];
 let typing = false;
 function renderChat() {
   $('#log').innerHTML = chat.map(m => `<div class="msg${m.me ? ' me' : ''}"><div class="bub">${esc(m.text)}</div></div>`).join('') + (typing ? '<div class="msg"><div class="bub">···</div></div>' : '');
@@ -399,7 +422,7 @@ $('#sheetX').addEventListener('click', () => { sheet.hidden = true; });
 sheet.addEventListener('click', e => { if (e.target === sheet) sheet.hidden = true; });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !sheet.hidden) sheet.hidden = true; });
 
-renderViewer(); renderG(); renderPeriods(); renderF(); renderHRange(); renderHist(); renderSpend(); renderAssets(); renderChat();
+renderViewer(); renderEq(); renderG(); renderPeriods(); renderF(); renderHRange(); renderHist(); renderSpend(); renderAssets(); renderChat();
 
 ;
 // ---- 원래 화면 스크립트 2/4 ----
@@ -456,7 +479,7 @@ function records() {
   return SET.map(r => {
     const s = SS[r.m];
     return { m: r.m, base: r.base, inc: r.inc - r.gift, sp: r.exp - r.one - r.annPaid + ANN_M, memo: s ? s.memo || '' : r.memo || '',
-      buyD: s ? buyAt(netOf(s.assets), s.asOf) - buyAt(netOf(s.prevAssets), s.prevAsOf) : null, legacy: !s };
+      buyD: s ? R2(buyAt(netOf(s.assets), s.asOf)) - R2(buyAt(netOf(s.prevAssets), s.prevAsOf)) : null, legacy: !s };   // 보이는 값끼리 뺌(7.10 → 7.06 = ▼0.04)
   });
 }
 
@@ -556,7 +579,7 @@ function resultCards(X, rows) {
   const pct = V.base <= 0 ? 0 : ok ? Math.floor(V.base / save * 100) : Math.min(99, Math.floor(V.base / save * 100));
   const scale = Math.max(save, V.base), barW = Math.max(0, Math.min(V.base, save)) / scale * 100, barGap = ok ? 0 : (save - Math.max(0, V.base)) / scale * 100, tick = save / scale * 100;
   const last3 = rows.slice(-3), avg = last3.reduce((a, r) => a + r.base, 0) / last3.length, hit = last3.filter(r => r.base >= save).length;
-  const netN = netOf(V.assets), netP = netOf(V.prev), buyN = buyAt(netN, V.asOf), buyP = buyAt(netP, V.prevAsOf), bD = buyN - buyP, nD = netN - netP;
+  const netN = netOf(V.assets), netP = netOf(V.prev), buyN = buyAt(netN, V.asOf), buyP = buyAt(netP, V.prevAsOf), bD = R2(buyN) - R2(buyP), nD = netN - netP;
   const flag = ok
     ? `<div class="flag ok"><span class="fi" style="background:var(--lime);color:var(--limeink)">${IC.check}</span><div class="ft"><b>목표 ${mw(save)}을 ${mw(gap)} 넘겼어요.</b> 최근 ${last3.length}달 중 ${hit}번 달성</div><a href="#simulator">시뮬레이터에서 레버 보기${IC.arrow}</a></div>`
     : `<div class="flag sh"><span class="fi" style="background:var(--orange);color:var(--ink)">${IC.lever}</span><div class="ft"><b>쓸 수 있는 저축이 목표보다 ${mw(gap)} 적어요.</b> 어떤 레버를 당길까?</div><a href="#simulator">시뮬레이터에서 레버 보기${IC.arrow}</a></div>`;
@@ -575,7 +598,8 @@ function resultCards(X, rows) {
     </div>
     <div class="kc"><span class="lbl">살 수 있는 집값${ii('buy')}</span><div class="kv3">${e2(buyN)}</div>
       <div style="display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap;margin-top:10px"><span class="sub" style="white-space:nowrap">${e2(buyP)} → ${e2(buyN)}</span><span class="bdg ${bD >= 0 ? 'ok' : 'sh'}">${bD >= 0 ? '▲' : '▼'}${(Math.abs(bD) / 10000).toFixed(2)}억</span></div>
-      <div class="s12" style="margin-top:6px">지난 기록(${md(V.prevAsOf)}) 대비 · ${eok(T.price)} 규제지역 기준</div></div>
+      <div class="s12" style="margin-top:6px">지난 기록(${md(V.prevAsOf)}) 대비 · ${eok(T.price)} 규제지역 · 계획 월 ${man(save)} 기준</div>
+      <div class="sub" style="margin-top:6px">목표와의 격차 <b style="color:var(--ink)">${priceGap(buyN, T.price) ? e2(priceGap(buyN, T.price)) : '없음'}</b> · 제때 닿으려면 월 <b style="color:var(--ink)">${man(needOf(L8.cash, netN, leftFrom(V.asOf)))}</b></div></div>
     <div class="kc"><span class="lbl">순자산${ii('net')}</span><div class="kv3">${em(netN)}</div>
       <div style="display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap;margin-top:10px"><span class="sub">${em(netP)} → ${em(netN)}</span><span class="bdg ${nD >= 0 ? 'ok' : 'sh'}">${nD >= 0 ? '▲' : '▼'}${mn(Math.abs(nD))}</span></div>
       <div class="s12" style="margin-top:6px">지난 기록 대비 · 묶인 자산 뺌</div></div></div></section>`;
@@ -642,7 +666,7 @@ function render() {
   const X = stateFor(location.hash), key = location.hash;
   if (key !== lastKey) { ans = {}; notes = {}; openRec = null; memoEdit = false; guideOpen = X.st === 'pending'; lastKey = key; }
   const rows = records();
-  if (X.vm && !X.vm.real) rows.push({ m: X.vm.m, base: X.vm.base, inc: X.vm.incTot, sp: X.vm.spTot, memo: X.vm.memo, buyD: buyAt(netOf(X.vm.assets), X.vm.asOf) - buyAt(netOf(X.vm.prev), X.vm.prevAsOf), legacy: false });
+  if (X.vm && !X.vm.real) rows.push({ m: X.vm.m, base: X.vm.base, inc: X.vm.incTot, sp: X.vm.spTot, memo: X.vm.memo, buyD: R2(buyAt(netOf(X.vm.assets), X.vm.asOf)) - R2(buyAt(netOf(X.vm.prev), X.vm.prevAsOf)), legacy: false });
   let h = '';
   if (X.demo) h += `<div class="demo full">예시 화면 · 숫자는 실제가 아니에요 (${{ pre: '첫 결산 전', pending: '결산 미입력', short: '목표 대비 부족', ok: '달성' }[X.st]})<a href="#settle">실제 화면으로</a></div>`;
   if (X.st === 'pending') {
@@ -660,7 +684,7 @@ function render() {
     const lr = rows[rows.length - 1];
     h += `<section class="cd full"><div style="font-size:15px;font-weight:700">${mon(X.m)}월 결과는 파일이 오면 채워져요</div><div class="sub" style="margin-top:2px">지금 보이는 숫자는 지난 기록 기준이에요</div>
       <div class="tiles"><div class="tile"><div class="s12">${lr ? mon(lr.m) + '월 ' : ''}쓸 수 있는 저축</div><b>${lr ? mw(lr.base) : '—'}</b></div>
-        <div class="tile"><div class="s12">살 수 있는 집값 · ${md(DATA.asOf)}</div><b>${e2(canBuy)}</b></div>
+        <div class="tile"><div class="s12">살 수 있는 집값 · ${md(DATA.asOf)} · 계획 기준</div><b>${e2(canBuy)}</b></div>
         <div class="tile"><div class="s12">순자산 · ${md(DATA.asOf)}</div><b>${em(netNow)}</b></div></div></section>`;
     h += recCard(rows, false) + `<div class="side">${guideCard(X.m, false)}</div>`;
   } else {
@@ -874,9 +898,9 @@ const BASE = () => ({ price: T.price, region: T.region, horizon: T.date, save, c
 // 신용대출(최후 카드): 연소득 100% · 은행 상한 1억 이내, 주담대 차주가 아닌 사람 명의로 주담대 실행 뒤 받는다고 가정
 const CREDIT = { rate: .053, cap: 10000, years: 10 };   // 10/11 A안: 900점 이상 하단 4.3%(2025-11)와 전체 평균 6.33%(2026-08) 사이 중간값
 // 월 상환 예측용 금리 시나리오 (최소 · 중간 · 최대)
-// 주담대: 900점대 최저 은행 3.86%(2026-07 신규, 은행연합회) · 은행 평균 4.66%(2026-08, 한국은행) · 최근 5년 최고 5.64%(2022-12, 스트레스 금리 기준)
+// 주담대: 900점대 최저 은행 3.86%(2026-07 신규, 은행연합회) · 은행 평균 4.88%(2026-09, 한국은행 · 계산 기준 10-3) · 최근 5년 최고 5.64%(2022-12, 스트레스 금리 기준)
 // 신용대출: 900점대 시중은행 하단 4.3%(2025-11) · 중간값 · 전체 평균 6.33%(2026-08, 한국은행)
-const PAYRATE = { mort: [.039, .0466, .0564], credit: [.043, .053, .0633], label: ['최소', '중간', '최대'], why: ['금리 좋은 은행', '지금 평균', '최근 5년 최고'] };
+const PAYRATE = { mort: [.039, ASSUME.rate, .0564], credit: [.043, .053, .0633], label: ['최소', '중간', '최대'], why: ['금리 좋은 은행', '지금 평균', '최근 5년 최고'] };
 const takeHome = (() => { const m = DATA.months.filter(x => !x.partial).slice(-1)[0]; return m ? M(m.incH + m.incW - (m.bonusH || 0)) : 0; })();
 const credMax = X => Math.min(CREDIT.cap, Math.floor((X.cWho === 'H' ? X.incH : X.incW) / 100) * 100);
 let S = BASE();
@@ -923,7 +947,7 @@ function calc(X) {
   const buyR2 = credit ? affordable({ ...s, region: '서울' }, ic, fut + credit) : buyR, buyN2 = credit ? affordable({ ...s, region: '경기' }, ic, fut + credit) : buyN;
   const short0 = Math.max(0, L.cash - fut), creditUsed = Math.min(credit, short0), gap = short0 - creditUsed;
   return { months, own, mon, fut, L, buyR: buyR2, buyN: buyN2, buy: X.region === '서울' ? buyR2 : buyN2, gap, surplus: Math.max(0, fut - L.cash),
-    need: Math.max(0, (L.cash - credit - own) / months), ok: gap <= 0.5, cause, nb, blocked: L.reason === '특례 조건', ic,
+    need: needOf(L.cash - credit, own, months), pgap: priceGap(X.region === '서울' ? buyR2 : buyN2, X.price), ok: gap <= 0.5, cause, nb, blocked: L.reason === '특례 조건', ic,
     credit, creditUsed, cInt: creditUsed * CREDIT.rate / 12, cPmt: PMT(CREDIT.rate / 12, CREDIT.years * 12, creditUsed) };
 }
 const condText = X => `${pl(X.price)} · ${RG[X.region]} · ${X.type} · ${hz(X.horizon)}`;
@@ -1085,22 +1109,26 @@ function renderCards(R) {
   const scale = Math.max(R.need, R.mon, 1), nowW = Math.min(R.mon, R.need || R.mon) / scale * 100;
   $('#simCards').innerHTML = `
   <div class="rc w2">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;min-height:24px"><span class="rc-l">살 수 있는 집값${ii('buy')}</span>${R.ok ? `<span class="bdg-ok">${pl(S.price)} 넘음 · 달성</span>` : `<span class="bdg-sh">목표 ${pl(S.price)}의 ${Math.min(99, Math.floor(R.buy / S.price * 100))}%</span>`}</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;min-height:24px"><span class="rc-l">살 수 있는 집값${ii('buy')}</span>${R.ok ? `<span class="bdg-ok">${pl(S.price)} 넘음 · 달성</span>` : `<span class="bdg-sh">목표 ${pl(S.price)}의 ${pctOf(R.buy, S.price)}%</span>`}</div>
     <div class="buy">${col('서울', R.buyR)}${col('경기', R.buyN)}</div>
-    <div class="sub12" style="margin-top:10px">${alt} 대출이면 규제 ${e2(a.buyR)} · 비규제 ${e2(a.buyN)}</div>
+    ${R.pgap ? `<div class="sub" style="margin-top:10px">목표와의 격차 <b style="color:var(--ink)">${e2(R.pgap)}</b></div>` : ''}
+    <div class="sub12" style="margin-top:${R.pgap ? 4 : 10}px">${alt} 대출이면 규제 ${e2(a.buyR)} · 비규제 ${e2(a.buyN)}</div>
   </div>
-  <div class="rc"><span class="rc-l">대출 가능액</span><div class="rc-v">${e2(R.L.amount)}</div><div class="rc-s">${R.blocked ? '신생아특례 조건을 넘어 특례 대출 불가' : `월 상환 ${man(R.L.monthly)}원 · 30년 · 금리 ${((R.nb ? ASSUME.nbRate : ASSUME.rate) * 100).toFixed(1)}%`}${R.creditUsed > 0.5 ? `<br><b style="color:var(--ink)">+ 신용대출 ${e2(R.creditUsed)}</b> (${DATA.names[S.cWho]}) · 이자만 월 ${man(R.cInt)}원, 10년 분할이면 월 ${man(R.cPmt)}원` : S.credit ? '<br>신용대출은 켜 뒀지만 지금 조건에선 쓸 일이 없어요' : ''}</div></div>
+  <div class="rc"><span class="rc-l">대출 가능액</span><div class="rc-v">${e2(R.L.amount)}</div><div class="rc-s">${R.blocked ? '신생아특례 조건을 넘어 특례 대출 불가' : `월 상환 ${man(R.L.monthly)}원 · 30년 · 금리 ${+((R.nb ? ASSUME.nbRate : ASSUME.rate) * 100).toFixed(2)}%`}${R.creditUsed > 0.5 ? `<br><b style="color:var(--ink)">+ 신용대출 ${e2(R.creditUsed)}</b> (${DATA.names[S.cWho]}) · 이자만 월 ${man(R.cInt)}원, 10년 분할이면 월 ${man(R.cPmt)}원` : S.credit ? '<br>신용대출은 켜 뒀지만 지금 조건에선 쓸 일이 없어요' : ''}</div></div>
   <div class="rc"><span class="rc-l">필요 현금${ii('cash')}</span><div class="rc-v">${e2(R.L.cash)}</div><div class="rc-s">${pl(S.price)} + 부대비용 ${e2(S.price * ASSUME.cost)} − 대출 ${e2(R.L.amount)}${R.creditUsed > 0.5 ? ` · 이 중 ${e2(R.creditUsed)}은 신용대출` : ''}</div></div>
   <div class="rc"><span class="rc-l">목표일 부족액${ii('gap')}</span>${R.ok ? `<div class="rc-v" style="color:var(--good)">없음</div><div class="rc-s">${R.creditUsed > 0.5 ? `신용대출 ${e2(R.creditUsed)}로 메움 · 목표일 예상 자산 ${e2(R.fut)}` : `목표일 예상 자산 ${e2(R.fut)} · <b style="color:var(--ink)">${e2(R.surplus)} 남아요</b>`}</div>` : `<div class="rc-v" style="color:var(--warn)">${e2(R.gap)}</div><div class="rc-s">목표일 예상 자산 ${e2(R.fut)} 기준</div>`}</div>
   <div class="rc w15"><span class="rc-l">월 저축${ii('save')}</span>
     <div style="display:flex;gap:4px 16px;align-items:flex-start;flex-wrap:wrap;margin-top:clamp(10px,(100cqi - 600px) * 100,44px)">
       <div><div class="rc-v" style="margin:0">${mw(R.need)}</div><div class="sub12" style="margin-top:4px">필요</div></div><div style="font-size:13px;color:var(--desc);line-height:31px">vs</div>
-      <div><div class="rc-v" style="margin:0">${mw(R.mon)}</div><div class="sub12" style="margin-top:4px">지금</div></div></div>
+      <div><div class="rc-v" style="margin:0">${mw(R.mon)}</div><div class="sub12" style="margin-top:4px">${monLabel()}</div></div></div>
     <div style="position:relative;margin-top:14px"><div class="sbar"><div style="width:${nowW}%;background:var(--lime)"></div><div style="width:${R.ok ? 0 : (R.need - R.mon) / scale * 100}%;background:var(--orange2)"></div></div>
       <div style="position:absolute;left:${R.need / scale * 100}%;top:-4px;width:2px;height:18px;margin-left:-2px;background:var(--ink);border-radius:1px"></div></div>
     <div class="rc-s">${R.ok ? `필요보다 ${mw(R.mon - R.need)} 더 모으는 중` : `매달 ${mw(R.need - R.mon)} 더 모아야 제때 닿아요`}</div>
+    <div class="rc-s" style="margin-top:4px">${TREND === null ? '실제 추세는 첫 결산 뒤에 나와요' : `실제 추세 월 ${man(TREND)}(${mon(TREND_FROM)}월부터 ${TR.length}달 평균)`}</div>
   </div>`;
 }
+// 월 저축 레버 값의 이름: 부부가 정한 계획(270만)이면 '계획', 슬라이더로 바꾸면 '바꾼 값' (실제 추세는 따로 표시)
+const monLabel = () => S.save + S.cut === save ? '계획' : '바꾼 값';
 function causeText(R) {
   const pct = Math.round(RULES.LTV[S.region][S.type] * 100);
   if (!hasData) return '자산과 소득이 들어오면 네 가지 중 어디서 막히는지 표시돼요.';
@@ -1152,16 +1180,16 @@ function renderSide(R) {
   if (R.ok) {
     const other = S.region === '서울' ? '경기' : '서울', ob = other === '서울' ? R.buyR : R.buyN;
     el.innerHTML = `<div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:var(--lime);color:var(--limeink);display:flex;align-items:center;justify-content:center;flex:none">${SV.check}</span><div class="sec-t">이 조건이면 ${hzLong(S.horizon)}에 닿아요</div></div>
-      <div style="display:flex;flex-direction:column;margin-top:14px"><div class="okrow"><span style="color:var(--desc)">살 수 있는 집값</span><b>${e2(R.buy)} ≥ ${pl(S.price)}</b></div>${R.creditUsed > 0.5 ? `<div class="okrow"><span style="color:var(--desc)">신용대출로 메우는 돈</span><b>${e2(R.creditUsed)} · 월 ${man(R.cPmt)}원(10년)</b></div>` : `<div class="okrow"><span style="color:var(--desc)">목표일에 남는 돈</span><b style="color:var(--good)">${e2(R.surplus)}</b></div>`}<div class="okrow" style="border:0"><span style="color:var(--desc)">월 저축 필요 / 지금</span><b>${man(R.need)} / ${man(R.mon)}</b></div></div>
+      <div style="display:flex;flex-direction:column;margin-top:14px"><div class="okrow"><span style="color:var(--desc)">살 수 있는 집값</span><b>${e2(R.buy)} ≥ ${pl(S.price)}</b></div>${R.creditUsed > 0.5 ? `<div class="okrow"><span style="color:var(--desc)">신용대출로 메우는 돈</span><b>${e2(R.creditUsed)} · 월 ${man(R.cPmt)}원(10년)</b></div>` : `<div class="okrow"><span style="color:var(--desc)">목표일에 남는 돈</span><b style="color:var(--good)">${e2(R.surplus)}</b></div>`}<div class="okrow" style="border:0"><span style="color:var(--desc)">월 저축 필요 / ${monLabel()}</span><b>${man(R.need)} / ${man(R.mon)}</b></div></div>
       <div class="note-box" style="margin-top:10px">${ob >= S.price ? `${RG[other]}으로 바꿔도 ${e2(ob)}이라 지역은 넓게 봐도 돼요.` : `${RG[other]}이면 ${e2(ob)}이라 이 가격엔 모자라요.`} ${goalDiff(S) ? '이 조건을 목표로 삼으려면 아래 ‘목표로 설정’을 누르세요.' : '지금 목표 그대로 닿아요.'}</div>`;
     return;
   }
   SUG = suggestions(R);
   const icBg = { target: 'background:#fff;color:var(--ink)', up: 'background:var(--lime);color:var(--limeink)', bank: 'background:var(--ink);color:var(--lime)' };
-  el.innerHTML = `<div class="sec-t">어떤 레버를 당길까?</div><div class="rc-s" style="margin-top:2px">목표까지 ${e2(R.gap)}. 하나만 당겨도 이만큼 달라져요.</div>
+  el.innerHTML = `<div class="sec-t">어떤 레버를 당길까?</div><div class="rc-s" style="margin-top:2px">목표일 부족액 ${e2(R.gap)}(필요 현금 기준). 하나만 당겨도 이만큼 달라져요.</div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">${SUG.map((g, i) => `<button type="button" class="sug" data-sug="${i}"><span class="si" style="${icBg[g.icon]}">${SV[g.icon]}</span>
       <span style="flex:1;min-width:0"><span style="display:block;font-weight:600">${g.t}</span><span style="display:block;font-size:13px;color:var(--desc);margin-top:2px">${g.X.price !== S.price ? `살 수 있는 집값 <b style="color:var(--ink)">${e2(g.R2.buy)}</b> ${g.R2.ok ? '≥' : '<'} ${pl(g.X.price)}` : `살 수 있는 집값 ${e2(R.buy)} → <b style="color:var(--ink)">${e2(g.R2.buy)}</b>`}${g.note ? ` · ${g.note}` : ''}</span></span>
-      ${g.R2.ok ? `<span class="bdg-ok">${g.X.price !== S.price ? '달성' : '목표 넘음'}</span>` : `<span class="bdg-sh">${e2(g.R2.gap)} 남음</span>`}</button>`).join('')}</div>
+      ${g.R2.ok ? `<span class="bdg-ok">${g.X.price !== S.price ? '달성' : '목표 넘음'}</span>` : `<span class="bdg-sh">목표일 ${e2(g.R2.gap)} 부족</span>`}</button>`).join('')}</div>
     <div class="sub12" style="margin-top:10px">누르면 그 레버만 바꿔서 결과를 보여줘요</div>`;
 }
 $('#simSide').addEventListener('click', e => { const b = e.target.closest('[data-sug]'); if (b && SUG[+b.dataset.sug]) { upd(SUG[+b.dataset.sug].X); toast('레버를 바꿨어요 · ‘목표 값으로’로 되돌릴 수 있어요'); } });
@@ -1179,7 +1207,7 @@ function scCard(o, idx) {
     <div class="meta">${idx < 0 ? '<span>부부 목표 · PRD 기준</span>' : `<span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap">${o.mine ? '직접 지은 이름' : SV.spark + '추천 이름'}</span><span>·</span><span>${esc(o.date)} 저장</span>`}</div>
     <div class="cond">${condFull(o.S)}</div>
     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:12px"><div><div class="sub12">살 수 있는 집값</div><div style="font-size:26px;font-weight:800;letter-spacing:-0.03em;line-height:1.1;white-space:nowrap;margin-top:2px">${e2(R.buy)}</div></div>
-      ${R.ok ? `<span class="bdg-ok">달성 · ${e2(R.surplus)} 여유</span>` : `<span class="bdg-sh">${e2(R.gap)} 부족</span>`}</div>
+      ${R.ok ? `<span class="bdg-ok">달성 · ${e2(R.surplus)} 여유</span>` : `<span class="bdg-sh">목표일 ${e2(R.gap)} 부족</span>`}</div>
     <div class="kv2"><span>대출 가능액</span><b>${e2(R.L.amount)}</b><span>필요 현금</span><b>${e2(R.L.cash)}</b><span>목표일 부족액</span><b>${R.ok ? '없음' : e2(R.gap)}</b><span>월 저축 필요</span><b>${mw(R.need)}</b></div>
     ${cur ? '' : `<button type="button" class="btn-w" style="width:100%;margin-top:12px;height:40px" data-load="${idx}">이 조건으로 보기</button>`}</div>`;
 }
@@ -1219,7 +1247,7 @@ function openSave(renameIdx) {
     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:18px"><label for="scName" style="font-size:14px;font-weight:600">이름</label><span id="scTag" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink2);background:var(--line2);border-radius:6px;padding:2px 8px;white-space:nowrap"></span></div>
     <input id="scName" type="text" maxlength="24" value="${esc(ren ? scen[renameIdx].name : N[0])}">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px"><span class="sub12">레버 조건을 보고 지은 이름이에요 · 바꿔도 돼요</span><button type="button" id="scRe" style="flex:none;height:40px;padding:0 10px;margin-right:-10px;border:0;background:transparent;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap">${SV.reset}다시 추천</button></div>
-    <div class="grid2"><span>조건</span><span>${condFull(X)}</span><span>살 수 있는 집값</span><b>${e2(R.buy)} · ${R.ok ? '달성' : `목표 ${pl(X.price)}의 ${Math.min(99, Math.floor(R.buy / X.price * 100))}%`}</b><span>목표일</span><b>${R.ok ? e2(R.surplus) + ' 남아요' : e2(R.gap) + ' 부족해요'}</b></div>
+    <div class="grid2"><span>조건</span><span>${condFull(X)}</span><span>살 수 있는 집값</span><b>${e2(R.buy)} · ${R.ok ? '달성' : `목표 ${pl(X.price)}의 ${pctOf(R.buy, X.price)}%`}</b><span>목표일</span><b>${R.ok ? e2(R.surplus) + ' 남아요' : e2(R.gap) + ' 부족해요'}</b></div>
     <div class="row-b"><button type="button" data-x style="border:1px solid var(--zero);background:#fff">취소</button><button type="button" id="scOk" style="border:0;background:var(--ink);color:#fff">저장</button></div>`);
   const inp = d.querySelector('#scName'), tag = () => { const isAi = N.includes(inp.value); d.querySelector('#scTag').innerHTML = isAi ? SV.spark + '추천 이름' : '직접 수정'; };
   tag(); inp.addEventListener('input', tag); setTimeout(() => inp.focus(), 30);
@@ -1240,7 +1268,7 @@ function copyText(t) {
 }
 function openConfirm() {
   const R = calc(S), from = condText(BASE()), to = condText(S);
-  const msg = `[내집마련 대시보드 목표 변경 요청]\n지금 목표: ${from}\n새 목표: ${to}\n조건: ${condFull(S)}\n살 수 있는 집값 ${e2(R.buy)} · ${R.ok ? '목표일에 ' + e2(R.surplus) + ' 남음' : e2(R.gap) + ' 부족'}\nPRD 결정 기록에 남기고 대시보드 목표를 바꿔줘.`;
+  const msg = `[내집마련 대시보드 목표 변경 요청]\n지금 목표: ${from}\n새 목표: ${to}\n조건: ${condFull(S)}\n살 수 있는 집값 ${e2(R.buy)} · ${R.ok ? '목표일에 ' + e2(R.surplus) + ' 남음' : '목표일 부족액 ' + e2(R.gap)}\nPRD 결정 기록에 남기고 대시보드 목표를 바꿔줘.`;
   const d = openDlg(`<div class="dt">이 조건을 새 목표로 설정할까요?</div>
     <div class="grid2"><span>지금 목표</span><span style="color:var(--desc)">${from}</span><span>새 목표</span><b>${to}</b></div>
     <div style="font-size:14px;color:var(--ink2);margin-top:14px;line-height:1.6">이 대시보드는 링크 공유형이라 목표는 Claude가 바꿔요. <b>‘복사하기’</b>를 누르면 변경 내용이 복사돼요. 내집마련 대시보드 채팅에 붙여 넣으면 홈의 목표 · 격차 · 집값 그래프가 새 목표로 바뀌고, 이전 목표는 PRD 기록에 남아 <b>언제든 되돌릴 수 있어요.</b></div>
@@ -1286,7 +1314,7 @@ function renderPay(R) {
         <div class="sub12" style="margin-top:6px">그중 이자 <b style="color:var(--ink)">${man(c.int)}원</b>${takeHome ? ` · 실수령의 ${Math.round(c.tot / takeHome * 100)}%` : ''}</div>
         <div class="sub12" style="margin-top:2px">주담대 ${(c.mr * 100).toFixed(2).replace(/0$/, '')}%${cu ? ` · 신용 ${(c.cr * 100).toFixed(2).replace(/0$/, '')}% (월 ${man(c.cp)})` : ''}</div>
       </div>`).join('')}</div>
-    <div class="sub12" style="margin-top:10px;line-height:1.5">실수령은 ${takeHome ? `부부 월급 합계 ${man(takeHome)}원(최근 결산 달, 인센티브·축의금 제외)` : '결산 후 표시'} 기준이에요. 대출 한도는 위 결과의 금리 가정(${(ASSUME.rate * 100).toFixed(1)}%)으로 계산한 값이라, 금리가 오르면 한도도 함께 줄어들어요.</div>`;
+    <div class="sub12" style="margin-top:10px;line-height:1.5">실수령은 ${takeHome ? `부부 월급 합계 ${man(takeHome)}원(최근 결산 달, 인센티브·축의금 제외)` : '결산 후 표시'} 기준이에요. 대출 한도는 위 결과의 금리 가정(${+(ASSUME.rate * 100).toFixed(2)}%)으로 계산한 값이라, 금리가 오르면 한도도 함께 줄어들어요.</div>`;
 }
 function render() { const R = calc(S); renderBanner(); renderCards(R); renderPay(R); renderCause(R); renderSide(R); renderScen(); renderAct(); }
 
