@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-11T19:20:08+09:00",
- "base_date": "2026-11-11",
- "window_from": "2026-09-12",
+ "collected_at": "2026-11-12T07:19:45+09:00",
+ "base_date": "2026-11-12",
+ "window_from": "2026-09-13",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 40,
-  "remndr": 34,
-  "opt": 40,
-  "total": 114
+  "apt": 37,
+  "remndr": 37,
+  "opt": 41,
+  "total": 115
  },
  "coverage": {
-  "with_types": 114,
-  "with_price": 114
+  "with_types": 115,
+  "with_price": 115
  },
  "items": [
   {
@@ -922,122 +922,6 @@
       "기타": 0
      },
      "price_top_manwon": 70796
-    }
-   ]
-  },
-  {
-   "id": "apt-2026820007-2026820007",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "신혼희망타운",
-   "house_detail": "국민",
-   "sale_type": "분양주택",
-   "name": "수원당수지구 A5블록 신혼희망타운(공공분양) 추가 입주자모집",
-   "sido": "경기",
-   "sigungu": "수원시",
-   "address": "경기도 수원시 권선구 금곡동, 당수동 일원 수원당수 공공주택지구내 A5블록",
-   "total_households": 142,
-   "announce_date": "2026-07-23",
-   "schedule": {
-    "receipt": {
-     "start": "2026-08-03",
-     "end": "2026-08-04"
-    },
-    "special": null,
-    "rank1": {
-     "start": "2026-08-03",
-     "end": "2026-08-03"
-    },
-    "rank2": {
-     "start": "2026-08-04",
-     "end": "2026-08-04"
-    },
-    "general": null,
-    "winner_date": "2026-08-13",
-    "contract": {
-     "start": "2026-11-09",
-     "end": "2026-11-11"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-08-03",
-      "end": "2026-08-03"
-     },
-     "경기": {
-      "start": "2026-08-03",
-      "end": "2026-08-03"
-     },
-     "기타지역": {
-      "start": "2026-08-03",
-      "end": "2026-08-03"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-08-04",
-      "end": "2026-08-04"
-     },
-     "경기": {
-      "start": "2026-08-04",
-      "end": "2026-08-04"
-     },
-     "기타지역": {
-      "start": "2026-08-04",
-      "end": "2026-08-04"
-     }
-    }
-   },
-   "move_in": "2027-06",
-   "flags": {
-    "투기과열": false,
-    "조정대상": false,
-    "분양가상한제": true,
-    "공공주택지구": true,
-    "대규모택지": true
-   },
-   "builder": "효성중공업주식회사",
-   "phone": "0312975229",
-   "homepage": "https://apply.lh.or.kr/",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026820007&pblancNo=2026820007",
-   "price_max_manwon": 41478,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "046.0000O",
-     "area_m2": 66.5715,
-     "general_households": 0,
-     "special_households": 65,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 34760
-    },
-    {
-     "model_no": "02",
-     "type": "055.0000O",
-     "area_m2": 79.0289,
-     "general_households": 0,
-     "special_households": 77,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 41478
     }
    ]
   },
@@ -2142,263 +2026,6 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 53400
-    }
-   ]
-  },
-  {
-   "id": "apt-2026000437-2026000437",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "APT",
-   "house_detail": "국민",
-   "sale_type": "분양주택",
-   "name": "힐스테이트 고덕엘리스트 A12BL 공공분양주택",
-   "sido": "경기",
-   "sigungu": "평택시",
-   "address": "경기도 평택시 고덕동 고덕면 일원(평택고덕국제화계획지구 A12BL)",
-   "total_households": 942,
-   "announce_date": "2026-09-11",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-21",
-     "end": "2026-09-23"
-    },
-    "special": {
-     "start": "2026-09-21",
-     "end": "2026-09-21"
-    },
-    "rank1": {
-     "start": "2026-09-22",
-     "end": "2026-09-22"
-    },
-    "rank2": {
-     "start": "2026-09-23",
-     "end": "2026-09-23"
-    },
-    "general": null,
-    "winner_date": "2026-10-01",
-    "contract": {
-     "start": "2026-11-09",
-     "end": "2026-11-11"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-09-22",
-      "end": "2026-09-22"
-     },
-     "경기": {
-      "start": "2026-09-22",
-      "end": "2026-09-22"
-     },
-     "기타지역": {
-      "start": "2026-09-22",
-      "end": "2026-09-22"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-09-23",
-      "end": "2026-09-23"
-     },
-     "경기": {
-      "start": "2026-09-23",
-      "end": "2026-09-23"
-     },
-     "기타지역": {
-      "start": "2026-09-23",
-      "end": "2026-09-23"
-     }
-    }
-   },
-   "move_in": "2029-06",
-   "flags": {
-    "투기과열": false,
-    "조정대상": false,
-    "분양가상한제": true,
-    "공공주택지구": false,
-    "대규모택지": true
-   },
-   "builder": "현대건설(주), 동부건설(주), 우미건설(주)",
-   "phone": "03180941260",
-   "homepage": "https://hillstate.co.kr/s/gd12",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000437&pblancNo=2026000437",
-   "price_max_manwon": 58420,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.0000A",
-     "area_m2": 108.9879,
-     "general_households": 87,
-     "special_households": 490,
-     "special_by_kind": {
-      "다자녀": 58,
-      "신혼부부": 58,
-      "생애최초": 86,
-      "청년": 0,
-      "신생아": 116,
-      "노부모부양": 29,
-      "기관추천": 85,
-      "이전기관": 0,
-      "기타": 58
-     },
-     "price_top_manwon": 58420
-    },
-    {
-     "model_no": "02",
-     "type": "084.0000B",
-     "area_m2": 109.3401,
-     "general_households": 30,
-     "special_households": 171,
-     "special_by_kind": {
-      "다자녀": 20,
-      "신혼부부": 20,
-      "생애최초": 30,
-      "청년": 0,
-      "신생아": 40,
-      "노부모부양": 10,
-      "기관추천": 31,
-      "이전기관": 0,
-      "기타": 20
-     },
-     "price_top_manwon": 57755
-    },
-    {
-     "model_no": "03",
-     "type": "084.9500C",
-     "area_m2": 109.6677,
-     "general_households": 24,
-     "special_households": 140,
-     "special_by_kind": {
-      "다자녀": 16,
-      "신혼부부": 16,
-      "생애최초": 25,
-      "청년": 0,
-      "신생아": 33,
-      "노부모부양": 8,
-      "기관추천": 26,
-      "이전기관": 0,
-      "기타": 16
-     },
-     "price_top_manwon": 57440
-    }
-   ]
-  },
-  {
-   "id": "apt-2026000438-2026000438",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "APT",
-   "house_detail": "국민",
-   "sale_type": "분양주택",
-   "name": "힐스테이트 고덕엘리스트 A65BL 공공분양주택",
-   "sido": "경기",
-   "sigungu": "평택시",
-   "address": "경기도 평택시 고덕동 고덕면 일원(평택고덕국제화계획지구 A65BL)",
-   "total_households": 837,
-   "announce_date": "2026-09-11",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-21",
-     "end": "2026-09-23"
-    },
-    "special": {
-     "start": "2026-09-21",
-     "end": "2026-09-21"
-    },
-    "rank1": {
-     "start": "2026-09-22",
-     "end": "2026-09-22"
-    },
-    "rank2": {
-     "start": "2026-09-23",
-     "end": "2026-09-23"
-    },
-    "general": null,
-    "winner_date": "2026-10-02",
-    "contract": {
-     "start": "2026-11-09",
-     "end": "2026-11-11"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-09-22",
-      "end": "2026-09-22"
-     },
-     "경기": {
-      "start": "2026-09-22",
-      "end": "2026-09-22"
-     },
-     "기타지역": {
-      "start": "2026-09-22",
-      "end": "2026-09-22"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-09-23",
-      "end": "2026-09-23"
-     },
-     "경기": {
-      "start": "2026-09-23",
-      "end": "2026-09-23"
-     },
-     "기타지역": {
-      "start": "2026-09-23",
-      "end": "2026-09-23"
-     }
-    }
-   },
-   "move_in": "2029-06",
-   "flags": {
-    "투기과열": false,
-    "조정대상": false,
-    "분양가상한제": true,
-    "공공주택지구": false,
-    "대규모택지": true
-   },
-   "builder": "현대건설(주), 동부건설(주), 우미건설(주)",
-   "phone": "03180941260",
-   "homepage": "https://hillstate.co.kr/s/gd12",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000438&pblancNo=2026000438",
-   "price_max_manwon": 56617,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.0000A",
-     "area_m2": 109.4815,
-     "general_households": 97,
-     "special_households": 558,
-     "special_by_kind": {
-      "다자녀": 66,
-      "신혼부부": 66,
-      "생애최초": 98,
-      "청년": 0,
-      "신생아": 131,
-      "노부모부양": 33,
-      "기관추천": 98,
-      "이전기관": 0,
-      "기타": 66
-     },
-     "price_top_manwon": 56617
-    },
-    {
-     "model_no": "02",
-     "type": "084.0000B",
-     "area_m2": 109.8332,
-     "general_households": 28,
-     "special_households": 154,
-     "special_by_kind": {
-      "다자녀": 18,
-      "신혼부부": 18,
-      "생애최초": 28,
-      "청년": 0,
-      "신생아": 36,
-      "노부모부양": 9,
-      "기관추천": 27,
-      "이전기관": 0,
-      "기타": 18
-     },
-     "price_top_manwon": 55973
     }
    ]
   },
@@ -9958,7 +9585,7 @@
     "조정대상": false,
     "분양가상한제": false,
     "공공주택지구": false,
-    "대규모택지": true
+    "대규모택지": false
    },
    "builder": "(주)한화",
    "phone": "16611098",
@@ -10507,6 +10134,71 @@
    ]
   },
   {
+   "id": "opt-2026940250-2026940250",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "고덕신도시 아테라 A-63블록 공공분양주택(3차)",
+   "sido": "경기",
+   "sigungu": "평택시",
+   "address": "경기도 평택시 고덕동, 고덕면 일원(평택고덕국제화계획지구 내 A-63BL)",
+   "total_households": 31,
+   "announce_date": "2026-11-11",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-13",
+     "end": "2026-11-17"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-20",
+    "contract": {
+     "start": "2026-11-21",
+     "end": "2026-11-21"
+    }
+   },
+   "move_in": "2028-10",
+   "flags": null,
+   "builder": "한국토지주택공사 경기남부지역본부",
+   "phone": "18336301",
+   "homepage": "https://www.arteragd.co.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940250&pblancNo=2026940250",
+   "price_max_manwon": 53908,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "074.5900A",
+     "area_m2": null,
+     "general_households": 11,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 47552
+    },
+    {
+     "model_no": "02",
+     "type": "074.7200B",
+     "area_m2": null,
+     "general_households": 10,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 47635
+    },
+    {
+     "model_no": "03",
+     "type": "084.5600A",
+     "area_m2": null,
+     "general_households": 10,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 53908
+    }
+   ]
+  },
+  {
    "id": "opt-2026940254-2026940254",
    "kind": "opt",
    "kind_label": "임의공급",
@@ -10833,6 +10525,53 @@
    ]
   },
   {
+   "id": "remndr-2026910288-2026910288",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "안양자이 더 포레스트",
+   "sido": "경기",
+   "sigungu": "안양시",
+   "address": "경기도 안양시 만안구 석수2동 38번지 일대",
+   "total_households": 1,
+   "announce_date": "2026-11-11",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-16",
+     "end": "2026-11-16"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-19",
+    "contract": {
+     "start": "2026-11-26",
+     "end": "2026-11-26"
+    }
+   },
+   "move_in": "2026-11",
+   "flags": null,
+   "builder": "화창지구재개발정비사업조합",
+   "phone": "0220520180",
+   "homepage": "https://xi.co.kr/YYH",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910288&pblancNo=2026910288",
+   "price_max_manwon": 68270,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.9871A",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 68270
+    }
+   ]
+  },
+  {
    "id": "apt-2026000553-2026000553",
    "kind": "apt",
    "kind_label": "APT",
@@ -10978,6 +10717,71 @@
       "기타": 0
      },
      "price_top_manwon": 86314
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910293-2026910293",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "이천자이 더 리체",
+   "sido": "경기",
+   "sigungu": "이천시",
+   "address": "경기도 이천시 증포동 502번지",
+   "total_households": 3,
+   "announce_date": "2026-11-11",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-16",
+     "end": "2026-11-16"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-19",
+    "contract": {
+     "start": "2026-11-26",
+     "end": "2026-11-26"
+    }
+   },
+   "move_in": "2026-11",
+   "flags": null,
+   "builder": "교보자산신탁(주)",
+   "phone": "0220520180",
+   "homepage": "https://xi.co.kr/irc",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910293&pblancNo=2026910293",
+   "price_max_manwon": 69700,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9400B",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 49290
+    },
+    {
+     "model_no": "02",
+     "type": "084.9400C",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 51390
+    },
+    {
+     "model_no": "03",
+     "type": "120.5800",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 69700
     }
    ]
   },
@@ -11482,6 +11286,62 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 73826
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910297-2026910297",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "평택 고덕 국제신도시 A-55 대광로제비앙 모아엘가(4차)",
+   "sido": "경기",
+   "sigungu": "평택시",
+   "address": "경기도 평택시 고덕국제8로 10(고덕동 2705-1)",
+   "total_households": 3,
+   "announce_date": "2026-11-11",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-16",
+     "end": "2026-11-16"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-19",
+    "contract": {
+     "start": "2026-11-26",
+     "end": "2026-11-26"
+    }
+   },
+   "move_in": "2027-02",
+   "flags": null,
+   "builder": "(주)덕원이앤씨",
+   "phone": "18118500",
+   "homepage": "http://평택고덕대광로제비앙모아엘가.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910297&pblancNo=2026910297",
+   "price_max_manwon": 50600,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9452A",
+     "area_m2": null,
+     "general_households": 2,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 50600
+    },
+    {
+     "model_no": "02",
+     "type": "084.9704B",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 50600
     }
    ]
   }
