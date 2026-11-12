@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-12T19:23:30+09:00",
- "base_date": "2026-11-12",
- "window_from": "2026-09-13",
+ "collected_at": "2026-11-13T07:04:00+09:00",
+ "base_date": "2026-11-13",
+ "window_from": "2026-09-14",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 37,
+  "apt": 39,
   "remndr": 37,
   "opt": 41,
-  "total": 115
+  "total": 117
  },
  "coverage": {
-  "with_types": 115,
-  "with_price": 115
+  "with_types": 117,
+  "with_price": 117
  },
  "items": [
   {
@@ -11342,6 +11342,369 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 50600
+    }
+   ]
+  },
+  {
+   "id": "apt-2026000457-2026000457",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "APT",
+   "house_detail": "국민",
+   "sale_type": "분양주택",
+   "name": "부천대장 하우스토리 디센트(부천대장지구 A2BL) 공공분양주택",
+   "sido": "경기",
+   "sigungu": "부천시",
+   "address": "경기도 부천시 오정구 대장동, 오정동, 원종동, 삼정동 일원 부천대장 공공주택지구 내 A2블록",
+   "total_households": 548,
+   "announce_date": "2026-11-12",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-23",
+     "end": "2026-11-25"
+    },
+    "special": {
+     "start": "2026-11-23",
+     "end": "2026-11-23"
+    },
+    "rank1": {
+     "start": "2026-11-24",
+     "end": "2026-11-24"
+    },
+    "rank2": {
+     "start": "2026-11-25",
+     "end": "2026-11-25"
+    },
+    "general": null,
+    "winner_date": "2026-12-01",
+    "contract": {
+     "start": "2027-01-25",
+     "end": "2027-01-29"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-11-24",
+      "end": "2026-11-24"
+     },
+     "경기": {
+      "start": "2026-11-24",
+      "end": "2026-11-24"
+     },
+     "기타지역": {
+      "start": "2026-11-24",
+      "end": "2026-11-24"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-11-25",
+      "end": "2026-11-25"
+     },
+     "경기": {
+      "start": "2026-11-25",
+      "end": "2026-11-25"
+     },
+     "기타지역": {
+      "start": "2026-11-25",
+      "end": "2026-11-25"
+     }
+    }
+   },
+   "move_in": "2029-06",
+   "flags": {
+    "투기과열": false,
+    "조정대상": false,
+    "분양가상한제": true,
+    "공공주택지구": true,
+    "대규모택지": true
+   },
+   "builder": "남광토건(주), 중흥토건(주), (주)케이알산업, 극동건설(주), 씨앤씨종합건설(주)",
+   "phone": "0323220548",
+   "homepage": "https://www.부천대장하우스토리디센트.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000457&pblancNo=2026000457",
+   "price_max_manwon": 85406,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.7100A",
+     "area_m2": 81.0969,
+     "general_households": 37,
+     "special_households": 205,
+     "special_by_kind": {
+      "다자녀": 24,
+      "신혼부부": 24,
+      "생애최초": 36,
+      "청년": 0,
+      "신생아": 49,
+      "노부모부양": 12,
+      "기관추천": 36,
+      "이전기관": 0,
+      "기타": 24
+     },
+     "price_top_manwon": 61345
+    },
+    {
+     "model_no": "02",
+     "type": "059.9900B",
+     "area_m2": 81.4772,
+     "general_households": 18,
+     "special_households": 108,
+     "special_by_kind": {
+      "다자녀": 13,
+      "신혼부부": 13,
+      "생애최초": 19,
+      "청년": 0,
+      "신생아": 25,
+      "노부모부양": 6,
+      "기관추천": 19,
+      "이전기관": 0,
+      "기타": 13
+     },
+     "price_top_manwon": 61520
+    },
+    {
+     "model_no": "03",
+     "type": "059.9900C",
+     "area_m2": 81.4772,
+     "general_households": 3,
+     "special_households": 11,
+     "special_by_kind": {
+      "다자녀": 1,
+      "신혼부부": 1,
+      "생애최초": 2,
+      "청년": 0,
+      "신생아": 3,
+      "노부모부양": 1,
+      "기관추천": 2,
+      "이전기관": 0,
+      "기타": 1
+     },
+     "price_top_manwon": 61515
+    },
+    {
+     "model_no": "04",
+     "type": "074.9800A",
+     "area_m2": 101.8363,
+     "general_households": 8,
+     "special_households": 42,
+     "special_by_kind": {
+      "다자녀": 5,
+      "신혼부부": 5,
+      "생애최초": 8,
+      "청년": 0,
+      "신생아": 10,
+      "노부모부양": 2,
+      "기관추천": 7,
+      "이전기관": 0,
+      "기타": 5
+     },
+     "price_top_manwon": 75423
+    },
+    {
+     "model_no": "05",
+     "type": "084.9500A",
+     "area_m2": 115.3774,
+     "general_households": 16,
+     "special_households": 100,
+     "special_by_kind": {
+      "다자녀": 12,
+      "신혼부부": 12,
+      "생애최초": 17,
+      "청년": 0,
+      "신생아": 23,
+      "노부모부양": 6,
+      "기관추천": 18,
+      "이전기관": 0,
+      "기타": 12
+     },
+     "price_top_manwon": 85406
+    }
+   ]
+  },
+  {
+   "id": "apt-2026000576-2026000576",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "APT",
+   "house_detail": "민영",
+   "sale_type": "분양주택",
+   "name": "아르뮤제자이",
+   "sido": "경기",
+   "sigungu": "안산시",
+   "address": "경기도 안산시 상록구 성포동 586번지 일원",
+   "total_households": 984,
+   "announce_date": "2026-11-12",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-23",
+     "end": "2026-11-25"
+    },
+    "special": {
+     "start": "2026-11-23",
+     "end": "2026-11-23"
+    },
+    "rank1": {
+     "start": "2026-11-24",
+     "end": "2026-11-24"
+    },
+    "rank2": {
+     "start": "2026-11-25",
+     "end": "2026-11-25"
+    },
+    "general": null,
+    "winner_date": "2026-12-01",
+    "contract": {
+     "start": "2026-12-13",
+     "end": "2026-12-15"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-11-24",
+      "end": "2026-11-24"
+     },
+     "기타지역": {
+      "start": "2026-11-24",
+      "end": "2026-11-24"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-11-25",
+      "end": "2026-11-25"
+     },
+     "기타지역": {
+      "start": "2026-11-25",
+      "end": "2026-11-25"
+     }
+    }
+   },
+   "move_in": "2031-03",
+   "flags": {
+    "투기과열": false,
+    "조정대상": false,
+    "분양가상한제": false,
+    "공공주택지구": false,
+    "대규모택지": false
+   },
+   "builder": "지에스건설(주)",
+   "phone": "18333367",
+   "homepage": "https://xi.co.kr/armusee",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000576&pblancNo=2026000576",
+   "price_max_manwon": 140840,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.8861A",
+     "area_m2": 119.2032,
+     "general_households": 82,
+     "special_households": 98,
+     "special_by_kind": {
+      "다자녀": 18,
+      "신혼부부": 27,
+      "생애최초": 12,
+      "청년": 0,
+      "신생아": 18,
+      "노부모부양": 5,
+      "기관추천": 18,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 110500
+    },
+    {
+     "model_no": "02",
+     "type": "084.9580B",
+     "area_m2": 120.6563,
+     "general_households": 43,
+     "special_households": 45,
+     "special_by_kind": {
+      "다자녀": 8,
+      "신혼부부": 13,
+      "생애최초": 6,
+      "청년": 0,
+      "신생아": 8,
+      "노부모부양": 2,
+      "기관추천": 8,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 110500
+    },
+    {
+     "model_no": "03",
+     "type": "084.8700C",
+     "area_m2": 120.9921,
+     "general_households": 42,
+     "special_households": 48,
+     "special_by_kind": {
+      "다자녀": 9,
+      "신혼부부": 13,
+      "생애최초": 6,
+      "청년": 0,
+      "신생아": 9,
+      "노부모부양": 2,
+      "기관추천": 9,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 109900
+    },
+    {
+     "model_no": "04",
+     "type": "099.9001A",
+     "area_m2": 140.8321,
+     "general_households": 157,
+     "special_households": 23,
+     "special_by_kind": {
+      "다자녀": 18,
+      "신혼부부": 0,
+      "생애최초": 0,
+      "청년": 0,
+      "신생아": 0,
+      "노부모부양": 5,
+      "기관추천": 0,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 127200
+    },
+    {
+     "model_no": "05",
+     "type": "099.9015B",
+     "area_m2": 140.3974,
+     "general_households": 237,
+     "special_households": 35,
+     "special_by_kind": {
+      "다자녀": 27,
+      "신혼부부": 0,
+      "생애최초": 0,
+      "청년": 0,
+      "신생아": 0,
+      "노부모부양": 8,
+      "기관추천": 0,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 124200
+    },
+    {
+     "model_no": "06",
+     "type": "104.8286",
+     "area_m2": 147.4366,
+     "general_households": 152,
+     "special_households": 22,
+     "special_by_kind": {
+      "다자녀": 17,
+      "신혼부부": 0,
+      "생애최초": 0,
+      "청년": 0,
+      "신생아": 0,
+      "노부모부양": 5,
+      "기관추천": 0,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 140840
     }
    ]
   }
