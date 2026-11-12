@@ -6,10 +6,10 @@
 const DATA = window.__HH;
 
 const RULES = { LTV: { 서울: { 일반: .4, 생애최초: .7, 신생아특례: .7 }, 경기: { 일반: .7, 생애최초: .7, 신생아특례: .7 } }, cap: 60000, DSR: .4, stress: .03, nbCap: 40000, nbHouse: 90000, nbIncome: 13000, nbDTI: .6 };
-const ASSUME = { rate: .0488, nbRate: .03, years: 30, cost: .04, rateAsOf: '2026-09 은행 주담대 평균(한국은행)', rateChecked: '2026-11-01', rulesChecked: '2026-10-05' };   // 11/01 계산 기준 10-3: 4.66% → 4.88% (10/11 A안: 4.2% → 4.66%)
+const ASSUME = { rate: .0488, nbRate: .03, years: 30, cost: .04, rateAsOf: '2026-09 은행 주담대 평균(한국은행)', rateChecked: '2026-11-01', rulesChecked: '2026-11-01' };   // 11/01 계산 기준 10-3: 4.66% → 4.88% (10/11 A안: 4.2% → 4.66%)
 // ===== 계산 기준 버전 (현황판 11 · 기준이 바뀔 때만 올림, 화면 수정과 분리) — 집값은 같은 자산(assetsAsOf)에서 다시 계산한 기록값(만원) =====
 const BASIS = {
-  zoneChecked: '2026-10-10', creditChecked: '2026-10-11', savingDecided: '2026-10-10',
+  zoneChecked: '2026-11-01', creditChecked: '2026-10-11', savingDecided: '2026-10-10',
   history: [
     { v: '2026.10-3', from: '2026-11-01', assetsAsOf: '2026-10-09', buy: 71000,
       changes: ['주담대 금리 가정 4.66% → 4.88% (2026-09 한국은행 평균)', '월 상환 예측 중간 금리 4.66% → 4.88%'],
@@ -396,11 +396,11 @@ const top2 = (() => { const r = last, t = M(r.expH + r.expW); return CATS.map(([
 const Lsolo = loan({ ...T, incomeBasis: '남편 단독' }, inc);
 function reply(q) {
   const t = q.replace(/\s/g, '');
-  if (/대출|DSR|한도|LTV|상환/.test(t)) return `${T.region} ${eok(T.price)} ${T.type} 기준, 두 사람 소득 합산(${man(inc.H + inc.W)})이면 대출 ${e2(L8.amount)}까지 가능해요. LTV 한도(${e2(L8.ltv)})보다 소득 한도에 먼저 막혀요. 월 상환은 약 ${man(Math.round(L8.monthly))}이에요.\n⟦H⟧ 단독 소득이면 ${e2(Lsolo.amount)}로 줄어서, 혼인신고 후 합산이 유리해요.`;
+  if (/대출|DSR|한도|LTV|상환/.test(t)) return `${T.region} ${eok(T.price)} ${T.type} 기준, 두 사람 소득 합산(${man(inc.H + inc.W)})이면 대출 ${e2(L8.amount)}까지 가능해요. LTV 한도(${e2(L8.ltv)})보다 소득 한도에 먼저 막혀요. 월 상환은 약 ${man(Math.round(L8.monthly))}이에요.\n⟦H⟧ 단독 소득이면 ${e2(Lsolo.amount)}으로 줄어서, 혼인신고 후 합산이 유리해요.`;
   if (/목표|달성|언제|가능|얼마나|집값/.test(t)) return `계획대로 월 ${man(save)}씩 모으면 ${ym(T.date)}에 살 수 있는 집은 ${e2(canBuy)}, 목표의 ${pct}%예요.${TREND === null ? '' : ` 실제 추세(${mon(TREND_FROM)}월부터 평균 월 ${man(TREND)})면 ${e2(canBuyTrend)}이에요.`}\n${eok(T.price)}에 제때 닿으려면 월 ${man(needPerMonth)}이 필요하고, 계획대로면 ${yearsMonths(extraMonths) || '0개월'} 더 걸려요. 레버는 월 저축 늘리기, 전세 연장(${e2(canBuyExt)}), 목표 조정 순으로 보세요.`;
-  if (/저축|모아|모으/.test(t)) return `${mon(last.m)}월 쓸 수 있는 저축은 ${sman(last.base)}이에요(축의금 ${man(last.gift)}·일회성 지출 ${man(last.one)} 제외). 축의금·일회성까지 넣은 실제 저축은 ${sman(last.sav)}이에요.\n최근 3개월 평균 쓸 수 있는 저축은 ${sman(base3)}로 목표 ${man(save)} ${base3 >= save ? '달성' : '미달'}이에요. 고정비는 월 약 ${man(M(DATA.fixed.total) + ANN_M)}이고, 10월에 할부 4건이 끝나요.`;
-  if (/소비|지출|줄이|식비|고정비|관리비/.test(t)) return `${mon(last.m)}월 소비 ${man(last.exp)} 중 ${top2}가 가장 커요.\n고정비(사라지는 돈)는 월 약 ${man(M(DATA.fixed.total))}: ${DATA.fixed.items.map(([l, v]) => `${l} ${man(M(v))}`).join(', ')}. 변동비는 부부 가계부로 관리해요.`;
-  if (/자산|예적금|적금|투자|주식|청약|연금/.test(t)) return `순자산은 ${eok(netNow)}이에요. 전세 자기자금 ${eok(jeonseNet)}, 예·적금·통장 ${eok(ASEG[1].v)}, 주식 ${eok(ASEG[2].v)}, 청약 ${eok(ASEG[3].v)}.\n퇴직연금 ${eok(M(A.emergency))}는 묶인 자산이라 순자산에서 뺐어요.`;
+  if (/저축|모아|모으/.test(t)) return `${mon(last.m)}월 쓸 수 있는 저축은 ${sman(last.base)}이에요(축의금 ${man(last.gift)}·일회성 지출 ${man(last.one)} 제외). 축의금·일회성까지 넣은 실제 저축은 ${sman(last.sav)}이에요.\n최근 3개월 평균 쓸 수 있는 저축은 ${sman(base3)}으로 목표 ${man(save)} ${base3 >= save ? '달성' : '미달'}이에요. 고정비는 월 약 ${man(M(DATA.fixed.total) + ANN_M)}이고, 10월에 할부 4건이 끝나요.`;
+  if (/소비|지출|줄이|식비|고정비|관리비/.test(t)) return `${mon(last.m)}월 소비 ${man(last.exp)} 중 ${top2}이 가장 커요.\n고정비(사라지는 돈)는 월 약 ${man(M(DATA.fixed.total))}: ${DATA.fixed.items.map(([l, v]) => `${l} ${man(M(v))}`).join(', ')}. 변동비는 부부 가계부로 관리해요.`;
+  if (/자산|예적금|적금|투자|주식|청약|연금/.test(t)) return `순자산은 ${eok(netNow)}이에요. 전세 자기자금 ${eok(jeonseNet)}, 예·적금·통장 ${eok(ASEG[1].v)}, 주식 ${eok(ASEG[2].v)}, 청약 ${eok(ASEG[3].v)}.\n퇴직연금 ${eok(M(A.emergency))}은 묶인 자산이라 순자산에서 뺐어요.`;
   if (/결산|입력|갱신|파일/.test(t)) return `매달 말일~다음 달 3일에 뱅크샐러드 가계부 탭 → 톱니바퀴 → 파일로 받기(지난달 1일~말일)로 받은 파일 2개를 Claude 채팅에 올려주세요. 이 화면이 같은 링크로 갱신돼요.`;
   return `목표·대출·저축·소비·자산 중 무엇이 궁금하세요? "대출 한도 얼마야?"나 "고정비 얼마야?"처럼 물어보셔도 돼요.`;
 }
@@ -775,17 +775,18 @@ function rows() {
     loan: [
       { n: '서울(규제지역) 일반 LTV', t: 'LTV: 집값 대비 빌릴 수 있는 비율', v: p(R.LTV.서울.일반), m: '서울 25개구 전역', k: 'rules' },
       { n: '생애최초 LTV', t: '처음 집을 사는 사람에게 주는 비율', v: p(R.LTV.서울.생애최초), m: '6개월 안 전입 의무', k: 'rules' },
-      { n: '경기 비규제지역 LTV', v: p(R.LTV.경기.일반), m: '경기 12곳 규제지역은 서울 기준', k: 'rules' },
+      { n: '경기 비규제지역 LTV', v: p(R.LTV.경기.일반), m: '경기 15곳 규제지역은 서울 기준', k: 'rules' },
       { n: '수도권 대출 금액 상한', v: kor(R.cap), m: '시가 15억 이하 주택', k: 'rules' },
       { n: 'DSR (은행권)', t: 'DSR: 연소득 대비 1년 원리금 상환액 비율', v: p(R.DSR), m: '지금 목표에서 대출을 막는 기준', k: 'rules' },
+      { n: 'DSR 소득 산정 (2027-01~)', v: '20% 넘게 오르면 2년 평균 · 30% 넘게 오르면 3년 평균', m: '8.13 대책 · 인센티브 등으로 소득이 급하게 오르면 한도가 줄 수 있음', k: 'rules' },
       { n: '스트레스 금리', t: '한도를 계산할 때만 금리에 더하는 값', v: '+' + (R.stress * 100).toFixed(1) + '%p', m: '수도권 주담대 · 실제 이자엔 안 붙음', k: 'stress' },
       { n: '신생아특례 한도', v: kor(R.nbCap), m: '자료마다 4억/5억 달라 낮은 값 적용', k: 'rules' },
-      { n: '신생아특례 주택·소득 상한', v: `${kor(R.nbHouse)} · ${kor(R.nbIncome)}`, m: '맞벌이 상향(최대 2억) 언급 있음, 확인 필요', k: 'rules' },
+      { n: '신생아특례 주택·소득 상한', v: `${kor(R.nbHouse)} · ${kor(R.nbIncome)}`, m: (inc.H + inc.W) <= R.nbIncome ? `맞벌이 2억까지(국토부 확인) · 우리 ${e2b(inc.H + inc.W)}이라 해당 없음` : `맞벌이 2억까지(국토부 확인) · 우리 ${e2b(inc.H + inc.W)}이라 맞벌이 기준으로 확인 필요`, k: 'rules' },
       { n: '신생아특례 DTI', t: 'DTI: 연소득 대비 주담대 원리금 비율', v: p(R.nbDTI), m: 'DSR 대신 적용 · 스트레스 금리 없음', k: 'rules' },
       { n: '신용대출 한도', v: `연소득 100% · 상한 ${kor(C.cap)}`, m: '1억 넘으면 1년간 규제지역 구입 제한 · 주담대 실행 뒤에 받기', k: 'rules' },
     ],
     zone: [
-      { n: '규제지역 범위', t: '규제지역이면 일반 LTV가 40%로 낮아짐', v: '서울 25개구 + 경기 12곳', m: '토지거래허가구역 범위 · 2025-10-20 효력', k: 'zone' },
+      { n: '규제지역 범위', t: '규제지역이면 일반 LTV가 40%로 낮아짐', v: '서울 25개구 + 경기 15곳', m: '토지거래허가구역 범위 · 12곳 ~2026-12-31, 동탄구·기흥구·구리시(2026-07 추가) ~2027-12-31 · 연말 연장 여부 미정', k: 'zone' },
     ],
     assume: [
       { n: '주담대 금리', v: p(A.rate), m: '30년 원리금균등 · 살 수 있는 집값에 바로 영향', k: 'rate' },
@@ -906,11 +907,11 @@ const credMax = X => Math.min(CREDIT.cap, Math.floor((X.cWho === 'H' ? X.incH : 
 let S = BASE();
 
 const TIPS = {
-  tohuh: ['규제지역 (토지거래허가구역)', '서울 25개구 전역 + 경기 12곳(과천, 광명, 성남 분당·수정·중원, 수원 영통·장안·팔달, 안양 동안, 용인 수지, 의왕, 하남). 2년 실거주 의무. 지정은 바뀔 수 있어 계약 직전 구청 공고로 확인해요.'],
+  tohuh: ['규제지역 (토지거래허가구역)', '서울 25개구 전역 + 경기 15곳(과천, 광명, 성남 분당·수정·중원, 수원 영통·장안·팔달, 안양 동안, 용인 수지, 의왕, 하남 + 2026-07 추가된 화성 동탄, 용인 기흥, 구리). 2년 실거주 의무. 지정은 바뀔 수 있어 계약 직전 구청 공고로 확인해요.'],
   dsr: ['DSR', '1년에 갚는 모든 대출 원리금이 연소득의 40%를 넘지 못해요. 한도를 계산할 때는 금리에 스트레스 금리 +3%p를 더해요.'],
   ltv: ['LTV', '집값 대비 빌릴 수 있는 비율이에요. 규제지역 일반은 40%, 생애최초는 70%까지예요.'],
   cap: ['금액 상한', '수도권 15억 이하 집은 소득·집값과 상관없이 주택담보대출이 최대 6억까지예요.'],
-  nb: ['신생아특례', '2년 안에 출산한 가구 대상. 집값 9억·부부 소득 1.3억 이하, 대출은 최대 4억(보수적 적용). 소득은 DSR 대신 DTI 60%로 봐요.'],
+  nb: ['신생아특례', '2년 안에 출산한 가구 대상. 집값 9억·부부 소득 1.3억(맞벌이 2억) 이하, 대출은 최대 4억(보수적 적용). 소득은 DSR 대신 DTI 60%로 봐요.'],
   first: ['생애최초', '부부 모두 집을 가져 본 적 없을 때 받는 혜택이에요. 규제지역에서도 LTV가 70%까지 올라가요. 6개월 안에 전입해야 해요.'],
   joint: ['소득 합산', '혼인신고를 하면 두 사람 소득을 합쳐 DSR을 계산해요. 끄면 ⟦H⟧ 소득만으로 계산해요.'],
   pension: ['퇴직연금 (DC·IRP)', '지금은 묶인 자산으로 따로 둬요. 중도인출 조건과 세금이 있어 기본은 빼고 계산해요.'],
@@ -1116,7 +1117,7 @@ function renderCards(R) {
   </div>
   <div class="rc"><span class="rc-l">대출 가능액</span><div class="rc-v">${e2(R.L.amount)}</div><div class="rc-s">${R.blocked ? '신생아특례 조건을 넘어 특례 대출 불가' : `월 상환 ${man(R.L.monthly)}원 · 30년 · 금리 ${+((R.nb ? ASSUME.nbRate : ASSUME.rate) * 100).toFixed(2)}%`}${R.creditUsed > 0.5 ? `<br><b style="color:var(--ink)">+ 신용대출 ${e2(R.creditUsed)}</b> (${DATA.names[S.cWho]}) · 이자만 월 ${man(R.cInt)}원, 10년 분할이면 월 ${man(R.cPmt)}원` : S.credit ? '<br>신용대출은 켜 뒀지만 지금 조건에선 쓸 일이 없어요' : ''}</div></div>
   <div class="rc"><span class="rc-l">필요 현금${ii('cash')}</span><div class="rc-v">${e2(R.L.cash)}</div><div class="rc-s">${pl(S.price)} + 부대비용 ${e2(S.price * ASSUME.cost)} − 대출 ${e2(R.L.amount)}${R.creditUsed > 0.5 ? ` · 이 중 ${e2(R.creditUsed)}은 신용대출` : ''}</div></div>
-  <div class="rc"><span class="rc-l">목표일 부족액${ii('gap')}</span>${R.ok ? `<div class="rc-v" style="color:var(--good)">없음</div><div class="rc-s">${R.creditUsed > 0.5 ? `신용대출 ${e2(R.creditUsed)}로 메움 · 목표일 예상 자산 ${e2(R.fut)}` : `목표일 예상 자산 ${e2(R.fut)} · <b style="color:var(--ink)">${e2(R.surplus)} 남아요</b>`}</div>` : `<div class="rc-v" style="color:var(--warn)">${e2(R.gap)}</div><div class="rc-s">목표일 예상 자산 ${e2(R.fut)} 기준</div>`}</div>
+  <div class="rc"><span class="rc-l">목표일 부족액${ii('gap')}</span>${R.ok ? `<div class="rc-v" style="color:var(--good)">없음</div><div class="rc-s">${R.creditUsed > 0.5 ? `신용대출 ${e2(R.creditUsed)}으로 메움 · 목표일 예상 자산 ${e2(R.fut)}` : `목표일 예상 자산 ${e2(R.fut)} · <b style="color:var(--ink)">${e2(R.surplus)} 남아요</b>`}</div>` : `<div class="rc-v" style="color:var(--warn)">${e2(R.gap)}</div><div class="rc-s">목표일 예상 자산 ${e2(R.fut)} 기준</div>`}</div>
   <div class="rc w15"><span class="rc-l">월 저축${ii('save')}</span>
     <div style="display:flex;gap:4px 16px;align-items:flex-start;flex-wrap:wrap;margin-top:clamp(10px,(100cqi - 600px) * 100,44px)">
       <div><div class="rc-v" style="margin:0">${mw(R.need)}</div><div class="sub12" style="margin-top:4px">필요</div></div><div style="font-size:13px;color:var(--desc);line-height:31px">vs</div>
@@ -1134,7 +1135,7 @@ function causeText(R) {
   if (!hasData) return '자산과 소득이 들어오면 네 가지 중 어디서 막히는지 표시돼요.';
   if (R.blocked) return `신생아특례 조건(집값 9억 · 부부 소득 1.3억 이하)을 넘어 특례 대출을 받을 수 없어요. 가격을 9억 이하로 낮추거나 다른 대출 유형을 골라 보세요.`;
   if (R.cause === 'dsr') return `소득 한도(${R.nb ? 'DTI 60%' : 'DSR'})에 먼저 막혀요. 집값 기준(LTV ${pct}%)으로는 ${e2(R.L.ltv)}까지 되지만 소득으로는 ${e2(R.L.repay)}이 최대예요. 연봉 · 소득 합산 레버가 여기에 닿아요.`;
-  if (R.cause === 'ltv') return `집값의 ${pct}%(LTV)에 먼저 닿아요. ${pl(S.price)}이면 대출은 ${e2(R.L.amount)}가 최대고, 소득 한도(${e2(R.L.repay)})는 아직 여유가 있어요.` + (S.type === '일반' && S.region === '서울' ? ' 생애최초면 70%까지 올라가요.' : '');
+  if (R.cause === 'ltv') return `집값의 ${pct}%(LTV)에 먼저 닿아요. ${pl(S.price)}이면 대출은 ${e2(R.L.amount)}이 최대고, 소득 한도(${e2(R.L.repay)})는 아직 여유가 있어요.` + (S.type === '일반' && S.region === '서울' ? ' 생애최초면 70%까지 올라가요.' : '');
   if (R.cause === 'cap') return `주택담보대출 금액 상한(6억)에 닿아요. 소득과 집값이 더 늘어도 대출은 6억이 최대예요.`;
   return `신생아특례 한도(4억)에 닿아요. 집값·소득 기준으로는 더 되지만 특례 대출은 4억이 최대예요.`;
 }
