@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-13T19:19:33+09:00",
- "base_date": "2026-11-13",
- "window_from": "2026-09-14",
+ "collected_at": "2026-11-14T07:02:39+09:00",
+ "base_date": "2026-11-14",
+ "window_from": "2026-09-15",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 39,
-  "remndr": 37,
+  "apt": 40,
+  "remndr": 38,
   "opt": 41,
-  "total": 117
+  "total": 119
  },
  "coverage": {
-  "with_types": 117,
-  "with_price": 117
+  "with_types": 119,
+  "with_price": 119
  },
  "items": [
   {
@@ -354,171 +354,6 @@
       "기타": 0
      },
      "price_top_manwon": 50760
-    }
-   ]
-  },
-  {
-   "id": "apt-2026820004-2026820004",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "신혼희망타운",
-   "house_detail": "국민",
-   "sale_type": "분양주택",
-   "name": "e편한세상 분당 퍼스트빌리지(성남낙생지구 A-1BL) 신혼희망타운(공공분양)(본청약)",
-   "sido": "경기",
-   "sigungu": "성남시",
-   "address": "경기도 성남시 성남낙생지구 내 A-1블록",
-   "total_households": 933,
-   "announce_date": "2026-05-29",
-   "schedule": {
-    "receipt": {
-     "start": "2026-07-13",
-     "end": "2026-07-21"
-    },
-    "special": null,
-    "rank1": {
-     "start": "2026-07-13",
-     "end": "2026-07-14"
-    },
-    "rank2": {
-     "start": "2026-07-20",
-     "end": "2026-07-21"
-    },
-    "general": null,
-    "winner_date": "2026-07-31",
-    "contract": {
-     "start": "2026-11-07",
-     "end": "2026-11-13"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-07-13",
-      "end": "2026-07-14"
-     },
-     "기타지역": {
-      "start": "2026-07-13",
-      "end": "2026-07-14"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-07-20",
-      "end": "2026-07-21"
-     },
-     "기타지역": {
-      "start": "2026-07-20",
-      "end": "2026-07-21"
-     }
-    }
-   },
-   "move_in": "2029-02",
-   "flags": {
-    "투기과열": true,
-    "조정대상": true,
-    "분양가상한제": true,
-    "공공주택지구": true,
-    "대규모택지": false
-   },
-   "builder": "디엘이앤씨 주식회사",
-   "phone": "0315381777",
-   "homepage": "https://apply.lh.or.kr",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026820004&pblancNo=2026820004",
-   "price_max_manwon": 68272,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "051.0000A",
-     "area_m2": 73.5335,
-     "general_households": 0,
-     "special_households": 115,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 59076
-    },
-    {
-     "model_no": "02",
-     "type": "055.0000A",
-     "area_m2": 79.2281,
-     "general_households": 0,
-     "special_households": 124,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 63651
-    },
-    {
-     "model_no": "03",
-     "type": "055.0000B",
-     "area_m2": 79.1997,
-     "general_households": 0,
-     "special_households": 48,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 63629
-    },
-    {
-     "model_no": "04",
-     "type": "059.0000A",
-     "area_m2": 84.9368,
-     "general_households": 0,
-     "special_households": 10,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 68238
-    },
-    {
-     "model_no": "05",
-     "type": "059.0000T",
-     "area_m2": 84.9793,
-     "general_households": 0,
-     "special_households": 4,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 0,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 68272
     }
    ]
   },
@@ -1562,71 +1397,6 @@
       "기타": 23
      },
      "price_top_manwon": 49201
-    }
-   ]
-  },
-  {
-   "id": "opt-2026940200-2026940200",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "이천자이 더 레브(2차)",
-   "sido": "경기",
-   "sigungu": "이천시",
-   "address": "경기도 이천시 송정동 산31번지 일원",
-   "total_households": 11,
-   "announce_date": "2026-09-14",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-16",
-     "end": "2026-09-16"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-21",
-    "contract": {
-     "start": "2026-09-28",
-     "end": "2026-09-28"
-    }
-   },
-   "move_in": "2027-04",
-   "flags": null,
-   "builder": "교보자산신탁(주)",
-   "phone": "0316332010",
-   "homepage": "http://xi.co.kr/irv",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940200&pblancNo=2026940200",
-   "price_max_manwon": 76300,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.8863B",
-     "area_m2": null,
-     "general_households": 5,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 54100
-    },
-    {
-     "model_no": "02",
-     "type": "084.9264C",
-     "area_m2": null,
-     "general_households": 1,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 54900
-    },
-    {
-     "model_no": "03",
-     "type": "117.9920",
-     "area_m2": null,
-     "general_households": 5,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 76300
     }
    ]
   },
@@ -11346,6 +11116,136 @@
    ]
   },
   {
+   "id": "opt-2026940249-2026940249",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "야목역 서희스타힐스 그랜드힐(조합원 취소분)(2차)",
+   "sido": "경기",
+   "sigungu": "화성특례시",
+   "address": "경기도 화성특례시 효행구 비봉면 구포리 614-18번지 일원",
+   "total_households": 13,
+   "announce_date": "2026-11-13",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-17",
+     "end": "2026-11-23"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-26",
+    "contract": {
+     "start": "2026-11-27",
+     "end": "2026-11-27"
+    }
+   },
+   "move_in": "2029-10",
+   "flags": null,
+   "builder": "비봉지역주택조합",
+   "phone": "15512148",
+   "homepage": "https://www.야목역서희스타힐스그랜드힐.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940249&pblancNo=2026940249",
+   "price_max_manwon": 57600,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9501A",
+     "area_m2": null,
+     "general_households": 7,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 57600
+    },
+    {
+     "model_no": "02",
+     "type": "084.9553B",
+     "area_m2": null,
+     "general_households": 6,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 56600
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910299-2026910299",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "용인 양지 서희스타힐스 하이뷰 (조합원 취소분)",
+   "sido": "경기",
+   "sigungu": "용인시",
+   "address": "경기도 용인시 처인구 양지읍 양지리 산105-8번지 일원",
+   "total_households": 19,
+   "announce_date": "2026-11-13",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-18",
+     "end": "2026-11-18"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-23",
+    "contract": {
+     "start": "2026-11-26",
+     "end": "2026-11-26"
+    }
+   },
+   "move_in": "2030-09",
+   "flags": null,
+   "builder": "양지지구 2블럭 지역주택조합",
+   "phone": "15447885",
+   "homepage": "https://www.starhills-yg.co.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910299&pblancNo=2026910299",
+   "price_max_manwon": 57900,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.9671A",
+     "area_m2": null,
+     "general_households": 12,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 44500
+    },
+    {
+     "model_no": "02",
+     "type": "074.9936A",
+     "area_m2": null,
+     "general_households": 3,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 53200
+    },
+    {
+     "model_no": "03",
+     "type": "084.9999A",
+     "area_m2": null,
+     "general_households": 3,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 57900
+    },
+    {
+     "model_no": "04",
+     "type": "084.9989B",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 55300
+    }
+   ]
+  },
+  {
    "id": "apt-2026000457-2026000457",
    "kind": "apt",
    "kind_label": "APT",
@@ -11705,6 +11605,285 @@
       "기타": 0
      },
      "price_top_manwon": 140840
+    }
+   ]
+  },
+  {
+   "id": "apt-2026000560-2026000560",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "APT",
+   "house_detail": "민영",
+   "sale_type": "분양주택",
+   "name": "해링턴 플레이스 문래",
+   "sido": "서울",
+   "sigungu": "영등포구",
+   "address": "서울특별시 영등포구 문래동3가 27-1번지 일원",
+   "total_households": 218,
+   "announce_date": "2026-11-13",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-23",
+     "end": "2026-11-26"
+    },
+    "special": {
+     "start": "2026-11-23",
+     "end": "2026-11-23"
+    },
+    "rank1": {
+     "start": "2026-11-24",
+     "end": "2026-11-25"
+    },
+    "rank2": {
+     "start": "2026-11-26",
+     "end": "2026-11-26"
+    },
+    "general": null,
+    "winner_date": "2026-12-02",
+    "contract": {
+     "start": "2026-12-14",
+     "end": "2026-12-16"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-11-24",
+      "end": "2026-11-24"
+     },
+     "기타지역": {
+      "start": "2026-11-25",
+      "end": "2026-11-25"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-11-26",
+      "end": "2026-11-26"
+     },
+     "기타지역": {
+      "start": "2026-11-26",
+      "end": "2026-11-26"
+     }
+    }
+   },
+   "move_in": "2030-03",
+   "flags": {
+    "투기과열": true,
+    "조정대상": true,
+    "분양가상한제": false,
+    "공공주택지구": false,
+    "대규모택지": false
+   },
+   "builder": "효성중공업 주식회사",
+   "phone": "0234637774",
+   "homepage": "https://www.해링턴플레이스문래.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000560&pblancNo=2026000560",
+   "price_max_manwon": 182700,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9409A",
+     "area_m2": 109.7007,
+     "general_households": 51,
+     "special_households": 59,
+     "special_by_kind": {
+      "다자녀": 11,
+      "신혼부부": 16,
+      "생애최초": 7,
+      "청년": 0,
+      "신생아": 11,
+      "노부모부양": 3,
+      "기관추천": 11,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 182700
+    },
+    {
+     "model_no": "02",
+     "type": "084.9708B",
+     "area_m2": 110.4326,
+     "general_households": 25,
+     "special_households": 29,
+     "special_by_kind": {
+      "다자녀": 5,
+      "신혼부부": 8,
+      "생애최초": 4,
+      "청년": 0,
+      "신생아": 5,
+      "노부모부양": 2,
+      "기관추천": 5,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 178500
+    },
+    {
+     "model_no": "03",
+     "type": "084.9894C",
+     "area_m2": 108.7429,
+     "general_households": 25,
+     "special_households": 29,
+     "special_by_kind": {
+      "다자녀": 5,
+      "신혼부부": 8,
+      "생애최초": 4,
+      "청년": 0,
+      "신생아": 5,
+      "노부모부양": 2,
+      "기관추천": 5,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 177500
+    }
+   ]
+  },
+  {
+   "id": "apt-2026000505-2026000505",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "APT",
+   "house_detail": "민영",
+   "sale_type": "분양주택",
+   "name": "경희궁 에피트",
+   "sido": "서울",
+   "sigungu": "종로구",
+   "address": "서울특별시 종로구 교남동 28번지 일원",
+   "total_households": 134,
+   "announce_date": "2026-11-13",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-25",
+     "end": "2026-11-30"
+    },
+    "special": {
+     "start": "2026-11-25",
+     "end": "2026-11-25"
+    },
+    "rank1": {
+     "start": "2026-11-26",
+     "end": "2026-11-27"
+    },
+    "rank2": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    },
+    "general": null,
+    "winner_date": "2026-12-04",
+    "contract": {
+     "start": "2026-12-16",
+     "end": "2026-12-18"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-11-26",
+      "end": "2026-11-26"
+     },
+     "기타지역": {
+      "start": "2026-11-27",
+      "end": "2026-11-27"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-11-30",
+      "end": "2026-11-30"
+     },
+     "기타지역": {
+      "start": "2026-11-30",
+      "end": "2026-11-30"
+     }
+    }
+   },
+   "move_in": "2030-08",
+   "flags": {
+    "투기과열": true,
+    "조정대상": true,
+    "분양가상한제": false,
+    "공공주택지구": false,
+    "대규모택지": false
+   },
+   "builder": "에이치엘디앤아이한라 주식회사",
+   "phone": "023032280",
+   "homepage": "https://brand.hldni.com/gyeonghuigung/",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000505&pblancNo=2026000505",
+   "price_max_manwon": 257484,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "039.9342",
+     "area_m2": 54.2361,
+     "general_households": 5,
+     "special_households": 0,
+     "special_by_kind": {
+      "다자녀": 0,
+      "신혼부부": 0,
+      "생애최초": 0,
+      "청년": 0,
+      "신생아": 0,
+      "노부모부양": 0,
+      "기관추천": 0,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 118241
+    },
+    {
+     "model_no": "02",
+     "type": "059.9926",
+     "area_m2": 78.3717,
+     "general_households": 13,
+     "special_households": 18,
+     "special_by_kind": {
+      "다자녀": 3,
+      "신혼부부": 5,
+      "생애최초": 1,
+      "청년": 0,
+      "신생아": 3,
+      "노부모부양": 1,
+      "기관추천": 5,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 189843
+    },
+    {
+     "model_no": "03",
+     "type": "084.9794A",
+     "area_m2": 111.357,
+     "general_households": 25,
+     "special_households": 28,
+     "special_by_kind": {
+      "다자녀": 5,
+      "신혼부부": 8,
+      "생애최초": 4,
+      "청년": 0,
+      "신생아": 5,
+      "노부모부양": 2,
+      "기관추천": 4,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 257484
+    },
+    {
+     "model_no": "04",
+     "type": "084.9940B",
+     "area_m2": 110.9884,
+     "general_households": 19,
+     "special_households": 26,
+     "special_by_kind": {
+      "다자녀": 5,
+      "신혼부부": 7,
+      "생애최초": 4,
+      "청년": 0,
+      "신생아": 5,
+      "노부모부양": 1,
+      "기관추천": 4,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 251744
     }
    ]
   }
