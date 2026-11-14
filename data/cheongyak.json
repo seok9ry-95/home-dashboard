@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-14T19:05:25+09:00",
- "base_date": "2026-11-14",
- "window_from": "2026-09-15",
+ "collected_at": "2026-11-15T06:54:19+09:00",
+ "base_date": "2026-11-15",
+ "window_from": "2026-09-16",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
   "apt": 40,
-  "remndr": 38,
-  "opt": 41,
-  "total": 119
+  "remndr": 37,
+  "opt": 39,
+  "total": 116
  },
  "coverage": {
-  "with_types": 119,
-  "with_price": 119
+  "with_types": 116,
+  "with_price": 116
  },
  "items": [
   {
@@ -1401,154 +1401,6 @@
    ]
   },
   {
-   "id": "opt-2026940201-2026940201",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "이천 중리지구 B3블록 금성백조 예미지",
-   "sido": "경기",
-   "sigungu": "이천시",
-   "address": "경기도 이천시 중리지구 B3블록(중리동 518번지)",
-   "total_households": 30,
-   "announce_date": "2026-09-15",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-17",
-     "end": "2026-09-17"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-22",
-    "contract": {
-     "start": "2026-09-23",
-     "end": "2026-09-23"
-    }
-   },
-   "move_in": "2026-11",
-   "flags": null,
-   "builder": "(주)금성백조주택",
-   "phone": "0316380518",
-   "homepage": "https://ic-yemizi.com/",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940201&pblancNo=2026940201",
-   "price_max_manwon": 55000,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "059.9870A",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 37900
-    },
-    {
-     "model_no": "02",
-     "type": "059.9870B",
-     "area_m2": null,
-     "general_households": 1,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 37900
-    },
-    {
-     "model_no": "03",
-     "type": "084.7884A",
-     "area_m2": null,
-     "general_households": 23,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 54700
-    },
-    {
-     "model_no": "04",
-     "type": "084.9970B",
-     "area_m2": null,
-     "general_households": 3,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 53200
-    },
-    {
-     "model_no": "05",
-     "type": "084.9665C",
-     "area_m2": null,
-     "general_households": 1,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 55000
-    }
-   ]
-  },
-  {
-   "id": "opt-2026940206-2026940206",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "청계백상앨리츠(3차)",
-   "sido": "서울",
-   "sigungu": "성동구",
-   "address": "서울특별시 성동구 마장동 767-56",
-   "total_households": 11,
-   "announce_date": "2026-09-15",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-17",
-     "end": "2026-09-18"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-30",
-    "contract": {
-     "start": "2026-10-06",
-     "end": "2026-10-10"
-    }
-   },
-   "move_in": "2028-05",
-   "flags": null,
-   "builder": "미성주택 소규모재건축사업조합",
-   "phone": "0222966521",
-   "homepage": "http://cheonggye-elitz.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940206&pblancNo=2026940206",
-   "price_max_manwon": 135200,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "076.6275",
-     "area_m2": null,
-     "general_households": 1,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 125000
-    },
-    {
-     "model_no": "02",
-     "type": "081.6700",
-     "area_m2": null,
-     "general_households": 7,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 134800
-    },
-    {
-     "model_no": "03",
-     "type": "081.6937",
-     "area_m2": null,
-     "general_households": 3,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 135200
-    }
-   ]
-  },
-  {
    "id": "opt-2026940205-2026940205",
    "kind": "opt",
    "kind_label": "임의공급",
@@ -1796,53 +1648,6 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 53400
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026910244-2026910244",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "무순위",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "더 리치먼드 미아(3차)",
-   "sido": "서울",
-   "sigungu": "강북구",
-   "address": "서울특별시 강북구 미아동 703-13번지",
-   "total_households": 14,
-   "announce_date": "2026-09-15",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-22",
-     "end": "2026-09-22"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-29",
-    "contract": {
-     "start": "2026-10-01",
-     "end": "2026-10-01"
-    }
-   },
-   "move_in": "2028-09",
-   "flags": null,
-   "builder": "우리자산신탁 주식회사",
-   "phone": "15516264",
-   "homepage": "https://www.더리치먼드미아.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910244&pblancNo=2026910244",
-   "price_max_manwon": 95300,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "059.8400A",
-     "area_m2": null,
-     "general_households": 14,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 95300
     }
    ]
   },
