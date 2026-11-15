@@ -145,7 +145,7 @@ $('#ctaT1').textContent = `${curMonth}월 결산 · ${p2(curMonth)}.${new Date(c
 // ===== 히어로 =====
 const pct = pctOf(canBuy, T.price);
 $('#goalLegend').textContent = `목표 ${eok(T.price)}`;
-$('#goalSentence').innerHTML = `<span class="hl">${ty}년 ${tm}월</span>까지 <span class="hl">${esc(T.label)}</span> <span class="amt">${eok(T.price)}</span> <span class="rest">아파트</span>`;
+$('#goalSentence').innerHTML = `<span class="gs-l"><span class="hl">${ty}년 ${tm}월</span>까지 <span class="hl">${esc(T.label)}</span> <span class="amt">${eok(T.price)}</span> <span class="rest">아파트</span></span><span class="gs-s">${ty}년 ${tm}월 ${esc(T.label)} ${eok(T.price)}</span>`;
 $('#leftPill').textContent = `${monthsLeft}개월 남음`;
 const gap = priceGap(canBuy, T.price);
 function renderEq() {
@@ -176,7 +176,7 @@ function renderG() {
     const ha = g.a / GMAX * H, hn = Math.max(0, g.ln / GMAX * H - 3);
     const tipSide = i >= gData.length - 2 ? 'right' : 'left';
     return `<div class="cl${on ? ' on' : ''}${now ? ' cur' : ' future'}" data-g="${i}">
-      <div class="vtop" style="bottom:${24 + ha + hn + 9}px">${now ? '오늘 산다면 ' + e2(g.price) : pctOf(g.price, T.price) + '%'}</div>
+      <div class="vtop" style="bottom:${24 + ha + hn + 9}px">${now ? '' : pctOf(g.price, T.price) + '%'}</div>
       <div class="stack" style="bottom:24px"><div style="height:${ha}px;background-color:${hl ? 'var(--lime)' : 'var(--lime2)'};background-image:${now ? 'var(--hatch)' : 'none'};opacity:${now || on ? 1 : .75}"></div><div style="height:${hn}px;background:${hl ? 'var(--ink)' : '#C9C9C6'};opacity:${now || on ? 1 : .75}"></div></div>
       <div class="lab">${now ? '현재' : g.label}</div>
       <div class="tip" style="top:${Math.max(0, y(g.a + g.ln) - 70)}px;${tipSide}:calc(50% + 34px)">
@@ -189,6 +189,7 @@ function renderG() {
   box.innerHTML = h;
   clampTip('#gChart');
 }
+$('#gNow').innerHTML = `오늘 산다면 <b>${e2(gData[0].price)}</b>`;
 hoverable('#gChart', 'g', () => gHover, v => { gHover = v; renderG(); });
 
 // ===== 월별 =====
