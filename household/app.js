@@ -137,12 +137,6 @@ $('#viewer').addEventListener('click', () => { viewer = viewer === 'H' ? 'W' : '
 // ===== 다짐 / 다음 결산 =====
 const settledNow = !!(DATA.settlements || {})[DATA.asOf.slice(0, 7)];   // 자산 기준달 결산이 끝났으면 다음 달 다짐·결산을 보여줌
 const curMonth = settledNow ? asOf.getMonth() % 12 + 2 - (asOf.getMonth() === 11 ? 12 : 0) : asOf.getMonth() + 1;
-$('#pledgeTitle').textContent = `${curMonth}월 다짐`;
-$('#pledges').innerHTML = [['H', '남편', 'h'], ['W', '아내', 'w']].map(([k, role, c]) => {
-  const t = DATA.pledges[k];
-  return `<div class="pl-row"><span class="av ${c}">${DATA.names[k][0]}</span><span class="pl-role">${role}</span>
-    <span class="pl-text ${t ? 'set' : 'empty'}">${t ? esc(t) + ` <span style="font-size:11px;color:var(--ph);font-weight:400">${DATA.pledgeDate}</span>` : '아직 없어요'}</span></div>`;
-}).join('');
 const nextM = curMonth === 12 ? 1 : curMonth + 1;
 const curY = asOf.getFullYear() + (settledNow && asOf.getMonth() === 11 ? 1 : 0), p2 = n => String(n).padStart(2, '0');
 // PRD 흐름 1: 말일 ~ 다음 달 3일 (결산 화면 window3와 같은 표기, 예: 11.30~12.03)
@@ -155,12 +149,12 @@ $('#goalSentence').innerHTML = `<span class="hl">${ty}년 ${tm}월</span>까지 
 $('#leftPill').textContent = `${monthsLeft}개월 남음`;
 const gap = priceGap(canBuy, T.price);
 function renderEq() {
-  const trend = TREND === null ? `<div class="s">실제 추세는 첫 결산 뒤에 나와요</div>`
-    : `<div class="s" style="color:var(--ink2)">실제 추세면 <b style="color:var(--ink)">${e2(canBuyTrend)}</b>(${mon(TREND_FROM)}월부터 ${TR.length}달 평균 월 ${man(TREND)})</div>`;
-  $('#eq').innerHTML = `
-  <div class="eqi"><span class="op" aria-hidden="true"></span><div><div class="t">목표</div><div class="v">${eok(T.price)}</div></div></div>
-  <div class="eqi"><span class="op" aria-hidden="true">−</span><div><div class="t">계획(월 ${man(save)})대로면 살 수 있는 집</div><div class="v" style="color:var(--good)">${e2(canBuy)}</div><div class="s">목표의 ${pct}%</div>${trend}</div></div>
-  <div class="eqi"><span class="op" aria-hidden="true">=</span><div><div class="t">목표와의 격차</div><div class="v" style="color:${gap ? 'var(--warn)' : 'var(--good)'}">${gap ? e2(gap) : '달성'}</div><div class="s">${extraMonths ? `계획대로면 <b style="color:var(--warn)">${yearsMonths(extraMonths).trim()}</b> 늦어요. ` : ''}제때 사려면 월 <b style="color:var(--ink)">${man(needPerMonth)}</b></div></div></div>`;
+  const gapT = TREND === null ? null : priceGap(canBuyTrend, T.price);
+  const amt2 = g => g ? e2(g) : '달성', col = g => g ? 'var(--warn)' : 'var(--good)';
+  const row = (label, buy, g) => `<div class="row"><div><div class="t">${label}</div>${buy === null ? '<div class="v wait">첫 결산 뒤에 나와요</div>' : `<div class="v" style="color:var(--good)">${e2(buy)}</div>`}</div>
+    <span class="op" aria-hidden="true">=</span><div><div class="t">목표와의 격차</div>${g === null ? '<div class="v wait">—</div>' : `<div class="v" style="color:${col(g)}">${amt2(g)}</div>`}</div></div>`;
+  $('#eq').innerHTML = `<div class="goal"><div class="t">목표</div><div class="v">${eok(T.price)}</div></div>
+  <div class="fork">${row(`계획(월 ${man(save)})대로면 살 수 있는 집`, canBuy, gap)}${row(TREND === null ? '실제 추세면 살 수 있는 집' : `실제 추세(월 ${man(TREND)})면 살 수 있는 집`, TREND === null ? null : canBuyTrend, gapT)}</div>`;
 }
 
 // 집값 추이: 지금부터 목표일까지 3개월 간격 예상
