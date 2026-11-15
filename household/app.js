@@ -141,7 +141,7 @@ $('#pledgeTitle').textContent = `${curMonth}월 다짐`;
 $('#pledges').innerHTML = [['H', '남편', 'h'], ['W', '아내', 'w']].map(([k, role, c]) => {
   const t = DATA.pledges[k];
   return `<div class="pl-row"><span class="av ${c}">${DATA.names[k][0]}</span><span class="pl-role">${role}</span>
-    <span class="pl-text ${t ? 'set' : 'empty'}">${t ? esc(t) + ` <span style="font-size:11px;color:var(--ph);font-weight:400">${DATA.pledgeDate}</span>` : `아직 없어요 · ${DATA.names[k]}의 다짐 한 가지를 채팅에 알려주세요`}</span></div>`;
+    <span class="pl-text ${t ? 'set' : 'empty'}">${t ? esc(t) + ` <span style="font-size:11px;color:var(--ph);font-weight:400">${DATA.pledgeDate}</span>` : '아직 없어요'}</span></div>`;
 }).join('');
 const nextM = curMonth === 12 ? 1 : curMonth + 1;
 const curY = asOf.getFullYear() + (settledNow && asOf.getMonth() === 11 ? 1 : 0), p2 = n => String(n).padStart(2, '0');
@@ -156,11 +156,11 @@ $('#leftPill').textContent = `${monthsLeft}개월 남음`;
 const gap = priceGap(canBuy, T.price);
 function renderEq() {
   const trend = TREND === null ? `<div class="s">실제 추세는 첫 결산 뒤에 나와요</div>`
-    : `<div class="s" style="color:var(--ink2)">실제 추세면 <b style="color:var(--ink)">${e2(canBuyTrend)}</b> · ${mon(TREND_FROM)}월부터 ${TR.length}달 평균 월 ${man(TREND)}</div>`;
+    : `<div class="s" style="color:var(--ink2)">실제 추세면 <b style="color:var(--ink)">${e2(canBuyTrend)}</b>(${mon(TREND_FROM)}월부터 ${TR.length}달 평균 월 ${man(TREND)})</div>`;
   $('#eq').innerHTML = `
-  <div class="eqi"><span class="op" aria-hidden="true"></span><div><div class="t">목표</div><div class="v">${eok(T.price)}</div><div class="s">${T.type} · 소득 ${T.incomeBasis}</div></div></div>
-  <div class="eqi"><span class="op" aria-hidden="true">−</span><div><div class="t">계획(월 ${man(save)})대로면 살 수 있는 집</div><div class="v" style="color:var(--good)">${e2(canBuy)}</div><div class="s">목표의 ${pct}% · 내림 표시</div>${trend}</div></div>
-  <div class="eqi"><span class="op" aria-hidden="true">=</span><div><div class="t">목표와의 격차</div><div class="v" style="color:${gap ? 'var(--warn)' : 'var(--good)'}">${gap ? e2(gap) : '달성'}</div><div class="s">${extraMonths ? `계획대로면 <b style="color:var(--warn)">+${yearsMonths(extraMonths)}</b> · ` : ''}월 <b style="color:var(--ink)">${man(needPerMonth)}</b>이면 제때</div></div></div>`;
+  <div class="eqi"><span class="op" aria-hidden="true"></span><div><div class="t">목표</div><div class="v">${eok(T.price)}</div></div></div>
+  <div class="eqi"><span class="op" aria-hidden="true">−</span><div><div class="t">계획(월 ${man(save)})대로면 살 수 있는 집</div><div class="v" style="color:var(--good)">${e2(canBuy)}</div><div class="s">목표의 ${pct}%</div>${trend}</div></div>
+  <div class="eqi"><span class="op" aria-hidden="true">=</span><div><div class="t">목표와의 격차</div><div class="v" style="color:${gap ? 'var(--warn)' : 'var(--good)'}">${gap ? e2(gap) : '달성'}</div><div class="s">${extraMonths ? `계획대로면 <b style="color:var(--warn)">${yearsMonths(extraMonths).trim()}</b> 늦어요. ` : ''}제때 사려면 월 <b style="color:var(--ink)">${man(needPerMonth)}</b></div></div></div>`;
 }
 
 // 집값 추이: 지금부터 목표일까지 3개월 간격 예상
@@ -196,7 +196,6 @@ function renderG() {
   clampTip('#gChart');
 }
 hoverable('#gChart', 'g', () => gHover, v => { gHover = v; renderG(); });
-$('#gNote').textContent = `현재 순자산 ${eok(netNow)}(${DATA.asOf.replace(/-/g, '.')} 기준)에 계획대로 월 ${man(save)}씩 더한 예상이에요. 맨 왼쪽은 오늘 산다면이에요. 대출은 ${T.region} ${T.type}·소득 ${T.incomeBasis}, DSR 40%·스트레스 금리 3%p 기준. 규칙은 2026-10 2차 자료라 계약 전 은행 확인이 필요해요.`;
 
 // ===== 월별 =====
 const ANN_M = M((DATA.annual || []).reduce((a, x) => a + x[2], 0) / 12);   // 연간 정기비용 ÷ 12 (만원)
@@ -307,7 +306,6 @@ $('#savBar').style.width = savPct + '%';
 $('#savNow').innerHTML = `최근 3개월 평균 ${sman(base3)} <span style="color:${base3 >= save ? 'var(--good)' : 'var(--warn)'}">${base3 >= save ? '달성' : '미달'}</span>`;
 $('#savGoal').textContent = '목표 ' + man(save);
 $('#savMonths').innerHTML = R3.map(r => `<span class="sm ${r.base >= save ? 'ok' : 'no'}"><b>${mon(r.m)}월</b> ${sman(r.base)}</span>`).join('');
-$('#savNote').textContent = `달성 여부는 최근 3개월 평균으로 보고, 달마다도 표시해요. 제때 ${eok(T.price)}에 닿으려면 월 ${man(Math.ceil(needPerMonth))}이 필요해요. 고정비(사라지는 돈)는 연간 비용 ÷ 12 포함 월 약 ${man(M(DATA.fixed.total) + ANN_M)}이에요.`;
 
 // ===== 소비 구성 =====
 const CATS = [['house', '주거·통신', 'var(--orange)'], ['food', '식비·카페', 'var(--orange2)'], ['move', '교통·자동차', 'var(--lemon)'], ['shop', '쇼핑·생활', 'var(--lime2)'], ['trip', '여행·여가', 'var(--lime)'], ['etc', '보험·금융·기타', '#E4E4E1']];
@@ -332,7 +330,7 @@ function renderSpend() {
     const fl = [...(DATA.fixedList[r.m] || []), ...(DATA.annual || []).map(a => [a[0], a[1], Math.round(a[2] / 12), a[3], `연 ${(a[2] / 10000).toFixed(1).replace(/\.0$/, '')}만 ÷ 12 · ${a[4]} 납부`])].sort((a, b) => b[2] - a[2]);
     segs = FGRPS.map(([g, color]) => ({ key: g, label: g, color, v: M(fl.filter(x => x[3] === g).reduce((a, x) => a + x[2], 0)) })).filter(x => x.v > 0);
     total = segs.reduce((a, x) => a + x.v, 0);
-    $('#spSub').textContent = `${r.m.replace('-', '년 ')}월 · 매달 같은 곳에 나가는 돈(사라지는 돈)`;
+    $('#spSub').textContent = `${r.m.replace('-', '년 ')}월`;
     const pick = spOpen && segs.find(x => x.key === spOpen) ? spOpen : null;
     const items = fl.filter(x => !pick || x[3] === pick);
     list = `<div class="dlist"><div class="dh">${pick ? pick + ' 고정비' : '고정비 전체'} <span>${items.length}건 · ${man(M(items.reduce((a, x) => a + x[2], 0)))} · 큰 순서</span></div>
@@ -341,7 +339,7 @@ function renderSpend() {
   } else {
     segs = CATS.map(([k, label, color]) => ({ key: k, label, color, v: M(r.cat[k] || 0) })).filter(x => x.v > 0);
     total = segs.reduce((a, x) => a + x.v, 0);
-    $('#spSub').textContent = `${r.m.replace('-', '년 ')}월 · 항목을 누르면 어디에 썼는지 보여요`;
+    $('#spSub').textContent = `${r.m.replace('-', '년 ')}월`;
     const pick = spOpen && segs.find(x => x.key === spOpen) ? segs.find(x => x.key === spOpen) : null;
     if (pick) {
       const items = (DATA.detail[r.m] || {})[pick.key] || [];
@@ -378,7 +376,7 @@ function renderAssets() {
     <div class="dl">${ASEG.map((s, i) => `<div class="dr${aHover === i ? ' on' : ''}${aHover !== null && aHover !== i ? ' dim' : ''}" data-ah="${i}"><i style="background:${s.color}"></i><div class="n"><div><span>${s.label}</span><b>${amt(s.v)}</b></div><div class="s">${s.sub}</div></div></div>`).join('')}</div>`;
 }
 hoverable('#assets', 'ah', () => aHover, v => { aHover = v; renderAssets(); });
-$('#assetSub').textContent = `합산 ${eok(netNow)} · 전세대출 차감`;
+$('#assetSub').textContent = `합산 ${eok(netNow)}`;
 $('#asOf').textContent = DATA.asOf.slice(5).replace('-', '.') + ' 기준';
 $('#emer').textContent = eok(M(A.emergency));
 const sh = Math.round(finH / (finH + finW) * 100);
