@@ -119,7 +119,7 @@ const MENUS = [
   ['월 결산', 'M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM4 10h16M8 3v5M16 3v5'],
   ['계산 기준', 'M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM14 3v5h5M9.5 13h6M9.5 17h6'],
 ];
-const icon = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+const icon = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
 $('#menu').innerHTML = MENUS.map(([l, d, on]) => on
   ? `<span class="mi on" aria-current="page">${icon(d)}${l}</span>`
   : `<button class="mi soon" type="button" data-soon="${l}" title="다음 단계에서 열려요">${icon(d)}${l}</button>`).join('');
@@ -183,7 +183,7 @@ function renderG() {
     const tipSide = i >= gData.length - 2 ? 'right' : 'left';
     return `<div class="cl${on ? ' on' : ''}${now ? ' cur' : ' future'}" data-g="${i}">
       <div class="vtop" style="bottom:${24 + ha + hn + 9}px">${now ? '' : pctOf(g.price, T.price) + '%'}</div>
-      <div class="stack" style="bottom:24px"><div style="height:${ha}px;background-color:${hl ? 'var(--lime)' : 'var(--lime2)'};background-image:${now ? 'var(--hatch)' : 'none'};opacity:${now || on ? 1 : .75}"></div><div style="height:${hn}px;background:${hl ? 'var(--ink)' : '#C9C9C6'};opacity:${now || on ? 1 : .75}"></div></div>
+      <div class="stack" style="bottom:24px"><div style="height:${ha}px;background-color:${hl ? 'var(--lime)' : 'var(--lime2)'};background-image:${now ? 'var(--hatch)' : 'none'};opacity:${now || on ? 1 : .75}"></div><div style="height:${hn}px;background:${hl ? 'var(--ink)' : 'var(--zero)'};opacity:${now || on ? 1 : .75}"></div></div>
       <div class="lab">${now ? '현재' : g.label}</div>
       <div class="tip" style="top:${Math.max(0, y(g.a + g.ln) - 70)}px;${tipSide}:calc(50% + 34px)">
         <div class="tt">${g.title}</div>
@@ -213,7 +213,7 @@ const TR = SET.filter(r => r.m >= TREND_FROM);
 const TREND = TR.length ? TR.reduce((a, r) => a + r.base, 0) / TR.length : null;
 const canBuyTrend = TREND === null ? null : affordable(T, inc, netNow + TREND * monthsLeft);
 const dpct = (a, b) => b ? (a - b) / Math.abs(b) * 100 : 0;
-const arrow = (up) => `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="${up ? 'M4 17l6-6 4 4 6-8M14 7h6v6' : 'M4 7l6 6 4-4 6 8M14 17h6v-6'}"/></svg>`;
+const arrow = (up) => `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${up ? 'M4 17l6-6 4 4 6-8M14 7h6v6' : 'M4 7l6 6 4-4 6 8M14 17h6v-6'}"/></svg>`;
 function kpi(label, v, p, goodWhenUp) {
   const up = v >= p, good = goodWhenUp ? up : !up, flip = p <= 0 || v <= 0;
   const delta = flip ? `${up ? '+' : '−'}${man(Math.abs(v - p))}` : `${Math.abs(dpct(v, p)).toFixed(1)}%`;
@@ -270,12 +270,12 @@ function renderF() {
     let bars;
     if (isSav) {
       const hgt = Math.max(3, Math.abs(r.base) / span * H), top = r.base >= 0 ? zeroY - hgt : zeroY;
-      bars = `<div style="position:absolute;left:50%;transform:translateX(-50%);width:min(50px,70%);top:${top}px;height:${hgt}px;border-radius:5px;background-color:${r.base >= 0 ? (hl ? 'var(--lime)' : 'var(--lime2)') : (hl ? 'var(--orange)' : '#FBD3AE')};background-image:${isCur ? 'var(--hatch)' : 'none'}"></div>`;
+      bars = `<div style="position:absolute;left:50%;transform:translateX(-50%);width:min(50px,70%);top:${top}px;height:${hgt}px;border-radius:5px;background-color:${r.base >= 0 ? (hl ? 'var(--lime)' : 'var(--lime2)') : (hl ? 'var(--orange)' : 'var(--orange2)')};background-image:${isCur ? 'var(--hatch)' : 'none'}"></div>`;
     } else {
       const hi1 = Math.max(3, r.inc / span * H), hx = Math.max(3, r.exp / span * H);
       bars = `<div style="position:absolute;left:50%;transform:translateX(-50%);bottom:24px;width:min(50px,70%);display:flex;gap:3px;align-items:flex-end">
-        <div style="flex:1;height:${hi1}px;border-radius:5px;background-color:${hl ? 'var(--lemon)' : '#F8F0A8'};background-image:${isCur ? 'var(--hatch)' : 'none'}"></div>
-        <div style="flex:1;height:${hx}px;border-radius:5px;background:${hl ? 'var(--orange)' : '#FBD3AE'}"></div></div>`;
+        <div style="flex:1;height:${hi1}px;border-radius:5px;background-color:${hl ? 'var(--lemon)' : 'var(--lemon2)'};background-image:${isCur ? 'var(--hatch)' : 'none'}"></div>
+        <div style="flex:1;height:${hx}px;border-radius:5px;background:${hl ? 'var(--orange)' : 'var(--orange2)'}"></div></div>`;
     }
     const rate = r.inc ? Math.round((isSav ? r.base / (r.inc - r.gift) : r.exp / r.inc) * 100) : 0;
     const tipTop = Math.max(0, Math.min(py(Math.max(isSav ? r.base : r.sav, 0)), isSav ? zeroY : py(Math.max(r.inc, r.exp))) - 10);
@@ -336,7 +336,8 @@ function renderSpend() {
     const pick = spOpen && segs.find(x => x.key === spOpen) ? spOpen : null;
     const items = fl.filter(x => !pick || x[3] === pick);
     list = `<div class="dlist"><div class="dh">${pick ? pick + ' 고정비' : '고정비 전체'} <span>${items.length}건 · ${man(M(items.reduce((a, x) => a + x[2], 0)))} · 큰 순서</span></div>
-      ${items.map(x => itemRow(x[0], x[1], x[2], `${x[4] ? `<span class="fx" style="background:var(--line2);color:var(--desc)">${x[4]}</span>` : ''}${(DATA.fixedEnds || {})[x[0]] ? `<span class="fx" style="background:var(--orangebg);color:var(--warn)">${DATA.fixedEnds[x[0]]}</span>` : ''}<span class="fgrp">${x[3]}</span>`)).join('')}
+      ${items.length ? '' : '<div class="empty">이달 고정비 기록이 없어요 · 결산하면 채워져요</div>'}
+      ${items.map(x => itemRow(x[0], x[1], x[2], `${x[4] ? `<span class="fx" style="background:var(--sub);color:var(--desc)">${x[4]}</span>` : ''}${(DATA.fixedEnds || {})[x[0]] ? `<span class="fx" style="background:var(--lime2);color:var(--ink)">${DATA.fixedEnds[x[0]]}</span>` : ''}<span class="fgrp">${x[3]}</span>`)).join('')}
       <div class="note" style="margin-top:8px">소비 ${man(M(r.expH + r.expW))} 중 고정비 ${Math.round(total / M(r.expH + r.expW) * 100)}%. ${(() => { const ins = fl.filter(x => x[3] === '할부').reduce((a, x) => a + x[2], 0), endAmt = fl.filter(x => (DATA.fixedEnds || {})[x[0]]).reduce((a, x) => a + x[2], 0); return `할부 ${man(M(ins))}이 고정비의 ${Math.round(M(ins) / total * 100)}%예요.` + (endAmt ? ` 완납·종료되는 할부 ${man(M(endAmt))}이 11월부터 빠지면 그만큼 저축 여력이 생겨요.` : ''); })()} 1년에 한 번 나가는 비용은 12로 나눠 넣었어요.</div></div>`;
   } else {
     segs = CATS.map(([k, label, color]) => ({ key: k, label, color, v: M(r.cat[k] || 0) })).filter(x => x.v > 0);
@@ -346,7 +347,7 @@ function renderSpend() {
     if (pick) {
       const items = (DATA.detail[r.m] || {})[pick.key] || [];
       list = `<div class="dlist"><div class="dh">${pick.label} <span>${man(pick.v)} · 큰 순서 · <b style="color:var(--limeink);background:var(--lime2);border-radius:4px;padding:0 4px;font-weight:700">고정</b> = 매달 나가는 돈</span></div>
-        ${items.map(x => itemRow(x[0], x[1], x[2], `${x[4] === 1 ? '<span class="fx">고정</span>' : x[4] === 2 ? '<span class="fx" style="background:var(--lemon);color:var(--ink)">일회성</span>' : ''}<span class="cnt">${x[3]}건</span>`)).join('')}</div>`;
+        ${items.length ? items.map(x => itemRow(x[0], x[1], x[2], `${x[4] === 1 ? '<span class="fx">고정</span>' : x[4] === 2 ? '<span class="fx" style="background:var(--lemon);color:var(--ink)">일회성</span>' : ''}<span class="cnt">${x[3]}건</span>`)).join('') : '<div class="empty">아직 가게별 내역이 없어요 · 다음 결산부터 보여요</div>'}</div>`;
     } else { const ol = ((DATA.oneOff || {})[r.m] || {}).list || [];
       list = (ol.length ? `<div class="dlist"><div class="dh">일회성 지출 <span>${man(r.one)} · 쓸 수 있는 저축 계산에서 빠짐</span></div>
         ${ol.slice(0, 6).map(x => itemRow(x[0], x[1], x[2], `<span class="fgrp">${x[3]}</span>`)).join('')}${ol.length > 6 ? `<div class="note" style="margin-top:6px">그 외 ${ol.length - 6}건 ${man(M(ol.slice(6).reduce((a, x) => a + x[2], 0)))}</div>` : ''}</div>` : ''); }
@@ -393,7 +394,7 @@ function renderHRange() {
     : `<button type="button" aria-disabled="true" data-lock="${n}개월 기록은 결산이 ${n}번 쌓이면 열려요">${n}개월</button>`).join('');
 }
 $('#hRange').addEventListener('click', e => { const b = e.target.closest('[data-hn]'); if (b) { hN = +b.dataset.hn; renderHRange(); renderHist(); } });
-function renderHist() { $('#hist').innerHTML = SET.slice(-hN).reverse().map(r => `<div class="hr"><div class="hm${r.base >= save ? ' ok' : ''}">${mon(r.m)}</div>
+function renderHist() { $('#hist').innerHTML = SET.length ? '' : '<div class="empty">아직 결산 기록이 없어요 · 첫 결산 뒤에 쌓여요</div>'; if (!SET.length) return; $('#hist').innerHTML = SET.slice(-hN).reverse().map(r => `<div class="hr"><div class="hm${r.base >= save ? ' ok' : ''}">${mon(r.m)}</div>
   <div class="mid"><div>${mon(r.m)}월 결산</div><div>${(DATA.settlements || {})[r.m] ? DATA.settledBy : '결산 방식 도입 전 기록'}${r.memo ? ' · ' + esc(r.memo) : ''}</div></div>
   <div class="rt"><div>평소 ${sman(r.base)}</div><div style="color:${r.base >= save ? 'var(--good)' : 'var(--desc)'}">${r.base >= save ? '목표 달성' : `${man(save)}까지 ${man(save - r.base)}`}</div></div></div>`).join(''); }
 
@@ -404,7 +405,7 @@ function reply(q) {
   const t = q.replace(/\s/g, '');
   if (/대출|DSR|한도|LTV|상환/.test(t)) return `${T.region} ${eok(T.price)} ${T.type} 기준, 두 사람 소득 합산(${incLabel} ${man(inc.H + inc.W)})이면 대출 ${e2(L8.amount)}까지 가능해요. LTV 한도(${e2(L8.ltv)})보다 소득 한도에 먼저 막혀요. 월 상환은 약 ${man(Math.round(L8.monthly))}이에요.\n⟦H⟧ 단독 소득이면 ${e2(Lsolo.amount)}으로 줄어서, 혼인신고 후 합산이 유리해요.`;
   if (/목표|달성|언제|가능|얼마나|집값/.test(t)) return `계획대로 월 ${man(save)}씩 모으면 ${ym(T.date)}에 살 수 있는 집은 ${e2(canBuy)}, 목표의 ${pct}%예요.${TREND === null ? '' : ` 실제 추세(${mon(TREND_FROM)}월부터 평균 월 ${man(TREND)})면 ${e2(canBuyTrend)}이에요.`}\n${eok(T.price)}에 제때 닿으려면 월 ${man(needPerMonth)}이 필요하고, 계획대로면 ${yearsMonths(extraMonths) || '0개월'} 더 걸려요. 레버는 월 저축 늘리기, 잔금 2030.1로 미루기(${e2(canBuyExt)}), 목표 조정 순으로 보세요.`;
-  if (/저축|모아|모으/.test(t)) return `${mon(last.m)}월 쓸 수 있는 저축은 ${sman(last.base)}이에요(축의금 ${man(last.gift)}·일회성 지출 ${man(last.one)} 제외). 축의금·일회성까지 넣은 실제 저축은 ${sman(last.sav)}이에요.\n최근 3개월 평균 쓸 수 있는 저축은 ${sman(base3)}으로 목표 ${man(save)} ${base3 >= save ? '달성' : '미달'}이에요. 고정비는 월 약 ${man(M(DATA.fixed.total) + ANN_M)}이고, 10월에 할부 4건이 끝나요.`;
+  if (/저축|모아|모으/.test(t)) return `${mon(last.m)}월 쓸 수 있는 저축은 ${sman(last.base)}이에요(축의금 ${man(last.gift)}·일회성 지출 ${man(last.one)} 제외). 축의금·일회성까지 넣은 실제 저축은 ${sman(last.sav)}이에요.\n최근 3개월 평균 쓸 수 있는 저축은 ${sman(base3)}으로 목표 ${man(save)} ${base3 >= save ? '달성' : '미달'}이에요. 고정비는 월 약 ${man(M(DATA.fixed.total) + ANN_M)}이에요.`;
   if (/소비|지출|줄이|식비|고정비|관리비/.test(t)) return `${mon(last.m)}월 소비 ${man(last.exp)} 중 ${top2}이 가장 커요.\n고정비(사라지는 돈)는 월 약 ${man(M(DATA.fixed.total))}: ${DATA.fixed.items.map(([l, v]) => `${l} ${man(M(v))}`).join(', ')}. 변동비는 부부 가계부로 관리해요.`;
   if (/자산|예적금|적금|투자|주식|청약|연금/.test(t)) return `순자산은 ${eok(netNow)}이에요. 전세 자기자금 ${eok(jeonseNet)}, 예·적금·통장 ${eok(ASEG[1].v)}, 주식 ${eok(ASEG[2].v)}, 청약 ${eok(ASEG[3].v)}.\n퇴직연금 ${eok(M(A.emergency))}은 묶인 자산이라 순자산에서 뺐어요.`;
   if (/결산|입력|갱신|파일/.test(t)) return `매달 말일~다음 달 3일에 뱅크샐러드 가계부 탭 → 톱니바퀴 → 파일로 받기(지난달 1일~말일)로 받은 파일 2개를 Claude 채팅에 올려주세요. 이 화면이 같은 링크로 갱신돼요.`;
@@ -1342,7 +1343,7 @@ function route() {
   $('#menu').innerHTML = MENUS.map(([l, d], i) => i < 4
     ? `<a class="mi${i === view ? ' on' : ''}" href="${HREF[i]}"${i === view ? ' aria-current="page"' : ''}>${icon(d)}${l}</a>`
     : `<button class="mi soon" type="button" data-soon="${l}" title="다음 단계에서 열려요">${icon(d)}${l}</button>`).join('');
-  $('#tabbar').innerHTML = TABS.map(([l, h, d], i) => { const on = i === view, sv = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${on ? 1.9 : 1.7}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+  $('#tabbar').innerHTML = TABS.map(([l, h, d], i) => { const on = i === view, sv = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
     return h.startsWith('#') ? `<a href="${h}" class="${on ? 'on' : ''}"${on ? ' aria-current="page"' : ''}>${on ? `<span class="tbi">${sv}</span>` : sv}${l}</a>` : `<button type="button" data-more class="${on ? 'on' : ''}" aria-haspopup="dialog">${on ? `<span class="tbi">${sv}</span>` : sv}${l}</button>`; }).join('');
   document.title = sim ? '내집마련 대시보드 · 시뮬레이터' : stl ? '내집마련 대시보드 · 월 결산' : bas ? '내집마련 대시보드 · 계산 기준' : '내집마련 대시보드';
   if (sim) { syncLevers(); render(); }
