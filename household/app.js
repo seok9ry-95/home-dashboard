@@ -126,14 +126,18 @@ $('#menu').innerHTML = MENUS.map(([l, d, on]) => on
   : `<button class="mi soon" type="button" data-soon="${l}" title="다음 단계에서 열려요">${icon(d)}${l}</button>`).join('');
 document.addEventListener('click', e => { const s = e.target.closest('[data-soon]'); if (s) toast(`${s.dataset.soon} 화면은 다음 단계에서 열려요`); });
 
-// ===== 보는 사람 =====
-let viewer = store.get('nest-viewer') === 'W' ? 'W' : 'H';
-function renderViewer() {
-  $('#viewerName').textContent = `${DATA.names[viewer]} 보는 중`;
-  $('#avH').className = 'av h' + (viewer === 'H' ? ' ring-h' : '');
-  $('#avW').className = 'av w' + (viewer === 'W' ? ' ring-w' : '');
+// ===== 해/달 버튼 (24-2) — 기본은 기기 설정, 누르면 라이트↔다크, 고른 값은 이 기기에 기억(index.html 맨 위 스크립트) =====
+const SUN = 'M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0';
+const MOON = 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z';
+const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+function renderThm() {
+  const d = isDark();
+  $('#thm').innerHTML = icon(d ? SUN : MOON);
+  $('#thm').setAttribute('aria-label', d ? '라이트 모드로 바꾸기' : '다크 모드로 바꾸기');
 }
-$('#viewer').addEventListener('click', () => { viewer = viewer === 'H' ? 'W' : 'H'; store.set('nest-viewer', viewer); renderViewer(); });
+$('#thm').addEventListener('click', () => { if (window.__setTheme) window.__setTheme(isDark() ? 'light' : 'dark'); renderThm(); });
+new MutationObserver(renderThm).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+renderThm();
 
 // ===== 다짐 / 다음 결산 =====
 const settledNow = !!(DATA.settlements || {})[DATA.asOf.slice(0, 7)];   // 자산 기준달 결산이 끝났으면 다음 달 다짐·결산을 보여줌
@@ -142,6 +146,17 @@ const nextM = curMonth === 12 ? 1 : curMonth + 1;
 const curY = asOf.getFullYear() + (settledNow && asOf.getMonth() === 11 ? 1 : 0), p2 = n => String(n).padStart(2, '0');
 // PRD 흐름 1: 말일 ~ 다음 달 3일 (결산 화면 window3와 같은 표기, 예: 11.30~12.03)
 $('#ctaT1').textContent = `${curMonth}월 결산 · ${p2(curMonth)}.${new Date(curY, curMonth, 0).getDate()}~${p2(nextM)}.03`;
+// 결산 버튼 상태색 (11/16): 결산 전 lemon · 결산 중 lime · 놓친 달 warn. 문구는 그대로, 색으로만 알린다
+// 결산 기간 = 그달 말일 ~ 다음 달 3일. 지난달이 결산 시작(settleStart) 이후인데 기록이 없으면 3일까지는 '결산 중', 그 뒤는 '놓친 달'
+function settleState(now = new Date()) {
+  const y = now.getFullYear(), mo = now.getMonth() + 1, d = now.getDate(), key = (yy, mm) => `${yy}-${p2(mm)}`;
+  const cur = key(y, mo), prevM = mo === 1 ? key(y - 1, 12) : key(y, mo - 1), SS0 = DATA.settlements || {}, START0 = DATA.settleStart || '2026-10';
+  if (prevM >= START0 && !SS0[prevM]) return d <= 3 ? 'now' : 'miss';
+  if (d === new Date(y, mo, 0).getDate() && !SS0[cur]) return 'now';
+  return 'pre';
+}
+{ const st = settleState(), b = $('header [data-open="settle"]');
+  b.dataset.st = st; b.setAttribute('aria-label', `결산 방법 · ${{ pre: '결산 전', now: '결산 중', miss: '놓친 달 있음' }[st]}`); }
 
 // ===== 히어로 =====
 const pct = pctOf(canBuy, T.price);
@@ -256,7 +271,7 @@ document.addEventListener('click', e => { const l = e.target.closest('[data-lock
 function renderF() {
   $('#vSav').setAttribute('aria-pressed', fView === '저축'); $('#vFlow').setAttribute('aria-pressed', fView !== '저축');
   $('#fLegend').innerHTML = fView === '저축'
-    ? `<span><i style="background:var(--lime)"></i>쓸 수 있는 저축(+)</span><span><i style="background:var(--orange)"></i>마이너스</span><span style="color:var(--ph)">축의금·일회성 지출 제외</span>`
+    ? `<span><i style="background:var(--lime)"></i>쓸 수 있는 저축(+)</span><span><i style="background:var(--orange)"></i>마이너스</span><span style="color:var(--mute)">축의금·일회성 지출 제외</span>`
     : `<span><i style="background:var(--lemon)"></i>수입</span><span><i style="background:var(--orange)"></i>소비</span>`;
   const SER = series(fPeriod);
   const isSav = fView === '저축', H = 106, B = 146, cur = SER.length - 1;
@@ -311,7 +326,7 @@ $('#savNeed').innerHTML = `제때 사려면 월 <b>${man(needPerMonth)}</b>`;
 $('#savMonths').innerHTML = R3.map(r => `<span class="sm ${r.base >= save ? 'ok' : 'no'}"><b>${mon(r.m)}월</b> ${sman(r.base)}</span>`).join('');
 
 // ===== 소비 구성 =====
-const CATS = [['house', '주거·통신', 'var(--orange)'], ['food', '식비·카페', 'var(--orange2)'], ['move', '교통·자동차', 'var(--lemon)'], ['shop', '쇼핑·생활', 'var(--lime2)'], ['trip', '여행·여가', 'var(--lime)'], ['etc', '보험·금융·기타', '#E4E4E1']];
+const CATS = [['house', '주거·통신', 'var(--orange)'], ['food', '식비·카페', 'var(--orange2)'], ['move', '교통·자동차', 'var(--lemon)'], ['shop', '쇼핑·생활', 'var(--lime2)'], ['trip', '여행·여가', 'var(--lime)'], ['etc', '보험·금융·기타', 'var(--ghost)']];
 let spMonth = SET.length - 1, spHover = null, spMode = 'all', spOpen = null;
 function donut(segs, total, hover, r, w) {
   const C = 2 * Math.PI * r; let acc = 0;
@@ -321,7 +336,7 @@ function donut(segs, total, hover, r, w) {
     return `<circle cx="75" cy="75" r="${r}" fill="none" stroke="${s.color}" stroke-width="${on ? w + 6 : w}" stroke-dasharray="${Math.max(len - 2, 0)} ${C}" stroke-dashoffset="${off}" opacity="${dim ? .4 : 1}"></circle>`;
   }).join('') + `</svg>`;
 }
-const FGRPS = [['주거', 'var(--orange)'], ['할부', 'var(--orange2)'], ['보험', 'var(--lemon)'], ['통신', 'var(--lime2)'], ['구독', 'var(--lime)'], ['가족', '#CFC8B8'], ['공과금', '#E4E4E1']];
+const FGRPS = [['주거', 'var(--orange)'], ['할부', 'var(--orange2)'], ['보험', 'var(--lemon)'], ['통신', 'var(--lime2)'], ['구독', 'var(--lime)'], ['가족', 'var(--zero)'], ['공과금', 'var(--ghost)']];
 const whoTag = w => `<span class="who ${w || 'N'}" title="${w ? DATA.names[w] : ''}">${w ? DATA.names[w][0] : '·'}</span>`;
 function itemRow(n, w, amt, extra) { return `<div class="di">${whoTag(w)}<span class="nm">${esc(n)}</span>${extra || ''}<span class="am">${amt < 10000 ? amt.toLocaleString('ko-KR') + '원' : amt < 100000 ? (amt / 10000).toFixed(1).replace(/\.0$/, '') + '만' : man(M(amt))}</span></div>`; }
 function renderSpend() {
@@ -347,8 +362,8 @@ function renderSpend() {
     const pick = spOpen && segs.find(x => x.key === spOpen) ? segs.find(x => x.key === spOpen) : null;
     if (pick) {
       const items = (DATA.detail[r.m] || {})[pick.key] || [];
-      list = `<div class="dlist"><div class="dh">${pick.label} <span>${man(pick.v)} · 큰 순서 · <b style="color:var(--limeink);background:var(--lime2);border-radius:4px;padding:0 4px;font-weight:700">고정</b> = 매달 나가는 돈</span></div>
-        ${items.length ? items.map(x => itemRow(x[0], x[1], x[2], `${x[4] === 1 ? '<span class="fx">고정</span>' : x[4] === 2 ? '<span class="fx" style="background:var(--lemon);color:var(--ink)">일회성</span>' : ''}<span class="cnt">${x[3]}건</span>`)).join('') : '<div class="empty">아직 가게별 내역이 없어요 · 다음 결산부터 보여요</div>'}</div>`;
+      list = `<div class="dlist"><div class="dh">${pick.label} <span>${man(pick.v)} · 큰 순서 · <b style="color:var(--ink);background:var(--lime2);border-radius:4px;padding:0 4px;font-weight:700">고정</b> = 매달 나가는 돈</span></div>
+        ${items.length ? items.map(x => itemRow(x[0], x[1], x[2], `${x[4] === 1 ? '<span class="fx">고정</span>' : x[4] === 2 ? '<span class="fx" style="background:var(--lemon);color:var(--on-data)">일회성</span>' : ''}<span class="cnt">${x[3]}건</span>`)).join('') : '<div class="empty">아직 가게별 내역이 없어요 · 다음 결산부터 보여요</div>'}</div>`;
     } else { const ol = ((DATA.oneOff || {})[r.m] || {}).list || [];
       list = (ol.length ? `<div class="dlist"><div class="dh">일회성 지출 <span>${man(r.one)} · 쓸 수 있는 저축 계산에서 빠짐</span></div>
         ${ol.slice(0, 6).map(x => itemRow(x[0], x[1], x[2], `<span class="fgrp">${x[3]}</span>`)).join('')}${ol.length > 6 ? `<div class="note" style="margin-top:6px">그 외 ${ol.length - 6}건 ${man(M(ol.slice(6).reduce((a, x) => a + x[2], 0)))}</div>` : ''}</div>` : ''); }
@@ -370,7 +385,7 @@ const ASEG = [
   { label: '예·적금·통장', v: M(A.H.cash + A.W.cash), color: 'var(--lime)', sub: `⟦H⟧ ${amt(M(A.H.cash))} · ⟦W⟧ ${amt(M(A.W.cash))}` },
   { label: '주식', v: M(A.H.invest + A.W.invest), color: 'var(--lime2)', sub: `⟦H⟧ ${amt(M(A.H.invest))} · ⟦W⟧ ${amt(M(A.W.invest))}` },
   { label: '청약', v: M(A.H.sub + A.W.sub), color: 'var(--lemon)', sub: `⟦H⟧ ${amt(M(A.H.sub))} · ⟦W⟧ ${amt(M(A.W.sub))}` },
-  { label: '페이머니 등', v: M(A.H.etc + A.W.etc), color: '#E4E4E1', sub: '포인트 포함' },
+  { label: '페이머니 등', v: M(A.H.etc + A.W.etc), color: 'var(--ghost)', sub: '포인트 포함' },
 ];
 let aHover = null;
 function renderAssets() {
@@ -436,7 +451,7 @@ $('#assetFold').addEventListener('click', () => { const b = $('#assetFold'), ope
 $('#rTabs').addEventListener('click', e => { const b = e.target.closest('[data-rt]'); if (!b) return; const bot = b.dataset.rt === 'bot';
   $('#rTabs').querySelectorAll('button').forEach(x => { const on = x === b; x.setAttribute('aria-selected', on); x.setAttribute('aria-pressed', on); });
   $('#rtHist').hidden = bot; $('#rtBot').hidden = !bot; $('#hRange').hidden = bot; if (bot) { const l = $('#log'); l.scrollTop = l.scrollHeight; } });
-renderViewer(); renderEq(); renderG(); renderPeriods(); renderF(); renderHRange(); renderHist(); renderSpend(); renderAssets(); renderChat();
+renderEq(); renderG(); renderPeriods(); renderF(); renderHRange(); renderHist(); renderSpend(); renderAssets(); renderChat();
 
 ;
 // ---- 원래 화면 스크립트 2/4 ----
@@ -565,10 +580,10 @@ const STEPS = m => [
 function guideCard(m, big) {
   const st = STEPS(m);
   if (big) return `<section class="cd full"><div class="eb">다음 결산 방법</div><div style="font-size:26px;font-weight:800;letter-spacing:-0.03em;line-height:1.3;margin-top:4px">첫 결산은 이렇게 해요</div>
-    <div style="font-size:14px;color:var(--ink2);margin-top:6px;line-height:1.55">입력은 채팅에서 해요. <b>${window3(m)}</b> 사이에 파일만 보내면 Claude가 분류해서 이 화면을 채워요.</div>
+    <div style="font-size:14px;color:var(--ink);margin-top:6px;line-height:1.55">입력은 채팅에서 해요. <b>${window3(m)}</b> 사이에 파일만 보내면 Claude가 분류해서 이 화면을 채워요.</div>
     <div class="steps">${st.map(([t, b], i) => `<div class="step"><span class="n">${i + 1}</span><div style="min-width:0"><div class="st">${t}</div><div class="sb">${b}</div></div></div>`).join('')}</div></section>`;
   return `<section class="cd gd" id="stlGuide" style="padding:6px 20px"><button type="button" data-guide aria-expanded="${guideOpen}"><span><span class="h2" style="display:block">다음 결산 방법</span><span class="s12" style="display:block">${mon(m)}월 결산 · ${window3(m)}에 보내기</span></span><span class="chev" style="transform:${guideOpen ? 'rotate(180deg)' : 'none'}">${IC.chev}</span></button>
-    ${guideOpen ? `<div style="display:flex;flex-direction:column;gap:12px;padding:6px 0 16px">${st.map(([t, b], i) => `<div class="gstep"><span class="n">${i + 1}</span><div style="min-width:0"><div style="font-size:14px;font-weight:700;line-height:1.4">${t}</div><div style="font-size:13px;color:var(--ink2);margin-top:2px;line-height:1.5">${b}</div></div></div>`).join('')}</div>` : ''}</section>`;
+    ${guideOpen ? `<div style="display:flex;flex-direction:column;gap:12px;padding:6px 0 16px">${st.map(([t, b], i) => `<div class="gstep"><span class="n">${i + 1}</span><div style="min-width:0"><div style="font-size:14px;font-weight:700;line-height:1.4">${t}</div><div style="font-size:13px;color:var(--ink);margin-top:2px;line-height:1.5">${b}</div></div></div>`).join('')}</div>` : ''}</section>`;
 }
 function recCard(rows, full) {
   const body = rows.length ? rows.slice().reverse().map(r => {
@@ -582,7 +597,7 @@ function recCard(rows, full) {
         <div><div class="s12" style="display:flex;align-items:center;gap:6px"><i style="background:var(--lemon)"></i>평소 수입</div><b style="font-size:16px;white-space:nowrap">${mw(r.inc)}</b></div>
         <div><div class="s12" style="display:flex;align-items:center;gap:6px"><i style="background:var(--orange)"></i>평소 소비</div><b style="font-size:16px;white-space:nowrap">${mw(r.sp)}</b></div>
         <div><div class="s12" style="display:flex;align-items:center;gap:6px"><i style="background:var(--lime)"></i>쓸 수 있는 저축</div><b style="font-size:16px;white-space:nowrap">${mw(r.base)}</b></div></div>
-        ${r.memo ? `<div style="font-size:14px;color:var(--ink2);line-height:1.5"><span style="color:var(--desc)">메모 · </span>${esc(r.memo)}</div>` : ''}
+        ${r.memo ? `<div style="font-size:14px;color:var(--ink);line-height:1.5"><span style="color:var(--desc)">메모 · </span>${esc(r.memo)}</div>` : ''}
         ${r.legacy ? `<div class="s12" style="display:flex;align-items:center">결산 방식 도입 전 기록 · 집값 변화 없음${ii('legacy')}</div>` : ''}</div>` : ''}</div>`;
   }).join('') : `<div class="dash" style="margin-top:12px;padding:24px 16px">아직 결산 기록이 없어요<br>첫 파일을 보내면 여기에 달마다 쌓여요</div>`;
   return `<section class="cd ${full ? 'full' : 's2'}"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><div class="h2">결산 기록</div><span class="s12">눌러서 펼쳐 보기 · 쓸 수 있는 저축은 홈과 같은 값</span></div><div style="margin-top:8px">${body}</div></section>`;
@@ -595,8 +610,8 @@ function resultCards(X, rows) {
   const last3 = rows.slice(-3), avg = last3.reduce((a, r) => a + r.base, 0) / last3.length, hit = last3.filter(r => r.base >= save).length;
   const netN = netOf(V.assets), netP = netOf(V.prev), buyN = buyAt(netN, V.asOf), buyP = buyAt(netP, V.prevAsOf), bD = R2(buyN) - R2(buyP), nD = netN - netP;
   const flag = ok
-    ? `<div class="flag ok"><span class="fi" style="background:var(--lime);color:var(--limeink)">${IC.check}</span><div class="ft"><b>목표 ${mw(save)}을 ${mw(gap)} 넘겼어요.</b> 최근 ${last3.length}달 중 ${hit}번 달성</div><a href="#simulator">시뮬레이터에서 레버 보기${IC.arrow}</a></div>`
-    : `<div class="flag sh"><span class="fi" style="background:var(--orange);color:var(--ink)">${IC.lever}</span><div class="ft"><b>쓸 수 있는 저축이 목표보다 ${mw(gap)} 적어요.</b> 어떤 레버를 당길까?</div><a href="#simulator">시뮬레이터에서 레버 보기${IC.arrow}</a></div>`;
+    ? `<div class="flag ok"><span class="fi" style="background:var(--lime);color:var(--on-data)">${IC.check}</span><div class="ft"><b>목표 ${mw(save)}을 ${mw(gap)} 넘겼어요.</b> 최근 ${last3.length}달 중 ${hit}번 달성</div><a href="#simulator">시뮬레이터에서 레버 보기${IC.arrow}</a></div>`
+    : `<div class="flag sh"><span class="fi" style="background:var(--orange);color:var(--on-data)">${IC.lever}</span><div class="ft"><b>쓸 수 있는 저축이 목표보다 ${mw(gap)} 적어요.</b> 어떤 레버를 당길까?</div><a href="#simulator">시뮬레이터에서 레버 보기${IC.arrow}</a></div>`;
   const res = `<section class="cd full" style="display:flex;flex-direction:column;gap:16px">${flag}
     <div class="res"><div class="mainr">
       <span class="lbl">쓸 수 있는 저축${ii('usual')}</span>
@@ -606,7 +621,7 @@ function resultCards(X, rows) {
       <div style="display:flex;justify-content:space-between;align-items:center;gap:4px 12px;flex-wrap:wrap;margin-top:8px">
         <span style="display:flex;align-items:center;font-size:15px;font-weight:700">${pct}%<span style="font-size:12px;font-weight:500;color:var(--desc);margin-left:4px">내림 표시</span>${ii('floor')}</span>
         <span style="font-size:13px;font-weight:600;color:${ok ? 'var(--good)' : 'var(--warn)'}">${mw(gap)} ${ok ? '더' : '덜'} 모았어요</span></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
         <div><span style="font-size:13px;color:var(--desc);display:flex;align-items:center;height:24px">${last3.length}개월 평균${ii('avg3')}</span><b style="font-size:20px;letter-spacing:-0.02em;white-space:nowrap">${mw(avg)}</b></div>
         <div class="dots" aria-label="최근 달성 여부">${last3.map(r => `<div class="dot"><i style="background:${r.base >= save ? 'var(--lime)' : 'var(--orange2)'}"></i><span style="font-size:12px;font-weight:600">${mon(r.m)}월</span><span class="s12" style="white-space:nowrap">${mn(r.base)}</span></div>`).join('')}</div></div>
     </div>
@@ -630,21 +645,21 @@ function resultCards(X, rows) {
   const answered = V.checks.filter(c => ans[c.id]).length;
   const checks = `<section class="cd s2"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px 12px;flex-wrap:wrap">
       <div><div class="h2">확인해 주세요</div><div class="sub" style="margin-top:2px">Claude가 확실하지 않은 것만 모았어요</div></div>
-      ${V.checks.length ? `<span style="height:32px;padding:0 10px;border-radius:9px;background:var(--line2);font-size:13px;font-weight:600;display:flex;align-items:center;white-space:nowrap">${answered}/${V.checks.length} 골랐어요</span>` : ''}</div>
-    ${V.checks.length ? `<div style="margin-top:10px">${V.checks.map(c => `<div class="ck"><div style="flex:1 1 280px;min-width:0"><span class="ctag">${esc(c.tag)}</span><div class="ctt">${esc(c.title)}</div><div class="sub" style="margin-top:2px;line-height:1.5">${esc(c.detail)}</div><div style="font-size:13px;color:var(--ink2);margin-top:4px;line-height:1.5">Claude 판단 · ${esc(c.guess)}</div></div>
+      ${V.checks.length ? `<span style="height:32px;padding:0 10px;border-radius:9px;background:var(--line);font-size:13px;font-weight:600;display:flex;align-items:center;white-space:nowrap">${answered}/${V.checks.length} 골랐어요</span>` : ''}</div>
+    ${V.checks.length ? `<div style="margin-top:10px">${V.checks.map(c => `<div class="ck"><div style="flex:1 1 280px;min-width:0"><span class="ctag">${esc(c.tag)}</span><div class="ctt">${esc(c.title)}</div><div class="sub" style="margin-top:2px;line-height:1.5">${esc(c.detail)}</div><div style="font-size:13px;color:var(--ink);margin-top:4px;line-height:1.5">Claude 판단 · ${esc(c.guess)}</div></div>
         <div role="group" aria-label="확인" style="display:flex;gap:6px;flex:none"><button type="button" class="pick y" data-pick="${c.id}" data-v="yes" aria-pressed="${ans[c.id] === 'yes'}">맞아요</button><button type="button" class="pick n" data-pick="${c.id}" data-v="no" aria-pressed="${ans[c.id] === 'no'}">바꿀게요</button></div>
         ${ans[c.id] === 'no' ? `<input type="text" class="inp" data-note="${c.id}" value="${esc(notes[c.id] || '')}" aria-label="어떻게 바꿀지" placeholder="어떻게 바꿀까요? 예: 이 돈은 생활비예요">` : ''}</div>`).join('')}</div>
-    <div style="border-top:1px solid var(--line2);padding-top:14px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center"><div class="sub" style="flex:1 1 240px;min-width:0;line-height:1.5">고른 결과를 채팅에 붙여 넣으면 Claude가 다시 분류해서 화면을 고쳐요</div>
+    <div style="border-top:1px solid var(--line);padding-top:14px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center"><div class="sub" style="flex:1 1 240px;min-width:0;line-height:1.5">고른 결과를 채팅에 붙여 넣으면 Claude가 다시 분류해서 화면을 고쳐요</div>
       <button type="button" class="btn-k" data-copychecks style="flex:1 1 200px;max-width:280px;margin-left:auto"${answered ? '' : ' disabled'}>${IC.copy}확인 결과 복사</button></div>`
     : `<div class="dash" style="margin-top:12px;padding:20px 16px">이번 달은 확인할 게 없어요 · Claude가 모두 분류했어요</div>`}</section>`;
   const snapRows = [['전세 자기자금', x => M(x.jeonse.deposit - x.jeonse.loan), 'jeonse'], ['예적금 · 통장', x => M(x.H.cash + x.W.cash)], ['주식', x => M(x.H.invest + x.W.invest)], ['청약', x => M(x.H.sub + x.W.sub), 'sub'], ['페이머니', x => M(x.H.etc + x.W.etc), 'pay']];
   const snap = `<section class="cd"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><div class="h2">자산 스냅샷</div><span class="s12">${md(V.asOf)} 기준 · 지난 기록 대비</span></div>
     <div style="margin-top:10px">${snapRows.map(([l, f, tip]) => { const v = f(V.assets), d = v - f(V.prev); return `<div class="snap"><span style="display:flex;align-items:center;font-size:14px;min-width:0">${l}${tip ? ii(tip) : ''}</span><span class="sv"><b>${em(v)}</b>${Math.abs(d) < 0.5 ? '<span class="s12">변동 없음</span>' : `<span class="${d > 0 ? 'up' : 'dn'}">${d > 0 ? '▲' : '▼'}${mn(Math.abs(d))}</span>`}</span></div>`; }).join('')}</div>
-    <div style="margin-top:8px;border-radius:12px;background:var(--sub);padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:4px 12px;flex-wrap:wrap"><span style="display:flex;align-items:center;font-size:13px;color:var(--desc)">묶인 자산 · 퇴직연금${ii('pension')}</span><span style="font-size:13px;color:var(--ink2);white-space:nowrap;margin-left:auto"><b>${em(M(V.assets.emergency))}</b> · 순자산에서 빠져요</span></div></section>`;
+    <div style="margin-top:8px;border-radius:12px;background:var(--sub);padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:4px 12px;flex-wrap:wrap"><span style="display:flex;align-items:center;font-size:13px;color:var(--desc)">묶인 자산 · 퇴직연금${ii('pension')}</span><span style="font-size:13px;color:var(--ink);white-space:nowrap;margin-left:auto"><b>${em(M(V.assets.emergency))}</b> · 순자산에서 빠져요</span></div></section>`;
   return res + buckets + checks + snap;
 }
 // ----- 용돈 (현황판 20 · 11/03): 잠긴 기록 hh:pocket:<YYYY-MM> = { plan:{H,W}, H:[[날짜, 가게, 원, 분류, 메모]], W:[...] } -----
-const PKG = [['외식·카페', 'var(--orange)', '식당·배달·카페·술'], ['쇼핑', 'var(--orange2)', '온라인 쇼핑·구독'], ['꾸미기', 'var(--lemon)', '네일·헤어·옷'], ['생활', 'var(--lime2)', '편의점·마트·다이소'], ['기타', '#CFC8B8', '문화·우편·송금']];
+const PKG = [['외식·카페', 'var(--orange)', '식당·배달·카페·술'], ['쇼핑', 'var(--orange2)', '온라인 쇼핑·구독'], ['꾸미기', 'var(--lemon)', '네일·헤어·옷'], ['생활', 'var(--lime2)', '편의점·마트·다이소'], ['기타', 'var(--zero)', '문화·우편·송금']];
 const won = v => v < 10000 ? v.toLocaleString('ko-KR') + '원' : (v / 10000).toFixed(1).replace(/\.0$/, '') + '만';
 function pocketCard(m) {
   const P = (DATA.pocket || {})[m];
@@ -983,8 +998,8 @@ SIM.innerHTML = `
     <h1><span class="g">${pl(T.price)}</span> · ${hzLong(T.date)} 실거주 · ${T.type}${ii('first', '생애최초 설명')}</h1>
   </div>
   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-width:0">
-    <span class="pill-k" style="background:var(--ink);color:#fff;font-weight:600">${monthsLeft}개월 남음</span>
-    <span class="pill-k" style="border:1px solid var(--line);color:var(--ink2)">${T.label.replace(' 실거주', '')} · 소득 ${T.incomeBasis}</span>
+    <span class="pill-k" style="background:var(--ink);color:var(--on-ink);font-weight:600">${monthsLeft}개월 남음</span>
+    <span class="pill-k" style="border:1px solid var(--line);color:var(--ink)">${T.label.replace(' 실거주', '')} · 소득 ${T.incomeBasis}</span>
   </div>
 </section>
 <section class="cardw">
@@ -998,7 +1013,7 @@ SIM.innerHTML = `
       <div class="fld">
         <div class="fld-h"><span>가격</span><span style="display:flex;align-items:center;gap:6px"><span class="changed" id="lPriceCh" hidden>목표 ${pl(T.price)}에서 바꿈</span><b id="lPrice"></b></span></div>
         <div class="rg-wrap">${range('rPrice', 60000, 100000, 1000, 'var(--ink)', '가격')}<i class="rg-mark" style="left:calc(11px + (100% - 22px) * ${(T.price - 60000) / 40000})"></i></div>
-        <div class="ends"><span>6억</span><span style="font-weight:600;color:var(--ink2)">${pl(T.price)} 목표</span><span>10억</span></div>
+        <div class="ends"><span>6억</span><span style="font-weight:600;color:var(--ink)">${pl(T.price)} 목표</span><span>10억</span></div>
       </div>
       <div class="fld" style="gap:6px"><span style="font-size:14px;font-weight:600">지역</span>
         <div class="segm" role="radiogroup" aria-label="지역" id="gRegion"><div role="radio" tabindex="0" data-v="서울">규제지역${ii('tohuh', '규제지역 설명')}</div><div role="radio" tabindex="0" data-v="경기">비규제지역</div></div>
@@ -1009,7 +1024,7 @@ SIM.innerHTML = `
       </div>
     </div>
     <div class="lv">
-      <div class="lv-h"><div class="lv-ic" style="background:var(--lime);color:var(--limeink)">${SV.up}</div><div><div class="lv-t">자산 늘리기</div><div class="sub12">목표일까지 모을 돈</div></div></div>
+      <div class="lv-h"><div class="lv-ic" style="background:var(--lime);color:var(--on-data)">${SV.up}</div><div><div class="lv-t">자산 늘리기</div><div class="sub12">목표일까지 모을 돈</div></div></div>
       <div class="fld">
         <div class="fld-h"><span>월 저축</span><span style="display:flex;align-items:center;gap:6px"><span class="changed" id="lSaveCh" hidden>기준 ${man(save)}에서 바꿈</span><b id="lSave"></b></span></div>
         ${range('rSave', 0, 500, 10, 'var(--lime)', '월 저축')}
@@ -1019,12 +1034,12 @@ SIM.innerHTML = `
       </div>
     </div>
     <div class="lv">
-      <div class="lv-h"><div class="lv-ic" style="background:var(--ink);color:var(--lime)">${SV.bank}</div><div><div class="lv-t">대출 늘리기</div><div class="sub12">은행이 빌려줄 돈</div></div></div>
+      <div class="lv-h"><div class="lv-ic" style="background:var(--ink);color:var(--on-ink)">${SV.bank}</div><div><div class="lv-t">대출 늘리기</div><div class="sub12">은행이 빌려줄 돈</div></div></div>
       <div style="display:flex;flex-direction:column;gap:10px">
         <div class="sub12">대출 심사 소득(세전 총급여, ${incLabel}) · 금액을 직접 넣거나 밀어서 바꿔요</div>
         ${['H', 'W'].map(k => `<div class="fld" style="gap:2px">
-          <div class="fld-h" style="flex-wrap:nowrap"><span><span class="av22" style="${k === 'H' ? 'background:var(--ink);color:#fff' : 'background:var(--lime);color:var(--limeink)'}">${DATA.names[k][0] === '설' ? '빔' : '석'}</span>${DATA.names[k]} 연봉</span>
-          <label style="display:flex;align-items:center;gap:6px;flex:none"><input class="num" type="text" inputmode="numeric" autocomplete="off" id="n${k}" value="${Math.round(inc[k]).toLocaleString('ko-KR')}" aria-label="${DATA.names[k]} 연봉(만원)"><span style="font-size:14px;color:var(--ink2)">만원</span></label></div>
+          <div class="fld-h" style="flex-wrap:nowrap"><span><span class="av22" style="${k === 'H' ? 'background:var(--ink);color:var(--on-ink)' : 'background:var(--lime);color:var(--on-data)'}">${DATA.names[k][0] === '설' ? '빔' : '석'}</span>${DATA.names[k]} 연봉</span>
+          <label style="display:flex;align-items:center;gap:6px;flex:none"><input class="num" type="text" inputmode="numeric" autocomplete="off" id="n${k}" value="${Math.round(inc[k]).toLocaleString('ko-KR')}" aria-label="${DATA.names[k]} 연봉(만원)"><span style="font-size:14px;color:var(--ink)">만원</span></label></div>
           ${range('r' + k, 3000, 10000, 50, 'var(--lemon)', DATA.names[k] + ' 연봉')}
           <div class="ends"><span>3,000만</span><span>${incLabel} ${man(inc[k])}</span><span>1억</span></div></div>`).join('')}
       </div>
@@ -1041,7 +1056,7 @@ SIM.innerHTML = `
         <button type="button" class="sw" role="switch" id="swCredit" aria-label="신용대출 포함"><span></span></button></div>
       <div id="creditBox" hidden style="display:flex;flex-direction:column;gap:10px;margin-top:-6px;padding:12px;border-radius:12px;background:var(--sub)">
         <div class="fld" style="gap:6px"><span style="font-size:14px;font-weight:600">누구 명의로</span>
-          <div class="segm" role="radiogroup" aria-label="신용대출 명의" id="gWho" style="background:#fff"><div role="radio" tabindex="0" data-v="H">${DATA.names.H}</div><div role="radio" tabindex="0" data-v="W">${DATA.names.W}</div></div></div>
+          <div class="segm" role="radiogroup" aria-label="신용대출 명의" id="gWho" style="background:var(--card)"><div role="radio" tabindex="0" data-v="H">${DATA.names.H}</div><div role="radio" tabindex="0" data-v="W">${DATA.names.W}</div></div></div>
         <div class="fld">
           <div class="fld-h"><span>금액</span><b id="lCredit"></b></div>
           <input type="range" id="rCredit" min="0" max="10000" step="100" aria-label="신용대출 금액" style="--c:var(--desc)">
@@ -1103,21 +1118,21 @@ $('#gWho').addEventListener('click', e => { const b = e.target.closest('[data-v]
 $('#simReset').addEventListener('click', () => { upd(BASE()); toast('목표 값으로 되돌렸어요'); });
 
 // ----- 결과 -----
-const dash = '<div class="rc-v" style="color:var(--ph)">—</div>';
+const dash = '<div class="rc-v" style="color:var(--mute)">—</div>';
 function renderBanner() {
   const sN = (DATA.settlements || {})[DATA.asOf.slice(0, 7)] ? 1 : 0, due = new Date(asOf.getFullYear(), asOf.getMonth() + 1 + sN, 3, 23, 59), now = new Date(), dueM = (due.getMonth() + 11) % 12 + 1;
   let h = '';
-  if (!hasData) h = `<div class="banner"><div class="bi" style="background:var(--lime);color:var(--limeink)">${SV.plus}</div><div class="bt"><b>먼저 우리 자산을 넣어 주세요</b><div>첫 결산 파일을 올리면 순자산이 채워지고, 레버를 바꿀 때마다 결과가 계산돼요. 목표와 레버는 지금도 둘러볼 수 있어요.</div></div><button type="button" class="btn-lime" data-settle>첫 결산 하기</button></div>`;
+  if (!hasData) h = `<div class="banner"><div class="bi" style="background:var(--lime);color:var(--on-data)">${SV.plus}</div><div class="bt"><b>먼저 우리 자산을 넣어 주세요</b><div>첫 결산 파일을 올리면 순자산이 채워지고, 레버를 바꿀 때마다 결과가 계산돼요. 목표와 레버는 지금도 둘러볼 수 있어요.</div></div><button type="button" class="btn-lime" data-settle>첫 결산 하기</button></div>`;
   else if (now > due) {
     const late = Math.floor((now - due) / 864e5) + 1, mm = String(due.getMonth() + 1).padStart(2, '0');
-    h = `<div class="banner"><div class="bi" style="background:var(--ink);color:var(--lime)">${SV.bolt}</div><div class="bt"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0"><b>${dueM}월 결산이 아직이에요</b><span style="font-size:12px;color:var(--ink2);background:var(--line2);border-radius:6px;padding:2px 8px">마감 ${mm}.03 · ${late}일 지남</span></div><div>아래 결과는 ${asOf.getMonth() + 1}월 ${asOf.getDate()}일 자산 기준이에요. 결산을 넣으면 이 화면이 다시 계산돼요.</div></div><button type="button" class="btn-lime" data-settle>결산하기</button></div>`;
+    h = `<div class="banner"><div class="bi" style="background:var(--ink);color:var(--on-ink)">${SV.bolt}</div><div class="bt"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0"><b>${dueM}월 결산이 아직이에요</b><span style="font-size:12px;color:var(--ink);background:var(--line);border-radius:6px;padding:2px 8px">마감 ${mm}.03 · ${late}일 지남</span></div><div>아래 결과는 ${asOf.getMonth() + 1}월 ${asOf.getDate()}일 자산 기준이에요. 결산을 넣으면 이 화면이 다시 계산돼요.</div></div><button type="button" class="btn-lime" data-settle>결산하기</button></div>`;
   }
   $('#simBan').innerHTML = h;
 }
 function renderCards(R) {
   $('#simCond').textContent = condText(S) + ' 조건';
   if (!hasData) {
-    $('#simCards').innerHTML = `<div class="rc w2"><span class="rc-l">살 수 있는 집값</span><div class="buy"><div class="on" style="box-shadow:inset 0 0 0 2px var(--zero)"><div class="bl">규제지역</div><div class="bv" style="color:var(--ph)">—</div></div><div class="off"><div class="bl">비규제지역</div><div class="bv" style="color:var(--ph)">—</div></div></div><div class="sub12" style="margin-top:10px">자산을 넣으면 두 지역 값을 나란히 보여드려요</div></div>
+    $('#simCards').innerHTML = `<div class="rc w2"><span class="rc-l">살 수 있는 집값</span><div class="buy"><div class="on" style="box-shadow:inset 0 0 0 2px var(--zero)"><div class="bl">규제지역</div><div class="bv" style="color:var(--mute)">—</div></div><div class="off"><div class="bl">비규제지역</div><div class="bv" style="color:var(--mute)">—</div></div></div><div class="sub12" style="margin-top:10px">자산을 넣으면 두 지역 값을 나란히 보여드려요</div></div>
       <div class="rc"><span class="rc-l">대출 가능액</span>${dash}<div class="rc-s">결산 후 표시</div></div><div class="rc"><span class="rc-l">필요 현금</span>${dash}<div class="rc-s">매매가 + 부대비용 − 대출</div></div><div class="rc"><span class="rc-l">목표일 부족액</span>${dash}<div class="rc-s">자산 입력 후 계산돼요</div></div><div class="rc w15"><span class="rc-l">월 저축</span>${dash}<div class="rc-s">부부가 정한 기준 ${mw(R.mon)}</div></div>`;
     return;
   }
@@ -1159,16 +1174,16 @@ function renderCause(R) {
   const cz = [['dsr', '소득(DSR)'], ['ltv', 'LTV'], ['cap', '금액 상한'], ['nb', '특례 한도']].map(([id, l]) => hasData && R.cause === id
     ? `<span class="cz on">${l}<em>여기서 막힘</em>${ii(id)}</span>` : `<span class="cz off">${l}${ii(id)}</span>`).join('');
   const add = R.ok ? Math.max(0, Math.min(R.mon * R.months, R.L.cash - R.creditUsed - R.own)) : R.mon * R.months, cu = R.creditUsed > 0.5;
-  const fund = !hasData ? `<div style="height:32px;margin-top:12px;border-radius:7px;background:var(--line2);outline:1.5px dashed var(--zero);outline-offset:-1.5px"></div><div class="rc-s" style="margin-top:10px">자산이 들어오면 내 돈 · 대출 · 부족분이 이 막대에 채워져요</div>`
-    : `<div class="fund"><div style="flex:${R.own} 1 0;background:var(--lime);background-image:var(--hatch)"></div><div style="flex:${add} 1 0;background:var(--lime2);outline:1.5px dashed rgba(20,20,20,.25);outline-offset:-1.5px"></div><div style="flex:${R.L.amount} 1 0;background:var(--ink)"></div>${cu ? `<div style="flex:${R.creditUsed} 1 0;background:var(--desc);background-image:var(--hatch)"></div>` : ''}${R.ok ? '' : `<div style="flex:${R.gap} 1 0;background:var(--orange)"></div>`}</div>
+  const fund = !hasData ? `<div style="height:32px;margin-top:12px;border-radius:7px;background:var(--line);outline:1.5px dashed var(--zero);outline-offset:-1.5px"></div><div class="rc-s" style="margin-top:10px">자산이 들어오면 내 돈 · 대출 · 부족분이 이 막대에 채워져요</div>`
+    : `<div class="fund"><div style="flex:${R.own} 1 0;background:var(--lime);background-image:var(--hatch)"></div><div style="flex:${add} 1 0;background:var(--lime2);outline:1.5px dashed var(--mute);outline-offset:-1.5px"></div><div style="flex:${R.L.amount} 1 0;background:var(--ink)"></div>${cu ? `<div style="flex:${R.creditUsed} 1 0;background:var(--desc);background-image:var(--hatch)"></div>` : ''}${R.ok ? '' : `<div style="flex:${R.gap} 1 0;background:var(--orange)"></div>`}</div>
       <div class="flg"><div><i style="background:var(--lime)"></i><div><div class="sub12">내 돈 · 지금 순자산${S.pension ? '+퇴직연금' : ''}</div><b>${e2(R.own)}</b></div></div>
-        <div><i style="background:var(--lime2);outline:1px dashed rgba(20,20,20,.35)"></i><div><div class="sub12">내 돈 · 목표일까지 저축</div><b>${e2(add)}${R.ok ? ' (쓸 만큼)' : ''}</b></div></div>
+        <div><i style="background:var(--lime2);outline:1px dashed var(--mute)"></i><div><div class="sub12">내 돈 · 목표일까지 저축</div><b>${e2(add)}${R.ok ? ' (쓸 만큼)' : ''}</b></div></div>
         <div><i style="background:var(--ink)"></i><div><div class="sub12">대출</div><b>${e2(R.L.amount)}</b></div></div>
         ${cu ? `<div><i style="background:var(--desc)"></i><div><div class="sub12">신용대출 · 최후 카드</div><b>${e2(R.creditUsed)}</b></div></div>` : ''}
         ${R.ok ? '' : `<div><i style="background:var(--orange)"></i><div><div class="sub12">부족분</div><b style="color:var(--warn)">${e2(R.gap)}</b></div></div>`}</div>
       ${R.ok ? `<div class="note-box">${cu ? `목표일 자산 ${e2(R.fut)}을 모두 쓰고 <b>신용대출 ${e2(R.creditUsed)}</b>로 나머지를 메워요 · 매달 갚을 돈이 늘어나요` : `목표일 자산 ${e2(R.fut)} 중 ${e2(R.L.cash)}을 쓰고 <b>${e2(R.surplus)}이 남아요</b>`}</div>` : ''}`;
-  $('#simCause').innerHTML = `<div class="sec-t">대출이 막힌 원인</div><div class="chipz">${cz}</div><div style="font-size:14px;color:var(--ink2);margin-top:12px;line-height:1.55;text-wrap:pretty">${causeText(R)}</div>
-    <div style="height:1px;background:var(--line2);margin:20px 0 18px"></div>
+  $('#simCause').innerHTML = `<div class="sec-t">대출이 막힌 원인</div><div class="chipz">${cz}</div><div style="font-size:14px;color:var(--ink);margin-top:12px;line-height:1.55;text-wrap:pretty">${causeText(R)}</div>
+    <div style="height:1px;background:var(--line);margin:20px 0 18px"></div>
     <div style="display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap"><div class="sec-t">자금 구성${ii('cost', '부대비용 설명')}</div><div style="font-size:13px;color:var(--desc)">매매가 ${pl(S.price)} + 부대비용 ${e2(S.price * ASSUME.cost)} = ${e2(S.price * (1 + ASSUME.cost))}</div></div>${fund}`;
 }
 let SUG = [];
@@ -1196,13 +1211,13 @@ function renderSide(R) {
   if (!hasData) { el.innerHTML = `<div class="sec-t">어떤 레버를 당길까?</div><div class="rc-s" style="margin-top:2px">자산이 들어오면 효과가 큰 레버부터 골라 드려요</div><div style="display:flex;flex-direction:column;gap:8px;margin-top:14px"><div style="height:64px;border-radius:14px;background:var(--sub)"></div><div style="height:64px;border-radius:14px;background:var(--sub);opacity:.7"></div><div style="height:64px;border-radius:14px;background:var(--sub);opacity:.45"></div></div>`; return; }
   if (R.ok) {
     const other = S.region === '서울' ? '경기' : '서울', ob = other === '서울' ? R.buyR : R.buyN;
-    el.innerHTML = `<div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:var(--lime);color:var(--limeink);display:flex;align-items:center;justify-content:center;flex:none">${SV.check}</span><div class="sec-t">이 조건이면 ${hzLong(S.horizon)}에 닿아요</div></div>
+    el.innerHTML = `<div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:var(--lime);color:var(--on-data);display:flex;align-items:center;justify-content:center;flex:none">${SV.check}</span><div class="sec-t">이 조건이면 ${hzLong(S.horizon)}에 닿아요</div></div>
       <div style="display:flex;flex-direction:column;margin-top:14px"><div class="okrow"><span style="color:var(--desc)">살 수 있는 집값</span><b>${e2(R.buy)} ≥ ${pl(S.price)}</b></div>${R.creditUsed > 0.5 ? `<div class="okrow"><span style="color:var(--desc)">신용대출로 메우는 돈</span><b>${e2(R.creditUsed)} · 월 ${man(R.cPmt)}원(10년)</b></div>` : `<div class="okrow"><span style="color:var(--desc)">목표일에 남는 돈</span><b style="color:var(--good)">${e2(R.surplus)}</b></div>`}<div class="okrow" style="border:0"><span style="color:var(--desc)">월 저축 필요 / ${monLabel()}</span><b>${man(R.need)} / ${man(R.mon)}</b></div></div>
       <div class="note-box" style="margin-top:10px">${ob >= S.price ? `${RG[other]}으로 바꿔도 ${e2(ob)}이라 지역은 넓게 봐도 돼요.` : `${RG[other]}이면 ${e2(ob)}이라 이 가격엔 모자라요.`} ${goalDiff(S) ? '이 조건을 목표로 삼으려면 아래 ‘목표로 설정’을 누르세요.' : '지금 목표 그대로 닿아요.'}</div>`;
     return;
   }
   SUG = suggestions(R);
-  const icBg = { target: 'background:#fff;color:var(--ink)', up: 'background:var(--lime);color:var(--limeink)', bank: 'background:var(--ink);color:var(--lime)' };
+  const icBg = { target: 'background:var(--card);color:var(--ink)', up: 'background:var(--lime);color:var(--on-data)', bank: 'background:var(--ink);color:var(--on-ink)' };
   el.innerHTML = `<div class="sec-t">어떤 레버를 당길까?</div><div class="rc-s" style="margin-top:2px">목표일 부족액 ${e2(R.gap)}(필요 현금 기준). 하나만 당겨도 이만큼 달라져요.</div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">${SUG.map((g, i) => `<button type="button" class="sug" data-sug="${i}"><span class="si" style="${icBg[g.icon]}">${SV[g.icon]}</span>
       <span style="flex:1;min-width:0"><span style="display:block;font-weight:600">${g.t}</span><span style="display:block;font-size:13px;color:var(--desc);margin-top:2px">${g.X.price !== S.price ? `살 수 있는 집값 <b style="color:var(--ink)">${e2(g.R2.buy)}</b> ${g.R2.ok ? '≥' : '<'} ${pl(g.X.price)}` : `살 수 있는 집값 ${e2(R.buy)} → <b style="color:var(--ink)">${e2(g.R2.buy)}</b>`}${g.note ? ` · ${g.note}` : ''}</span></span>
@@ -1219,7 +1234,7 @@ const persist = () => store.set(SKEY, JSON.stringify(scen));
 function scCard(o, idx) {
   const R = calc(o.S), cur = same(o.S, S);
   return `<div class="sc${cur ? ' cur' : ''}"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0"><span style="font-size:16px;font-weight:700;letter-spacing:-0.02em">${esc(o.name)}</span>${cur ? '<span style="font-size:12px;font-weight:600;color:#fff;background:var(--ink);border-radius:6px;padding:1px 7px;white-space:nowrap">지금 보는 중</span>' : ''}</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0"><span style="font-size:16px;font-weight:700;letter-spacing:-0.02em">${esc(o.name)}</span>${cur ? '<span style="font-size:12px;font-weight:600;color:var(--on-ink);background:var(--ink);border-radius:6px;padding:1px 7px;white-space:nowrap">지금 보는 중</span>' : ''}</div>
       ${idx < 0 ? '' : `<span style="display:flex;gap:2px"><button type="button" class="icb" data-ren="${idx}" aria-label="이름 수정">${SV.pen}</button><button type="button" class="icb" data-del="${idx}" aria-label="삭제">${SV.trash}</button></span>`}</div>
     <div class="meta">${idx < 0 ? '<span>부부 목표 · PRD 기준</span>' : `<span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap">${o.mine ? '직접 지은 이름' : SV.spark + '추천 이름'}</span><span>·</span><span>${esc(o.date)} 저장</span>`}</div>
     <div class="cond">${condFull(o.S)}</div>
@@ -1230,9 +1245,9 @@ function scCard(o, idx) {
 }
 function renderScen() {
   const el = $('#simScen');
-  const head = `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px 12px;flex-wrap:wrap"><div><div class="h-big">시나리오 비교</div><div class="sub12" style="margin-top:4px">현재 목표 + 저장한 시나리오 최대 ${MAXSAVED}개 · 이 기기에만 저장돼요</div></div>${justSaved ? `<span style="display:flex;align-items:center;gap:6px;min-height:32px;padding:4px 10px;border-radius:9px;background:var(--lime2);color:var(--limeink);font-size:13px;font-weight:600">${SV.check}‘${esc(justSaved)}’ 저장했어요</span>` : ''}</div>`;
+  const head = `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px 12px;flex-wrap:wrap"><div><div class="h-big">시나리오 비교</div><div class="sub12" style="margin-top:4px">현재 목표 + 저장한 시나리오 최대 ${MAXSAVED}개 · 이 기기에만 저장돼요</div></div>${justSaved ? `<span style="display:flex;align-items:center;gap:6px;min-height:32px;padding:4px 10px;border-radius:9px;background:var(--lime2);color:var(--ink);font-size:13px;font-weight:600">${SV.check}‘${esc(justSaved)}’ 저장했어요</span>` : ''}</div>`;
   if (!hasData) { el.innerHTML = head + `<div style="margin-top:14px;border-radius:14px;border:1.5px dashed var(--zero);padding:28px 16px;text-align:center;color:var(--desc);font-size:14px;line-height:1.55">저장한 시나리오가 없어요<br>레버를 바꾼 뒤 ‘시나리오 저장’을 누르면 여기서 나란히 비교해요</div>`; return; }
-  el.innerHTML = head + `<div class="scg">${scCard({ name: '현재 목표', S: BASE() }, -1)}${scen.map((o, i) => scCard(o, i)).join('')}${Array.from({ length: Math.max(0, MAXSAVED - scen.length) }, (_, k) => `<button type="button" class="slot" data-save>${'<span style="width:40px;height:40px;border-radius:50%;background:var(--line2);color:var(--ink);display:flex;align-items:center;justify-content:center">' + SV.plus + '</span>'}<b style="color:var(--ink);font-size:15px">빈 자리</b><span>${k === 0 ? '지금 조건을 저장하면 여기에 놓여요' : '다음에 저장한 시나리오가 놓여요'}</span></button>`).join('')}</div>`;
+  el.innerHTML = head + `<div class="scg">${scCard({ name: '현재 목표', S: BASE() }, -1)}${scen.map((o, i) => scCard(o, i)).join('')}${Array.from({ length: Math.max(0, MAXSAVED - scen.length) }, (_, k) => `<button type="button" class="slot" data-save>${'<span style="width:40px;height:40px;border-radius:50%;background:var(--line);color:var(--ink);display:flex;align-items:center;justify-content:center">' + SV.plus + '</span>'}<b style="color:var(--ink);font-size:15px">빈 자리</b><span>${k === 0 ? '지금 조건을 저장하면 여기에 놓여요' : '다음에 저장한 시나리오가 놓여요'}</span></button>`).join('')}</div>`;
 }
 $('#simScen').addEventListener('click', e => {
   const t = e.target.closest('[data-load],[data-del],[data-ren],[data-save]'); if (!t) return;
@@ -1261,11 +1276,11 @@ function openDlg(html) { closeDlg(); closeTip(); dlg = document.createElement('d
 function openSave(renameIdx) {
   const ren = renameIdx !== undefined, X = ren ? scen[renameIdx].S : S, R = calc(X), N = names(X); let ai = 0;
   const d = openDlg(`<div class="dt">${ren ? '이름 수정' : '시나리오 저장'}</div><div class="rc-s" style="margin-top:2px">${ren ? '시나리오 이름만 바꿔요' : scen.length >= MAXSAVED ? `${MAXSAVED}자리가 꽉 찼어요 · 저장하면 가장 오래된 ‘${esc(scen[0].name)}’ 자리에 들어가요` : `저장하면 ‘시나리오 비교’에 나란히 놓여요 · 빈 자리 ${MAXSAVED - scen.length}개`}</div>
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:18px"><label for="scName" style="font-size:14px;font-weight:600">이름</label><span id="scTag" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink2);background:var(--line2);border-radius:6px;padding:2px 8px;white-space:nowrap"></span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:18px"><label for="scName" style="font-size:14px;font-weight:600">이름</label><span id="scTag" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink);background:var(--line);border-radius:6px;padding:2px 8px;white-space:nowrap"></span></div>
     <input id="scName" type="text" maxlength="24" value="${esc(ren ? scen[renameIdx].name : N[0])}">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px"><span class="sub12">레버 조건을 보고 지은 이름이에요 · 바꿔도 돼요</span><button type="button" id="scRe" style="flex:none;height:40px;padding:0 10px;margin-right:-10px;border:0;background:transparent;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap">${SV.reset}다시 추천</button></div>
     <div class="grid2"><span>조건</span><span>${condFull(X)}</span><span>살 수 있는 집값</span><b>${e2(R.buy)} · ${R.ok ? '달성' : `목표 ${pl(X.price)}의 ${pctOf(R.buy, X.price)}%`}</b><span>목표일</span><b>${R.ok ? e2(R.surplus) + ' 남아요' : e2(R.gap) + ' 부족해요'}</b></div>
-    <div class="row-b"><button type="button" data-x style="border:1px solid var(--zero);background:#fff">취소</button><button type="button" id="scOk" style="border:0;background:var(--ink);color:#fff">저장</button></div>`);
+    <div class="row-b"><button type="button" data-x style="border:1px solid var(--zero);background:var(--card)">취소</button><button type="button" id="scOk" style="border:0;background:var(--ink);color:var(--on-ink)">저장</button></div>`);
   const inp = d.querySelector('#scName'), tag = () => { const isAi = N.includes(inp.value); d.querySelector('#scTag').innerHTML = isAi ? SV.spark + '추천 이름' : '직접 수정'; };
   tag(); inp.addEventListener('input', tag); setTimeout(() => inp.focus(), 30);
   d.querySelector('#scRe').addEventListener('click', () => { ai = (ai + 1) % N.length; inp.value = N[ai]; tag(); });
@@ -1288,8 +1303,8 @@ function openConfirm() {
   const msg = `[내집마련 대시보드 목표 변경 요청]\n지금 목표: ${from}\n새 목표: ${to}\n조건: ${condFull(S)}\n살 수 있는 집값 ${e2(R.buy)} · ${R.ok ? '목표일에 ' + e2(R.surplus) + ' 남음' : '목표일 부족액 ' + e2(R.gap)}\nPRD 결정 기록에 남기고 대시보드 목표를 바꿔줘.`;
   const d = openDlg(`<div class="dt">이 조건을 새 목표로 설정할까요?</div>
     <div class="grid2"><span>지금 목표</span><span style="color:var(--desc)">${from}</span><span>새 목표</span><b>${to}</b></div>
-    <div style="font-size:14px;color:var(--ink2);margin-top:14px;line-height:1.6">이 대시보드는 링크 공유형이라 목표는 Claude가 바꿔요. <b>‘복사하기’</b>를 누르면 변경 내용이 복사돼요. 내집마련 대시보드 채팅에 붙여 넣으면 홈의 목표 · 격차 · 집값 그래프가 새 목표로 바뀌고, 이전 목표는 PRD 기록에 남아 <b>언제든 되돌릴 수 있어요.</b></div>
-    <div class="row-b"><button type="button" data-x style="border:1px solid var(--zero);background:#fff">취소</button><button type="button" id="cfOk" style="border:0;background:var(--ink);color:#fff">복사하기</button></div>`);
+    <div style="font-size:14px;color:var(--ink);margin-top:14px;line-height:1.6">이 대시보드는 링크 공유형이라 목표는 Claude가 바꿔요. <b>‘복사하기’</b>를 누르면 변경 내용이 복사돼요. 내집마련 대시보드 채팅에 붙여 넣으면 홈의 목표 · 격차 · 집값 그래프가 새 목표로 바뀌고, 이전 목표는 PRD 기록에 남아 <b>언제든 되돌릴 수 있어요.</b></div>
+    <div class="row-b"><button type="button" data-x style="border:1px solid var(--zero);background:var(--card)">취소</button><button type="button" id="cfOk" style="border:0;background:var(--ink);color:var(--on-ink)">복사하기</button></div>`);
   d.querySelector('#cfOk').addEventListener('click', () => copyText(msg).then(ok => { closeDlg(); toast(ok ? '복사했어요 · 채팅에 붙여 넣어 주세요' : '복사가 막혔어요 · 조건을 채팅에 적어 주세요'); }));
 }
 
@@ -1325,7 +1340,7 @@ function renderPay(R) {
     return { i, mr, cr, tot: mp + cp, int: mi + ci, mp, cp }; });
   el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap"><div class="sec-t">매달 갚을 돈 (예상)</div><div class="sub12">주담대 ${e2(amt)} · 30년 원리금균등${cu ? ` + 신용대출 ${e2(R.creditUsed)} · 10년 분할` : ''} · 첫 달 기준</div></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:14px">${cols.map(c => `
-      <div style="border-radius:14px;padding:14px;${c.i === 1 ? 'box-shadow:inset 0 0 0 2px var(--ink);background:#fff' : 'background:var(--sub)'}">
+      <div style="border-radius:14px;padding:14px;${c.i === 1 ? 'box-shadow:inset 0 0 0 2px var(--ink);background:var(--card)' : 'background:var(--sub)'}">
         <div style="display:flex;justify-content:space-between;gap:6px;font-size:12px;color:var(--desc)"><b style="color:var(--ink)">${PAYRATE.label[c.i]}</b><span>${PAYRATE.why[c.i]}</span></div>
         <div style="font-size:26px;font-weight:800;letter-spacing:-0.03em;line-height:1.15;margin-top:8px;white-space:nowrap">월 ${man(c.tot)}원</div>
         <div class="sub12" style="margin-top:6px">그중 이자 <b style="color:var(--ink)">${man(c.int)}원</b>${takeHome ? ` · 실수령의 ${Math.round(c.tot / takeHome * 100)}%` : ''}</div>
