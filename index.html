@@ -29,6 +29,7 @@ body:not(.hh-locked) > #hh-lock { display: none; }
 
 
 <title>내집마련 대시보드</title>
+<link rel="preload" href="fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
@@ -776,6 +777,97 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
   .pill,.lab,.goal-line span,.kd .up,.kd .dn,.sneed b,.hr .rt div:first-child{font-weight:600}
   .hr .mid div:first-child{font-weight:500}
 }
+
+/* ===== 23번 세부 요소 (DESIGN.md '세부 요소') — 홈에 적용. 다른 화면은 24번 ===== */
+/* 색: DESIGN.md 값(글자 대비 4.5:1). 이름(변수)만 쓴다 */
+:root{--mute:#767672;--good:#3F7A0A;--warn:#A85A16;--lemon2:#F8F0A8;--orange2:#F9C38F}
+/* 글자: hero 40 · num-l 28 · num-s 20 · title 16 · body 14 · small 12, 굵기 500·600·700 */
+body{font-size:14px;font-weight:500}
+main .note,main .cs,main .legend,main .tick span,main .lab,main .goal-line span,main .vtop,main .kd,main .kl,main .sl,main .sm,main .dr .s,main .donut .c span,main .tip .tt,main .tip .tg,main .tip .memo,main .hist .hh,main .hr .mid div:last-child,main .hr .rt div:last-child,main .di .cnt,main .dlist .dh span,main .fx,main .fgrp,main .bub,main .eq .t,main .eq .s,.v2,.cta .t2,.toast{font-size:12px}
+main .di,main .dr,main .dlist .dh,main .hr .mid div:first-child,main .hr .rt div:first-child,main .eq.br .t,main .sav-mini .st,.cta .t1,.v1{font-size:14px}
+main .ct{font-size:16px;font-weight:600}
+main .donut .c b,main .eq-m .mr b{font-size:20px;font-weight:700}
+main .kv,main .eq.br .v{font-size:28px;font-weight:700}
+main .kv small{font-size:16px;font-weight:600}
+main .gs{font-size:20px;font-weight:700}main .gs .amt{font-size:28px;font-weight:700}main .gs .rest{font-weight:500}
+main .eq.br .op{font-weight:500}
+main b,main strong{font-weight:600}
+.brand span{font-weight:700}
+main .tip .tg b,main .pill{font-weight:600}
+/* 카드: 모서리 18 · 여백 20(휴대폰 16) · 묶음 12 */
+section.card,.cta{border-radius:18px}
+.cta{padding:16px 20px}
+.cta .t1{overflow-wrap:normal}
+.eq,.emer,.tip,.bub,.hm,.ask input,.sheet .x{border-radius:12px}
+.msg.me .bub{border-radius:12px 12px 4px 12px}.msg:not(.me) .bub{border-radius:12px 12px 12px 4px}
+.fx,.fgrp,.savm .sm,.pill,.chip{border-radius:999px}
+.fx,.fgrp{padding:2px 8px}
+.fx{font-weight:600;color:var(--ink)}
+.hm{background:var(--orange2);color:var(--ink);font-weight:600}.hm.ok{background:var(--sub);color:var(--ink)}
+.savm .sm{padding:2px 8px}
+.savm .sm.ok{background:var(--lime2);color:var(--ink)}.savm .sm.no{background:var(--orange2);color:var(--ink)}
+.chip{height:28px;padding:0 10px;color:var(--desc);font-size:12px}
+/* 진행 막대: 높이 12, 바탕 lime2, 채움 lime, 끝 4px */
+.bar{height:12px;border-radius:4px;background:var(--lime2)}
+.bar div{border-radius:4px}
+/* 그래프: 말풍선 12px·떠 있는 그림자, 막대 끝 4px */
+.tip{box-shadow:0 1px 3px rgba(0,0,0,.15),0 0 0 1px var(--line)}
+.stack div{border-radius:4px}
+#fChart .cl > div[style*="border-radius"],#fChart .cl > div > div{border-radius:4px!important}
+.legend i{width:8px;height:8px;border-radius:2px}
+/* 내비게이션: 메뉴 높이 40 · 모서리 12 · 아이콘 20, 고른 메뉴 sub + ink 600 */
+.mi{height:40px;border-radius:12px;font-size:14px;color:var(--desc)}
+.mi svg{width:20px;height:20px}
+.mi.on,a.mi.on{background:var(--sub);color:var(--ink);font-weight:600}
+a.mi:hover,.mi.soon:hover{background:var(--sub);color:var(--ink)}
+.mi.soon{color:var(--mute)}
+.tabbar svg{width:20px;height:20px}
+.tabbar a,.tabbar button{gap:4px;color:var(--desc);font-weight:500}
+.tabbar .on{color:var(--ink);font-weight:600}
+.tabbar .on .tbi{background:var(--sub)}
+.tabbar .tbi{width:48px;height:28px;border-radius:999px;display:flex;align-items:center;justify-content:center}
+/* 버튼: 기본(ink) · 보조(테두리) · 글자. 높이 40(휴대폰 44), 모서리 12 */
+.btn-dark{height:40px;border-radius:12px;font-size:14px}
+.viewer{height:40px;border-radius:12px}
+.btn-sub{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;flex:none}
+.btn-sub:hover,.fold-btn:hover,.chips button:hover{background:var(--sub)}
+.fold-btn{height:40px;border-radius:12px;font-size:14px;font-weight:600;color:var(--ink)}
+.chips button{height:32px;padding:0 12px;border-radius:999px;font-size:12px;font-weight:500;color:var(--ink)}
+.ask input{height:40px;font-size:14px}
+.ask button{width:40px;height:40px;border-radius:12px}
+.cta .ic{background:var(--sub);color:var(--ink)}
+/* 토글(알약 선택): sub 묶음, 고른 것만 ink + 흰 글자 */
+.seg{border-radius:999px;padding:4px;gap:4px}
+.seg button{height:32px;padding:0 12px;border-radius:999px;font-size:12px;font-weight:500;color:var(--desc)}
+.seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--ink);color:#fff;font-weight:600;box-shadow:none}
+.seg button:not([aria-pressed="true"]):not([aria-selected="true"]):not([aria-disabled="true"]):hover{color:var(--ink)}
+.seg button[aria-disabled="true"]{color:var(--mute);opacity:.6}
+/* 눌렀을 때 98%, 포커스는 ink 2px */
+.btn-dark,.btn-sub,.fold-btn,.seg button,.chips button,.ask button,.mi,.tabbar a,.tabbar button,.viewer,.dr{transition:transform .1s ease-out,background-color .15s ease-out,color .15s ease-out}
+.btn-dark:active,.btn-sub:active,.fold-btn:active,.seg button:active,.chips button:active,.ask button:active,.mi:active,.viewer:active,.tabbar a:active,.tabbar button:active{transform:scale(.98)}
+button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+a:hover{color:var(--ink)}
+/* 화면 전환 150ms 흐릿하게, 펼치기·카드 안 탭 200ms 위에서 4px */
+@keyframes ui-fade{from{opacity:0}}
+@keyframes ui-rise{from{opacity:0;transform:translateY(-4px)}}
+main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]){animation:ui-fade .15s ease-out}
+#assetMore:not([hidden]),#rtHist:not([hidden]),#rtBot:not([hidden]),#spDetail .dlist,.sheet{animation:ui-rise .2s ease-out}
+.cl.on .tip{animation:ui-fade .15s ease-out}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+/* 빈 상태: 무엇이 없는지 + 언제 채워지는지 */
+.empty{display:flex;align-items:center;justify-content:center;text-align:center;min-height:64px;padding:12px 16px;border-radius:12px;background:var(--sub);color:var(--desc);font-size:14px;margin-top:8px}
+.eq.br .v.wait,.eq-m .mr em{font-size:12px;color:var(--mute);font-weight:500}
+@media (max-width:560px){
+  section.card{padding:16px;border-radius:18px}
+  .btn-dark,.btn-sub,.viewer,.fold-btn,.ask button{height:44px}
+  .ask button{width:44px}
+  .ask input{height:44px;font-size:16px}
+  .seg button{height:40px;font-size:14px}
+  .chips button{height:40px;font-size:14px}
+  main .kv{font-size:24px}
+  main .gs{font-size:16px}
+  main .tick span,main .lab{font-size:12px}
+}
 </style>
 
 <header class="top">
@@ -788,7 +880,7 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
         <div><div class="v1" id="viewerName">⟦H⟧ 보는 중</div></div>
       </button>
       <button class="btn-dark" type="button" data-open="settle">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4"/></svg>
         <span>결산 방법</span>
       </button>
     </div>
@@ -865,11 +957,11 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
 
     <div class="col right">
       <div class="cta">
-        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM4 10h16M8 3v5M16 3v5"/></svg></div>
         <div style="flex:1;min-width:0">
           <div class="t1" id="ctaT1">다음 결산</div>
         </div>
-        <button class="btn-lime" type="button" data-open="settle">결산 방법 보기</button>
+        <button class="btn-sub" type="button" data-open="settle">결산 방법 보기</button>
       </div>
       <section class="card">
         <div class="head">
@@ -900,7 +992,7 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
         <div class="chips" id="chips"></div>
         <form class="ask" id="askForm">
           <input id="askInput" type="text" placeholder="빔글석굴에게 물어보기" aria-label="질문" maxlength="120">
-          <button type="submit" aria-label="보내기"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <button type="submit" aria-label="보내기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </form>
         </div>
       </section>
