@@ -167,7 +167,7 @@ const gData = steps.map(k => {
 let gHover = null;
 function renderG() {
   const box = $('#gChart'), GMAX = Math.ceil(Math.max(T.price * 1.1, ...gData.map(g => g.a + g.ln)) / 10000) * 10000;
-  const H = 200, B = 226, y = v => B - v / GMAX * H, act = gHover ?? (box.clientWidth >= 640 ? 0 : -1);
+  const H = 120, B = 146, y = v => B - v / GMAX * H, act = gHover ?? (box.clientWidth >= 640 ? 0 : -1);
   const tickVals = []; for (let v = 0; v <= GMAX; v += GMAX > 80000 ? 20000 : 10000) tickVals.push(v);
   let h = tickVals.map(v => `<div class="tick${v ? '' : ' zero'}" style="top:${y(v)}px"><span>${v / 10000}억</span></div>`).join('');
   h += `<div class="goal-line" style="top:${y(T.price)}px"><span>목표 ${eok(T.price)}</span></div>`;
@@ -251,7 +251,7 @@ function renderF() {
     ? `<span><i style="background:var(--lime)"></i>쓸 수 있는 저축(+)</span><span><i style="background:var(--orange)"></i>마이너스</span><span style="color:var(--ph)">축의금·일회성 지출 제외</span>`
     : `<span><i style="background:var(--lemon)"></i>수입</span><span><i style="background:var(--orange)"></i>소비</span>`;
   const SER = series(fPeriod);
-  const isSav = fView === '저축', H = 186, B = 226, cur = SER.length - 1;
+  const isSav = fView === '저축', H = 106, B = 146, cur = SER.length - 1;
   const hi = isSav ? Math.max(0, ...SER.map(r => r.base)) : Math.max(...SER.map(r => Math.max(r.inc, r.exp)));
   const lo = isSav ? Math.min(0, ...SER.map(r => r.base)) : 0;
   const span = (hi - lo) || 1, zeroY = B - (0 - lo) / span * H, py = v => B - (v - lo) / span * H;
@@ -298,7 +298,8 @@ hoverable('#fChart', 'f', () => fHover, v => { fHover = v; renderF(); });
 const savPct = Math.max(0, Math.min(100, base3 / save * 100));
 $('#savBar').style.width = savPct + '%';
 $('#savNow').innerHTML = `최근 3개월 평균 ${sman(base3)} <span style="color:${base3 >= save ? 'var(--good)' : 'var(--warn)'}">${base3 >= save ? '달성' : '미달'}</span>`;
-$('#savGoal').textContent = '목표 ' + man(save);
+$('#savGoal').textContent = man(save);
+$('#savNeed').innerHTML = `제때 사려면 월 <b>${man(needPerMonth)}</b>`;
 $('#savMonths').innerHTML = R3.map(r => `<span class="sm ${r.base >= save ? 'ok' : 'no'}"><b>${mon(r.m)}월</b> ${sman(r.base)}</span>`).join('');
 
 // ===== 소비 구성 =====
@@ -421,6 +422,12 @@ $('#sheetX').addEventListener('click', () => { sheet.hidden = true; });
 sheet.addEventListener('click', e => { if (e.target === sheet) sheet.hidden = true; });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !sheet.hidden) sheet.hidden = true; });
 
+// 22번 한 화면: 자산 항목 접기, 결산 기록·도우미 탭
+$('#assetFold').addEventListener('click', () => { const b = $('#assetFold'), open = b.getAttribute('aria-expanded') !== 'true';
+  b.setAttribute('aria-expanded', open); b.textContent = open ? '항목 접기' : '항목 펼치기'; $('#assets').classList.toggle('fold', !open); $('#assetMore').hidden = !open; });
+$('#rTabs').addEventListener('click', e => { const b = e.target.closest('[data-rt]'); if (!b) return; const bot = b.dataset.rt === 'bot';
+  $('#rTabs').querySelectorAll('button').forEach(x => { const on = x === b; x.setAttribute('aria-selected', on); x.setAttribute('aria-pressed', on); });
+  $('#rtHist').hidden = bot; $('#rtBot').hidden = !bot; $('#hRange').hidden = bot; if (bot) { const l = $('#log'); l.scrollTop = l.scrollHeight; } });
 renderViewer(); renderEq(); renderG(); renderPeriods(); renderF(); renderHRange(); renderHist(); renderSpend(); renderAssets(); renderChat();
 
 ;
