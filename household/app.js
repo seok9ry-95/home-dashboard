@@ -154,7 +154,7 @@ function renderEq() {
   const row = (label, buy, g) => `<div class="row"><div><div class="t">${label}</div>${buy === null ? '<div class="v wait">첫 결산 뒤에 나와요</div>' : `<div class="v" style="color:var(--good)">${e2(buy)}</div>`}</div>
     <span class="op" aria-hidden="true">=</span><div><div class="t">목표와의 격차</div>${g === null ? '<div class="v wait">—</div>' : `<div class="v" style="color:${col(g)}">${amt2(g)}</div>`}</div></div>`;
   $('#eq').innerHTML = `<div class="goal"><div class="t">목표</div><div class="v">${eok(T.price)}</div></div>
-  <div class="fork">${row(`계획(월 ${man(save)})대로면 살 수 있는 집`, canBuy, gap)}${row('실제 추세면 살 수 있는 집', TREND === null ? null : canBuyTrend, gapT)}</div>`;
+  <div class="fork">${row(`계획(월 ${man(save)})대로면 살 수 있는 집`, canBuy, gap)}${row(TREND === null ? '실제 추세면 살 수 있는 집' : `실제 추세(월 ${man(TREND)})면 살 수 있는 집`, TREND === null ? null : canBuyTrend, gapT)}</div>`;
 }
 
 // 집값 추이: 지금부터 목표일까지 3개월 간격 예상
