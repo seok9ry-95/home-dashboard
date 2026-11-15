@@ -737,6 +737,24 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
   .gs-l{display:none}.gs-s{display:inline;white-space:nowrap}
   .goal-sent .pill{height:28px;padding:0 10px}
 }
+
+/* 휴대폰(앱) 목표 칸: 목록형, 금액과 격차 한 줄 */
+.eq-m{display:none}
+@media (max-width:560px){
+  .eq.br{display:block;padding:4px 16px}
+  .eq.br > .goal,.eq.br > .fork{display:none}
+  .eq-m{display:block}
+  .eq-m .mr{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 0}
+  .eq-m .mr + .mr{border-top:1px solid var(--line)}
+  .eq-m .mr.head{border-bottom:1px solid var(--line)}
+  .eq-m .mr + .mr.head,.eq-m .mr.head + .mr{border-top:0}
+  .eq-m .mr span{font-size:14px;font-weight:600;color:var(--ink2);min-width:0}
+  .eq-m .mr b{font-size:20px;font-weight:700;letter-spacing:-0.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .eq-m .mr.head b{color:var(--ink)}
+  .eq-m .mr:not(.head) b{color:var(--good)}
+  .eq-m .mr i{font-style:normal;font-size:14px;font-weight:600;margin-left:6px}
+  .eq-m .mr em{font-style:normal;font-size:14px;color:var(--mute)}
+}
 /* 휴대폰 글자: 크기 12·14·16·20·24, 굵기 500·600·700만 (DESIGN.md) */
 @media (max-width:560px){
   main{font-weight:500}

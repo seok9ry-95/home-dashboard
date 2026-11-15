@@ -153,8 +153,14 @@ function renderEq() {
   const amt2 = g => g ? e2(g) : '달성', col = g => g ? 'var(--warn)' : 'var(--good)';
   const row = (label, buy, g) => `<div class="row"><div><div class="t">${label}</div>${buy === null ? '<div class="v wait">첫 결산 뒤에 나와요</div>' : `<div class="v" style="color:var(--good)">${e2(buy)}</div>`}</div>
     <span class="op" aria-hidden="true">=</span><div><div class="t">목표와의 격차</div>${g === null ? '<div class="v wait">—</div>' : `<div class="v" style="color:${col(g)}">${amt2(g)}</div>`}</div></div>`;
+  const mrow = (label, buy, g) => `<div class="mr"><span>${label}</span>${buy === null ? '<em>첫 결산 뒤에 나와요</em>' : `<b>${e2(buy)}<i style="color:${col(g)}">(${g ? '−' + (g / 10000).toFixed(2) : '달성'})</i></b>`}</div>`;
   $('#eq').innerHTML = `<div class="goal"><div class="t">목표</div><div class="v">${eok(T.price)}</div></div>
-  <div class="fork">${row(`계획(월 ${man(save)})대로면 살 수 있는 집`, canBuy, gap)}${row(TREND === null ? '실제 추세면 살 수 있는 집' : `실제 추세(월 ${man(TREND)})면 살 수 있는 집`, TREND === null ? null : canBuyTrend, gapT)}</div>`;
+  <div class="fork">${row(`계획(월 ${man(save)})대로면 살 수 있는 집`, canBuy, gap)}${row(TREND === null ? '실제 추세면 살 수 있는 집' : `실제 추세(월 ${man(TREND)})면 살 수 있는 집`, TREND === null ? null : canBuyTrend, gapT)}</div>
+  <div class="eq-m">
+    <div class="mr head"><span>목표</span><b>${eok(T.price)}</b></div>
+    ${mrow(`계획대로 · 월 ${man(save)}`, canBuy, gap)}
+    ${mrow(TREND === null ? '실제 추세' : `실제 추세 · 월 ${man(TREND)}`, TREND === null ? null : canBuyTrend, gapT)}
+  </div>`;
 }
 
 // 집값 추이: 지금부터 목표일까지 3개월 간격 예상
