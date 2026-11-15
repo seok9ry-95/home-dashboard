@@ -11,6 +11,9 @@ const ASSUME = { rate: .0488, nbRate: .03, years: 30, cost: .04, rateAsOf: '2026
 const BASIS = {
   zoneChecked: '2026-11-01', creditChecked: '2026-10-11', savingDecided: '2026-10-10',
   history: [
+    { v: '2026.11-1', from: '2026-11-15', assetsAsOf: '2026-10-09', buy: 75700,
+      changes: ['매수 전략 변경: 갱신청구권으로 전세 연장 → 잔금 목표 2028.1 → 2028.6', '대출 심사 소득을 2027 예상(총급여)으로 · ⟦H⟧ 2026·2027 2년 평균(보수적)', '모자랄 때 순서: 퇴직연금(IRP) 인출 → 신용대출'],
+      why: '2027 원천징수영수증(2028년 2~3월 발급)으로 대출받고, 해지 통지 3개월 뒤 보증금을 받음' },
     { v: '2026.10-3', from: '2026-11-01', assetsAsOf: '2026-10-09', buy: 71000,
       changes: ['주담대 금리 가정 4.66% → 4.88% (2026-09 한국은행 평균)', '월 상환 예측 중간 금리 4.66% → 4.88%'],
       why: '최신 공식 평균을 따름 (11/01 월간 금리 점검)' },
@@ -50,8 +53,12 @@ const sumP = p => p.cash + p.invest + p.sub + p.etc;
 const finH = M(sumP(A.H)), finW = M(sumP(A.W));
 const jeonseNet = M(A.jeonse.deposit - A.jeonse.loan);
 const netNow = finH + finW + jeonseNet;
-const inc = { H: M(DATA.income.H), W: M(DATA.income.W) };
-const T = { ...DATA.target, price: M(DATA.target.price) };
+// 11/15 매수 전략(계산 기준 11-1): 잔금일과 대출 심사 소득은 hh:strategy가 있으면 그것을 쓴다. 실제 소득 기록(hh:income)은 그대로 둔다
+const ST = DATA.strategy || null;
+const LI = ST && ST.loanIncome ? ST.loanIncome : DATA.income;
+const incLabel = ST && ST.loanIncome ? (ST.loanIncomeLabel || '2027 예상') : '지금';
+const inc = { H: M(LI.H), W: M(LI.W) };
+const T = { ...DATA.target, price: M(DATA.target.price), ...(ST && ST.date ? { date: ST.date } : {}) };
 const asOf = new Date(DATA.asOf + 'T00:00:00');
 const [ty, tm] = T.date.split('-').map(Number);
 const monthsLeft = Math.max(1, (ty - asOf.getFullYear()) * 12 + tm - (asOf.getMonth() + 1));
@@ -64,7 +71,7 @@ const needPerMonth = needOf(L8.cash, netNow, monthsLeft);   // 월 필요 저축
 const gapAtTarget = Math.max(0, L8.cash - future);
 const monthsToGoal = save > 0 ? Math.ceil(needNow / save) : Infinity;
 const extraMonths = Math.max(0, monthsToGoal - monthsLeft);
-// 전세 연장(2030.1) 시 살 수 있는 집값 — 도우미 답변용, 계획 월 저축 기준
+// 잔금을 갱신 만기(2030.1)로 미룰 때 살 수 있는 집값 — 도우미 답변용, 계획 월 저축 기준
 const canBuyExt = affordable(T, inc, netNow + save * Math.max(1, (2030 - asOf.getFullYear()) * 12 + 1 - (asOf.getMonth() + 1)));
 
 // ===== 포맷 =====
@@ -396,8 +403,8 @@ const top2 = (() => { const r = last, t = M(r.expH + r.expW); return CATS.map(([
 const Lsolo = loan({ ...T, incomeBasis: '남편 단독' }, inc);
 function reply(q) {
   const t = q.replace(/\s/g, '');
-  if (/대출|DSR|한도|LTV|상환/.test(t)) return `${T.region} ${eok(T.price)} ${T.type} 기준, 두 사람 소득 합산(${man(inc.H + inc.W)})이면 대출 ${e2(L8.amount)}까지 가능해요. LTV 한도(${e2(L8.ltv)})보다 소득 한도에 먼저 막혀요. 월 상환은 약 ${man(Math.round(L8.monthly))}이에요.\n⟦H⟧ 단독 소득이면 ${e2(Lsolo.amount)}으로 줄어서, 혼인신고 후 합산이 유리해요.`;
-  if (/목표|달성|언제|가능|얼마나|집값/.test(t)) return `계획대로 월 ${man(save)}씩 모으면 ${ym(T.date)}에 살 수 있는 집은 ${e2(canBuy)}, 목표의 ${pct}%예요.${TREND === null ? '' : ` 실제 추세(${mon(TREND_FROM)}월부터 평균 월 ${man(TREND)})면 ${e2(canBuyTrend)}이에요.`}\n${eok(T.price)}에 제때 닿으려면 월 ${man(needPerMonth)}이 필요하고, 계획대로면 ${yearsMonths(extraMonths) || '0개월'} 더 걸려요. 레버는 월 저축 늘리기, 전세 연장(${e2(canBuyExt)}), 목표 조정 순으로 보세요.`;
+  if (/대출|DSR|한도|LTV|상환/.test(t)) return `${T.region} ${eok(T.price)} ${T.type} 기준, 두 사람 소득 합산(${incLabel} ${man(inc.H + inc.W)})이면 대출 ${e2(L8.amount)}까지 가능해요. LTV 한도(${e2(L8.ltv)})보다 소득 한도에 먼저 막혀요. 월 상환은 약 ${man(Math.round(L8.monthly))}이에요.\n⟦H⟧ 단독 소득이면 ${e2(Lsolo.amount)}으로 줄어서, 혼인신고 후 합산이 유리해요.`;
+  if (/목표|달성|언제|가능|얼마나|집값/.test(t)) return `계획대로 월 ${man(save)}씩 모으면 ${ym(T.date)}에 살 수 있는 집은 ${e2(canBuy)}, 목표의 ${pct}%예요.${TREND === null ? '' : ` 실제 추세(${mon(TREND_FROM)}월부터 평균 월 ${man(TREND)})면 ${e2(canBuyTrend)}이에요.`}\n${eok(T.price)}에 제때 닿으려면 월 ${man(needPerMonth)}이 필요하고, 계획대로면 ${yearsMonths(extraMonths) || '0개월'} 더 걸려요. 레버는 월 저축 늘리기, 잔금 2030.1로 미루기(${e2(canBuyExt)}), 목표 조정 순으로 보세요.`;
   if (/저축|모아|모으/.test(t)) return `${mon(last.m)}월 쓸 수 있는 저축은 ${sman(last.base)}이에요(축의금 ${man(last.gift)}·일회성 지출 ${man(last.one)} 제외). 축의금·일회성까지 넣은 실제 저축은 ${sman(last.sav)}이에요.\n최근 3개월 평균 쓸 수 있는 저축은 ${sman(base3)}으로 목표 ${man(save)} ${base3 >= save ? '달성' : '미달'}이에요. 고정비는 월 약 ${man(M(DATA.fixed.total) + ANN_M)}이고, 10월에 할부 4건이 끝나요.`;
   if (/소비|지출|줄이|식비|고정비|관리비/.test(t)) return `${mon(last.m)}월 소비 ${man(last.exp)} 중 ${top2}이 가장 커요.\n고정비(사라지는 돈)는 월 약 ${man(M(DATA.fixed.total))}: ${DATA.fixed.items.map(([l, v]) => `${l} ${man(M(v))}`).join(', ')}. 변동비는 부부 가계부로 관리해요.`;
   if (/자산|예적금|적금|투자|주식|청약|연금/.test(t)) return `순자산은 ${eok(netNow)}이에요. 전세 자기자금 ${eok(jeonseNet)}, 예·적금·통장 ${eok(ASEG[1].v)}, 주식 ${eok(ASEG[2].v)}, 청약 ${eok(ASEG[3].v)}.\n퇴직연금 ${eok(M(A.emergency))}은 묶인 자산이라 순자산에서 뺐어요.`;
@@ -794,6 +801,8 @@ function rows() {
       { n: '대출 만기', v: A.years + '년', m: '원리금균등 상환', k: 'base' },
       { n: '부대비용', t: '취득세·중개비·등기 등, 매매가 대비', v: p(A.cost), m: '필요 현금 = 매매가 × (1 + 부대비용) − 대출', k: 'base' },
       { n: '월 저축', v: Math.round(save).toLocaleString('ko-KR') + '만원', m: '고정비 뺀 저축 + 비상금 이체(251~271만)', k: 'ours' },
+      { n: '잔금 목표', v: ym(T.date), m: '갱신청구권으로 전세 연장 뒤 매수 · 해지 통지 3개월 뒤 보증금 반환 (11/15)', k: 'ours' },
+      { n: '대출 심사 소득', t: '은행이 DSR을 계산할 때 쓰는 연소득(세전 총급여)', v: `${incLabel} ${e2b(inc.H + inc.W)}`, m: ST && ST.loanIncome ? `⟦H⟧ ${man(inc.H)}(2026·2027 2년 평균, 보수적) + ⟦W⟧ ${man(inc.W)} · 20% 규칙 경계라 낮은 쪽 · 은행 확인 전(D9)` : '원천징수영수증 총급여', k: 'ours' },
       { n: '신용대출 금리', v: `${p(C.rate)} · ${C.years}년`, m: '900점 이상 하단 4.3%와 전체 평균 6.33% 사이', k: 'credit' },
       { n: '월 상환 예측 금리', v: P ? `주담대 ${P.mort.map(p).join(' / ')}` : '—', m: P ? `신용대출 ${P.credit.map(p).join(' / ')} · ${P.why.join(' · ')}` : '', k: 'credit' },
     ],
@@ -893,7 +902,7 @@ const mw = v => v <= 0.5 ? '0원' : Math.round(v).toLocaleString('ko-KR') + '만
 const hz = h => { const [y, m] = h.split('-'); return `${y}.${+m}`; };
 const hzLong = h => { const [y, m] = h.split('-'); return `${y}년 ${+m}월`; };
 const monthsFor = h => { const [y, m] = h.split('-').map(Number); return Math.max(1, (y - asOf.getFullYear()) * 12 + m - (asOf.getMonth() + 1)); };
-const HORIZONS = [[T.date, hz(T.date)], ['2030-01', '2030.1 전세 연장']];
+const HORIZONS = [[T.date, hz(T.date)], ['2030-01', '2030.1 갱신 만기']];
 const hasData = finH + finW > 0;
 const BASE = () => ({ price: T.price, region: T.region, horizon: T.date, save, cut: 0, incH: inc.H, incW: inc.W, joint: T.incomeBasis === '합산', type: T.type, pension: false, credit: false, cWho: 'H', cAmt: Math.min(10000, Math.round(inc.H / 100) * 100) });
 // 신용대출(최후 카드): 연소득 100% · 은행 상한 1억 이내, 주담대 차주가 아닌 사람 명의로 주담대 실행 뒤 받는다고 가정
@@ -914,7 +923,7 @@ const TIPS = {
   nb: ['신생아특례', '2년 안에 출산한 가구 대상. 집값 9억·부부 소득 1.3억(맞벌이 2억) 이하, 대출은 최대 4억(보수적 적용). 소득은 DSR 대신 DTI 60%로 봐요.'],
   first: ['생애최초', '부부 모두 집을 가져 본 적 없을 때 받는 혜택이에요. 규제지역에서도 LTV가 70%까지 올라가요. 6개월 안에 전입해야 해요.'],
   joint: ['소득 합산', '혼인신고를 하면 두 사람 소득을 합쳐 DSR을 계산해요. 끄면 ⟦H⟧ 소득만으로 계산해요.'],
-  pension: ['퇴직연금 (DC·IRP)', '지금은 묶인 자산으로 따로 둬요. 중도인출 조건과 세금이 있어 기본은 빼고 계산해요.'],
+  pension: ['퇴직연금 (DC·IRP)', '모자랄 때 신용대출보다 먼저 꺼내는 돈이에요(이자보다 세금이 쌀 가능성이 큼). 중도인출 조건(본인 명의 주택)과 퇴직소득세가 있어 기본은 빼고 계산해요. 은행·금융사 확인 필요.'],
   buy: ['살 수 있는 집값', '목표일 예상 자산과 대출로 살 수 있는 가장 비싼 집이에요. 규제·비규제를 함께 보여줘요.'],
   cash: ['필요 현금', '매매가 + 부대비용 − 대출. 집 살 때 우리 돈으로 내야 하는 금액이에요.'],
   gap: ['목표일 부족액', '필요 현금에서 목표일 예상 자산(지금 순자산 + 월 저축 × 남은 달)을 뺀 금액이에요.'],
@@ -987,9 +996,9 @@ SIM.innerHTML = `
       <div class="fld" style="gap:6px"><span style="font-size:14px;font-weight:600">지역</span>
         <div class="segm" role="radiogroup" aria-label="지역" id="gRegion"><div role="radio" tabindex="0" data-v="서울">규제지역${ii('tohuh', '규제지역 설명')}</div><div role="radio" tabindex="0" data-v="경기">비규제지역</div></div>
       </div>
-      <div class="fld" style="gap:6px"><span style="font-size:14px;font-weight:600">입주 시점</span>
-        <div class="segm" role="radiogroup" aria-label="입주 시점" id="gHorizon">${HORIZONS.map(([v, l]) => `<div role="radio" tabindex="0" data-v="${v}">${l}</div>`).join('')}</div>
-        <div class="sub12">전세 연장은 지금 계약이 첫 계약일 때만 돼요 · 계약서 확인</div>
+      <div class="fld" style="gap:6px"><span style="font-size:14px;font-weight:600">잔금 시점</span>
+        <div class="segm" role="radiogroup" aria-label="잔금 시점" id="gHorizon">${HORIZONS.map(([v, l]) => `<div role="radio" tabindex="0" data-v="${v}">${l}</div>`).join('')}</div>
+        <div class="sub12">갱신청구권으로 전세를 연장해 갱신 만기(2030.1) 안에서 골라요 · 해지 통지 3개월 뒤 보증금을 받아요</div>
       </div>
     </div>
     <div class="lv">
@@ -1005,12 +1014,12 @@ SIM.innerHTML = `
     <div class="lv">
       <div class="lv-h"><div class="lv-ic" style="background:var(--ink);color:var(--lime)">${SV.bank}</div><div><div class="lv-t">대출 늘리기</div><div class="sub12">은행이 빌려줄 돈</div></div></div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div class="sub12">세전 연봉 · 금액을 직접 넣거나 밀어서 바꿔요 (예: 7,000만원)</div>
+        <div class="sub12">대출 심사 소득(세전 총급여, ${incLabel}) · 금액을 직접 넣거나 밀어서 바꿔요</div>
         ${['H', 'W'].map(k => `<div class="fld" style="gap:2px">
           <div class="fld-h" style="flex-wrap:nowrap"><span><span class="av22" style="${k === 'H' ? 'background:var(--ink);color:#fff' : 'background:var(--lime);color:var(--limeink)'}">${DATA.names[k][0] === '설' ? '빔' : '석'}</span>${DATA.names[k]} 연봉</span>
           <label style="display:flex;align-items:center;gap:6px;flex:none"><input class="num" type="text" inputmode="numeric" autocomplete="off" id="n${k}" value="${Math.round(inc[k]).toLocaleString('ko-KR')}" aria-label="${DATA.names[k]} 연봉(만원)"><span style="font-size:14px;color:var(--ink2)">만원</span></label></div>
           ${range('r' + k, 3000, 10000, 50, 'var(--lemon)', DATA.names[k] + ' 연봉')}
-          <div class="ends"><span>3,000만</span><span>지금 ${man(inc[k])}</span><span>1억</span></div></div>`).join('')}
+          <div class="ends"><span>3,000만</span><span>${incLabel} ${man(inc[k])}</span><span>1억</span></div></div>`).join('')}
       </div>
       <div class="sw-row"><div style="min-width:0"><div style="font-size:14px;font-weight:600;display:flex;align-items:center">혼인신고 후 소득 합산${ii('joint', '소득 합산 설명')}</div><div class="sub12" id="lJoint"></div></div>
         <button type="button" class="sw" role="switch" id="swJoint" aria-label="소득 합산"><span></span></button></div>
@@ -1018,10 +1027,10 @@ SIM.innerHTML = `
         <div class="segm" role="radiogroup" aria-label="대출 유형" id="gType"><div role="radio" tabindex="0" data-v="일반">일반</div><div role="radio" tabindex="0" data-v="생애최초" style="flex-grow:1.3">생애최초${ii('first', '생애최초 설명')}</div><div role="radio" tabindex="0" data-v="신생아특례" style="flex-grow:1.4">신생아특례${ii('nb', '신생아특례 설명')}</div></div>
         <div class="sub12">신생아특례는 기본 꺼짐 · 2년 안에 출산한 가구만 돼요</div>
       </div>
-      <div class="sw-row"><div style="min-width:0"><div style="font-size:14px;font-weight:600;display:flex;align-items:center">퇴직연금 포함${ii('pension', '퇴직연금 설명')}</div><div class="sub12">기본 꺼짐 · 켜면 ${man(EMG)}원이 내 돈에 더해져요</div></div>
+      <div class="sw-row"><div style="min-width:0"><div style="font-size:14px;font-weight:600;display:flex;align-items:center">① 퇴직연금(IRP) 인출${ii('pension', '퇴직연금 설명')}</div><div class="sub12">모자랄 때 1순위 · 기본 꺼짐 · 켜면 ${man(EMG)}원이 내 돈에 더해져요</div></div>
         <button type="button" class="sw" role="switch" id="swPension" aria-label="퇴직연금 포함"><span></span></button></div>
       <div style="border-top:1px dashed var(--line);margin:-4px 0 -8px"></div>
-      <div class="sw-row"><div style="min-width:0"><div style="font-size:14px;font-weight:600;display:flex;align-items:center">신용대출 (최후 카드)${ii('credit', '신용대출 설명')}</div><div class="sub12">기본 꺼짐 · 켜면 잔금 때 모자란 돈을 신용대출로 메워요</div></div>
+      <div class="sw-row"><div style="min-width:0"><div style="font-size:14px;font-weight:600;display:flex;align-items:center">② 신용대출 (최후 카드)${ii('credit', '신용대출 설명')}</div><div class="sub12">2순위 · 기본 꺼짐 · 퇴직연금까지 쓰고도 모자란 돈만 메워요</div></div>
         <button type="button" class="sw" role="switch" id="swCredit" aria-label="신용대출 포함"><span></span></button></div>
       <div id="creditBox" hidden style="display:flex;flex-direction:column;gap:10px;margin-top:-6px;padding:12px;border-radius:12px;background:var(--sub)">
         <div class="fld" style="gap:6px"><span style="font-size:14px;font-weight:600">누구 명의로</span>
@@ -1158,7 +1167,7 @@ function renderCause(R) {
 let SUG = [];
 function suggestions(R) {
   const out = [], eff = (X, icon, t) => { const R2 = calc(X); return { X, icon, t, R2 }; };
-  if (S.horizon === T.date) out.push(eff({ ...S, horizon: '2030-01' }, 'target', '입주 시점 2030.1로 전세 연장'));
+  if (S.horizon === T.date) out.push(eff({ ...S, horizon: '2030-01' }, 'target', '잔금 2030.1(갱신 만기)로 미루기'));
   if (S.save < 500) { const v = Math.min(500, S.save + 130); out.push(eff({ ...S, save: v }, 'up', `월 저축 ${S.save}만 → ${v}만`)); }
   if (!S.joint) out.push(eff({ ...S, joint: true }, 'bank', '혼인신고 후 소득 합산'));
   // 연봉 인상: 두 사람 연봉을 같은 비율로 올려, 목표에 닿거나 더 올라도 집값이 안 오르는(LTV 등에 막힘) 지점을 찾음
@@ -1236,8 +1245,8 @@ $('#simAct').addEventListener('click', e => { if (e.target.closest('[data-save]'
 function names(X) {
   const R = calc(X), base = same(X, BASE());
   return base ? ['지금 그대로 · 기본안', `${pl(X.price)} ${RG[X.region]} 정공법`, `월 ${X.save + X.cut}만 꾸준히 플랜`]
-    : R.ok ? [`${RG[X.region].replace('지역', '')} ${pl(X.price)} 현실 플랜`, `${pl(X.price)} · ${e2(R.surplus)} 여유`, X.horizon !== T.date ? '전세 2년 더 살고 사기' : '현실적인 첫 집 플랜']
-    : [X.save + X.cut > save ? `허리띠 조이기 · 월 ${X.save + X.cut}만` : `${pl(X.price)} ${RG[X.region]} 도전`, `${pl(X.price)} · ${e2(R.gap)} 부족`, X.horizon !== T.date ? '전세 2년 더 살고 사기' : `월 ${X.save + X.cut}만 꾸준히 플랜`];
+    : R.ok ? [`${RG[X.region].replace('지역', '')} ${pl(X.price)} 현실 플랜`, `${pl(X.price)} · ${e2(R.surplus)} 여유`, X.horizon !== T.date ? '갱신 만기까지 살고 사기' : '현실적인 첫 집 플랜']
+    : [X.save + X.cut > save ? `허리띠 조이기 · 월 ${X.save + X.cut}만` : `${pl(X.price)} ${RG[X.region]} 도전`, `${pl(X.price)} · ${e2(R.gap)} 부족`, X.horizon !== T.date ? '갱신 만기까지 살고 사기' : `월 ${X.save + X.cut}만 꾸준히 플랜`];
 }
 let dlg = null;
 function closeDlg() { if (dlg) { dlg.remove(); dlg = null; } }
