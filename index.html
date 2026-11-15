@@ -715,6 +715,40 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
 .fold-btn:hover{background:var(--sub)}
 .hist .log{max-height:220px}
 @media (max-width:1180px){.kpis-wrap > .kpis{flex-direction:row;flex-wrap:wrap}.kpis-wrap > .kpis > div{flex:1 1 140px}}
+
+/* 22번: 목표 카드 위·아래 분리(데스크톱은 한 카드처럼), 휴대폰은 목표 → KPI → 차트 */
+@media (min-width:1181px){
+  .row-hero{grid-template-areas:"top kpi" "chart kpi";row-gap:0}
+  .row-hero > .hero-top{grid-area:top;border-radius:18px 18px 0 0;padding:20px 20px 0}
+  .row-hero > .hero-chart{grid-area:chart;border-radius:0 0 18px 18px;padding:16px 20px 16px}
+  .row-hero > .kpis-wrap{grid-area:kpi}
+}
+@media (max-width:1180px){
+  .row-hero{display:flex;flex-direction:column;gap:12px}
+  .row-hero > .hero-top{order:0}.row-hero > .kpis-wrap{order:1}.row-hero > .hero-chart{order:2}
+}
+.gs .hl{white-space:nowrap}
+/* 휴대폰 글자: 크기 12·14·16·20·24, 굵기 500·600·700만 (DESIGN.md) */
+@media (max-width:560px){
+  main{font-weight:500}
+  main span,main div,main b,main button,main small{font-weight:inherit}
+  .gs{font-size:20px;font-weight:700}.gs .rest{font-weight:500}.gs .amt{font-size:24px;font-weight:700}
+  .kv{font-size:24px;font-weight:700}.kv small{font-size:16px;font-weight:600}
+  .donut .c b{font-size:20px;font-weight:700}
+  .ct{font-size:16px;font-weight:600}
+  .cta .t1{font-size:14px;font-weight:600}
+  .seg button{height:40px;font-size:14px;font-weight:500}
+  .seg button[aria-pressed="true"],.seg button[aria-selected="true"]{font-weight:600}
+  .fold-btn{height:40px;font-size:14px}
+  .btn-lime{height:40px;font-size:14px;font-weight:600}
+  .chips button{height:40px;font-size:14px}
+  .sav-mini .savm .sm{font-size:12px;font-weight:500}.sav-mini .savm .sm b{font-weight:600}
+  .eq.br .op{font-weight:500}
+  .eq.br .t,.sav-mini .st{font-weight:600}
+  .eq.br .v,.vtop{font-weight:700}
+  .pill,.lab,.goal-line span,.kd .up,.kd .dn,.sneed b,.hr .rt div:first-child{font-weight:600}
+  .hr .mid div:first-child{font-weight:500}
+}
 </style>
 
 <header class="top">
@@ -738,12 +772,14 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
   <div class="grid">
     <div class="col">
       <div class="row-hero">
-        <section class="card" style="padding:20px 20px 16px">
+        <section class="card hero-top">
           <div class="goal-sent">
             <div style="min-width:0"><h1 class="gs" id="goalSentence"></h1></div>
             <span class="pill" id="leftPill"></span>
           </div>
           <div class="eq br" id="eq"></div>
+        </section>
+        <section class="card hero-chart">
           <div class="legend" style="margin-top:16px">
             <span><i style="background:var(--lime)"></i>자산</span>
             <span><i style="background:var(--ink)"></i>대출 가능</span>
@@ -805,7 +841,7 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
         <div style="flex:1;min-width:0">
           <div class="t1" id="ctaT1">다음 결산</div>
         </div>
-        <button class="btn-lime" type="button" data-open="settle">방법</button>
+        <button class="btn-lime" type="button" data-open="settle">결산 방법 보기</button>
       </div>
       <section class="card">
         <div class="head">

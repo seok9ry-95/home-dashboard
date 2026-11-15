@@ -297,7 +297,7 @@ hoverable('#fChart', 'f', () => fHover, v => { fHover = v; renderF(); });
 // ===== 저축 목표 / 레버 =====
 const savPct = Math.max(0, Math.min(100, base3 / save * 100));
 $('#savBar').style.width = savPct + '%';
-$('#savNow').innerHTML = `최근 3개월 평균 ${sman(base3)} <span style="color:${base3 >= save ? 'var(--good)' : 'var(--warn)'}">${base3 >= save ? '달성' : '미달'}</span>`;
+$('#savNow').innerHTML = `최근 3개월 평균 ${sman(base3)} <span style="color:${base3 >= save ? 'var(--good)' : 'var(--desc)'}">${base3 >= save ? '달성' : `목표까지 ${man(save - base3)}`}</span>`;
 $('#savGoal').textContent = man(save);
 $('#savNeed').innerHTML = `제때 사려면 월 <b>${man(needPerMonth)}</b>`;
 $('#savMonths').innerHTML = R3.map(r => `<span class="sm ${r.base >= save ? 'ok' : 'no'}"><b>${mon(r.m)}월</b> ${sman(r.base)}</span>`).join('');
@@ -342,8 +342,7 @@ function renderSpend() {
         ${items.map(x => itemRow(x[0], x[1], x[2], `${x[4] === 1 ? '<span class="fx">고정</span>' : x[4] === 2 ? '<span class="fx" style="background:var(--lemon);color:var(--ink)">일회성</span>' : ''}<span class="cnt">${x[3]}건</span>`)).join('')}</div>`;
     } else { const ol = ((DATA.oneOff || {})[r.m] || {}).list || [];
       list = (ol.length ? `<div class="dlist"><div class="dh">일회성 지출 <span>${man(r.one)} · 쓸 수 있는 저축 계산에서 빠짐</span></div>
-        ${ol.slice(0, 6).map(x => itemRow(x[0], x[1], x[2], `<span class="fgrp">${x[3]}</span>`)).join('')}${ol.length > 6 ? `<div class="note" style="margin-top:6px">그 외 ${ol.length - 6}건 ${man(M(ol.slice(6).reduce((a, x) => a + x[2], 0)))}</div>` : ''}</div>` : '')
-        + `<div class="note" style="margin-top:12px">위 항목을 누르면 가맹점별 금액이 펼쳐져요. 고정비만 보려면 ‘고정비’를 누르세요.</div>`; }
+        ${ol.slice(0, 6).map(x => itemRow(x[0], x[1], x[2], `<span class="fgrp">${x[3]}</span>`)).join('')}${ol.length > 6 ? `<div class="note" style="margin-top:6px">그 외 ${ol.length - 6}건 ${man(M(ol.slice(6).reduce((a, x) => a + x[2], 0)))}</div>` : ''}</div>` : ''); }
   }
   const hv = spHover !== null && segs[spHover] ? segs[spHover] : null;
   $('#spend').innerHTML = `<div class="donut">${donut(segs, total, spHover, 60, 18)}<div class="c"><b>${man(hv ? hv.v : total)}</b><span>${hv ? `${hv.label} · ${Math.round(hv.v / total * 100)}%` : `${mon(r.m)}월 ${spMode === 'fixed' ? '고정비' : '소비 합계'}`}</span></div></div>
@@ -389,7 +388,7 @@ function renderHRange() {
 $('#hRange').addEventListener('click', e => { const b = e.target.closest('[data-hn]'); if (b) { hN = +b.dataset.hn; renderHRange(); renderHist(); } });
 function renderHist() { $('#hist').innerHTML = SET.slice(-hN).reverse().map(r => `<div class="hr"><div class="hm${r.base >= save ? ' ok' : ''}">${mon(r.m)}</div>
   <div class="mid"><div>${mon(r.m)}월 결산</div><div>${(DATA.settlements || {})[r.m] ? DATA.settledBy : '결산 방식 도입 전 기록'}${r.memo ? ' · ' + esc(r.memo) : ''}</div></div>
-  <div class="rt"><div>평소 ${sman(r.base)}</div><div style="color:${r.base >= save ? 'var(--good)' : 'var(--warn)'}">${r.base >= save ? '목표 달성' : '목표 미달'}</div></div></div>`).join(''); }
+  <div class="rt"><div>평소 ${sman(r.base)}</div><div style="color:${r.base >= save ? 'var(--good)' : 'var(--desc)'}">${r.base >= save ? '목표 달성' : `${man(save)}까지 ${man(save - r.base)}`}</div></div></div>`).join(''); }
 
 // ===== 빔글석굴 (이 화면 숫자로 답하는 규칙형 도우미) =====
 const top2 = (() => { const r = last, t = M(r.expH + r.expW); return CATS.map(([k, l]) => [l, M(r.cat[k] || 0)]).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([l, v]) => `${l} ${Math.round(v / t * 100)}%(${man(v)})`).join(', '); })();
