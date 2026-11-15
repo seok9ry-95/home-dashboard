@@ -1,4 +1,36 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="robots" content="noindex,nofollow">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+/* 22번 2단계: 결산 알림은 오른쪽 열 맨 위, 흐름·소비 구성 한 줄 */
+.col.right > .cta{width:auto}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:stretch}
+.duo > section,.duo > .spend-wrap > section{height:100%;box-sizing:border-box}
+.duo .spend-wrap > section{display:block}
+.duo .spend-wrap #spDetail .dlist{border-top:1px solid var(--line2);padding-top:12px;margin-top:16px}
+@media (max-width:1180px){
+  .grid{display:flex;flex-direction:column}
+  .col.right{display:contents}
+  .col.right > .cta{order:-1}
+  .col.right > section{order:1}
+}
+@media (max-width:860px){.duo{grid-template-columns:minmax(0,1fr)}}
+/* 목표 계산식: 목표에서 두 갈래(계획 · 실제 추세) */
+.eq.br{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:0;padding:16px 20px}
+.eq.br .goal{padding-right:24px;position:relative}
+.eq.br .goal::after{content:"";position:absolute;right:0;top:50%;width:16px;border-top:2px solid var(--zero)}
+.eq.br .fork{position:relative;padding-left:24px;display:grid;grid-template-rows:1fr 1fr;row-gap:12px}
+.eq.br .fork::before{content:"";position:absolute;left:0;top:25%;bottom:25%;width:16px;border:2px solid var(--zero);border-right:0;border-radius:10px 0 0 10px}
+.eq.br .row{display:grid;grid-template-columns:minmax(260px,auto) 48px minmax(120px,auto);justify-content:start;align-items:center}
+.eq.br .t{font-size:14px;font-weight:600;color:var(--ink2)}
+.eq.br .v{font-size:28px;font-weight:700;letter-spacing:-0.03em;line-height:1.15;margin-top:2px}
+.eq.br .v.wait{font-size:14px;font-weight:500;color:var(--mute);margin-top:6px}
+.eq.br .op{font-size:24px;font-weight:300;color:var(--mute);text-align:center}
+@media (max-width:860px){
+  .eq.br{grid-template-columns:minmax(0,1fr);gap:12px}
+  .eq.br .goal{padding-right:0}.eq.br .goal::after,.eq.br .fork::before{display:none}
+  .eq.br .fork{padding-left:0}
+  .eq.br .row{grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr)}
+  .eq.br .v{font-size:24px}
+}
+</style><meta name="robots" content="noindex,nofollow">
 </head><body class="hh-locked">
 <style>
 body.hh-locked > *:not(#hh-lock):not(script):not(style) { display: none !important; }
@@ -681,20 +713,6 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
 </header>
 
 <main>
-  <div class="strip">
-    <div class="pledge">
-      <span class="ttl" id="pledgeTitle">10월 다짐</span>
-      <div class="pl-rows" id="pledges"></div>
-    </div>
-    <div class="cta">
-      <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
-      <div style="flex:1;min-width:0">
-        <div class="t1" id="ctaT1">다음 결산</div>
-      </div>
-      <button class="btn-lime" type="button" data-open="settle">방법</button>
-    </div>
-  </div>
-
   <div class="grid">
     <div class="col">
       <div class="row-hero">
@@ -703,7 +721,7 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
             <div style="min-width:0"><h1 class="gs" id="goalSentence"></h1></div>
             <span class="pill" id="leftPill"></span>
           </div>
-          <div class="eq" id="eq"></div>
+          <div class="eq br" id="eq"></div>
           <div class="legend" style="margin-top:16px">
             <span><i style="background:var(--lime)"></i>자산</span>
             <span><i style="background:var(--ink)"></i>대출 가능</span>
@@ -715,20 +733,35 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
         <section class="card kpis" id="kpis"></section>
       </div>
 
+      <div class="duo">
       <section class="card" style="padding:20px 20px 16px">
-        <div class="head">
-          <div><div class="ct">수입 · 소비 · 저축 흐름</div><div class="cs">단위 만원</div></div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <div class="seg" role="group" aria-label="보기">
-              <button type="button" data-view="저축" id="vSav">저축</button>
-              <button type="button" data-view="수입·소비" id="vFlow">수입·소비</button>
+          <div class="head">
+            <div><div class="ct">수입 · 소비 · 저축 흐름</div><div class="cs">단위 만원</div></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div class="seg" role="group" aria-label="보기">
+                <button type="button" data-view="저축" id="vSav">저축</button>
+                <button type="button" data-view="수입·소비" id="vFlow">수입·소비</button>
+              </div>
+              <div class="seg" role="group" aria-label="기간" id="fPeriods"></div>
             </div>
-            <div class="seg" role="group" aria-label="기간" id="fPeriods"></div>
           </div>
+          <div class="legend" id="fLegend" style="justify-content:flex-end;margin-top:6px"></div>
+          <div class="chart" id="fChart" style="margin-top:10px"></div>
+        </section>
+      <div class="spend-wrap">
+          <section class="card">
+            <div class="head">
+              <div><div class="ct">소비 구성</div><div class="cs" id="spSub"></div></div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <div class="seg" role="group" aria-label="보기" id="spMode"><button type="button" data-spm="all" aria-pressed="true">전체</button><button type="button" data-spm="fixed" aria-pressed="false">고정비</button></div>
+                <div class="seg" role="group" aria-label="월 선택" id="spMonths"></div>
+              </div>
+            </div>
+            <div class="dn-wrap" id="spend"></div>
+            <div id="spDetail"></div>
+          </section>
         </div>
-        <div class="legend" id="fLegend" style="justify-content:flex-end;margin-top:6px"></div>
-        <div class="chart" id="fChart" style="margin-top:10px"></div>
-      </section>
+      </div>
 
       <div>
         <section class="card">
@@ -741,22 +774,18 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
         </section>
       </div>
 
-      <div class="spend-wrap">
-        <section class="card">
-          <div class="head">
-            <div><div class="ct">소비 구성</div><div class="cs" id="spSub"></div></div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-              <div class="seg" role="group" aria-label="보기" id="spMode"><button type="button" data-spm="all" aria-pressed="true">전체</button><button type="button" data-spm="fixed" aria-pressed="false">고정비</button></div>
-              <div class="seg" role="group" aria-label="월 선택" id="spMonths"></div>
-            </div>
-          </div>
-          <div class="dn-wrap" id="spend"></div>
-          <div id="spDetail"></div>
-        </section>
-      </div>
+
+
     </div>
 
     <div class="col right">
+      <div class="cta">
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
+        <div style="flex:1;min-width:0">
+          <div class="t1" id="ctaT1">다음 결산</div>
+        </div>
+        <button class="btn-lime" type="button" data-open="settle">방법</button>
+      </div>
       <section class="card">
         <div class="head">
           <div><div class="ct">우리 자산</div><div class="cs" id="assetSub"></div></div>
