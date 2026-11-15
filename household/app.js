@@ -118,6 +118,7 @@ const MENUS = [
   ['시뮬레이터', 'M4 7h9M17 7h3M4 17h3M11 17h9M13 7a2 2 0 1 0 4 0a2 2 0 1 0-4 0M7 17a2 2 0 1 0 4 0a2 2 0 1 0-4 0'],
   ['월 결산', 'M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM4 10h16M8 3v5M16 3v5'],
   ['계산 기준', 'M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM14 3v5h5M9.5 13h6M9.5 17h6'],
+  ['청약', 'M5 5h14v15H5zM5 9h14M9 3v4M15 3v4M8.5 13h2M13.5 13h2M8.5 16.5h2'],   // 24-1: 앱 안 화면(#cheongyak)
 ];
 const icon = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
 $('#menu').innerHTML = MENUS.map(([l, d, on]) => on
@@ -1336,19 +1337,19 @@ function render() { const R = calc(S); renderBanner(); renderCards(R); renderPay
 
 // ----- 화면 전환: #sim = 시뮬레이터, 그 외 = 대시보드 -----
 const TABS = [['홈', '#home', 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z'], ['시뮬레이터', '#simulator', MENUS[1][1]], ['결산', '#settle', MENUS[2][1]], ['더보기', 'more', 'M5 12h.01M12 12h.01M19 12h.01']];
-const STLV = $('#stl'), BASV = $('#bas'), HREF = ['#home', '#simulator', '#settle', '#basis'];
+const STLV = $('#stl'), BASV = $('#bas'), CYV = $('#cy'), HREF = ['#home', '#simulator', '#settle', '#basis', '#cheongyak'];
+let cyMod = null;   // 청약 화면 코드는 처음 열 때 한 번만 불러온다
 function route() {
-  const sim = location.hash === '#simulator', stl = location.hash.startsWith('#settle'), bas = location.hash === '#basis', view = sim ? 1 : stl ? 2 : bas ? 3 : 0;
-  SIM.hidden = !sim; STLV.hidden = !stl; BASV.hidden = !bas; MAIN.hidden = view !== 0; $('#more').hidden = true; closeTip(); closeDlg(); if (window.__settle) window.__settle.closeTip();
-  $('#menu').innerHTML = MENUS.map(([l, d], i) => i < 4
-    ? `<a class="mi${i === view ? ' on' : ''}" href="${HREF[i]}"${i === view ? ' aria-current="page"' : ''}>${icon(d)}${l}</a>`
-    : `<button class="mi soon" type="button" data-soon="${l}" title="다음 단계에서 열려요">${icon(d)}${l}</button>`).join('');
-  $('#tabbar').innerHTML = TABS.map(([l, h, d], i) => { const on = i === view, sv = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+  const sim = location.hash === '#simulator', stl = location.hash.startsWith('#settle'), bas = location.hash === '#basis', cy = location.hash === '#cheongyak', view = sim ? 1 : stl ? 2 : bas ? 3 : cy ? 4 : 0;
+  SIM.hidden = !sim; STLV.hidden = !stl; BASV.hidden = !bas; CYV.hidden = !cy; MAIN.hidden = view !== 0; $('#more').hidden = true; closeTip(); closeDlg(); if (window.__settle) window.__settle.closeTip();
+  $('#menu').innerHTML = MENUS.map(([l, d], i) => `<a class="mi${i === view ? ' on' : ''}" href="${HREF[i]}"${i === view ? ' aria-current="page"' : ''}>${icon(d)}${l}</a>`).join('');
+  $('#tabbar').innerHTML = TABS.map(([l, h, d], i) => { const on = i === view || (i === 3 && view === 4) /* 청약은 휴대폰 '더보기' 안 */, sv = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
     return h.startsWith('#') ? `<a href="${h}" class="${on ? 'on' : ''}"${on ? ' aria-current="page"' : ''}>${on ? `<span class="tbi">${sv}</span>` : sv}${l}</a>` : `<button type="button" data-more class="${on ? 'on' : ''}" aria-haspopup="dialog">${on ? `<span class="tbi">${sv}</span>` : sv}${l}</button>`; }).join('');
-  document.title = sim ? '내집마련 대시보드 · 시뮬레이터' : stl ? '내집마련 대시보드 · 월 결산' : bas ? '내집마련 대시보드 · 계산 기준' : '내집마련 대시보드';
+  document.title = sim ? '내집마련 대시보드 · 시뮬레이터' : stl ? '내집마련 대시보드 · 월 결산' : bas ? '내집마련 대시보드 · 계산 기준' : cy ? '내집마련 대시보드 · 청약' : '내집마련 대시보드';
   if (sim) { syncLevers(); render(); }
   if (stl) window.__settle.render();
   if (bas) window.__basis.render();
+  if (cy) (cyMod ||= import(`./cheongyak/app.mjs?v=${Date.now()}`)).then(m => m.mount(window.__HH_PRIV)).catch(() => toast('청약 화면을 불러오지 못했어요 · 새로고침해 주세요'));
   window.scrollTo(0, 0);
 }
 document.querySelectorAll('[data-soon="시뮬레이터"]').forEach(el => { el.removeAttribute('data-soon'); el.addEventListener('click', () => { location.hash = '#simulator'; }); });
