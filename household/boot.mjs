@@ -1,4 +1,4 @@
-// 가계 화면 잠금 해제 (현황판 15번). 청약 탭과 같은 자물쇠·열쇠, 같은 '이 기기에서 기억'을 쓴다.
+// 대시보드 잠금 해제 (현황판 15번). 한 번 풀면 가계 화면과 청약 화면(#cheongyak, 24-1)이 함께 열린다.
 import { unlock } from "../scripts/lib/vault.mjs";
 // 데이터는 늘 최신본을 읽으므로, 데이터를 합치는 코드도 캐시 없이 최신본을 쓴다(코드·데이터 버전 어긋남 방지)
 const fresh = (p) => import(`${p}?v=${Date.now()}`);
@@ -21,7 +21,7 @@ async function getJson(path) {
   return null;
 }
 
-// 청약 탭과 같은 저장소(IndexedDB "home-dashboard" / kv / priv) — 한 번 열면 두 화면 다 열림
+// '이 기기에서 기억': 꺼낼 수 없는 열쇠(CryptoKey)만 IndexedDB "home-dashboard" / kv / priv에 둔다
 const idb = (mode, fn) => new Promise((res, rej) => {
   const o = indexedDB.open("home-dashboard", 1);
   o.onupgradeneeded = () => o.result.createObjectStore("kv");
@@ -49,6 +49,7 @@ async function start(priv) {
   if (!D) throw new Error("가계 기록이 아직 없습니다. Claude에게 이전 작업을 요청해 주세요");
   window.__HH = D;
   window.__HH_BROKEN = broken;
+  window.__HH_PRIV = priv;   // 청약 화면이 같은 열쇠로 부부 기록을 연다(따로 비밀번호 없음)
   // 이름 자리 채우기: 본문 → 코드 순서
   const names = D.names;
   for (const el of [...document.body.children]) {
@@ -61,23 +62,6 @@ async function start(priv) {
   const s = document.createElement("script");
   s.textContent = fillNames(code, names);
   document.body.appendChild(s);
-  addCheongyakMenu();
-}
-
-// 데스크톱 왼쪽 메뉴에 청약 추가(휴대폰은 더보기 안에 있음)
-function addCheongyakMenu() {
-  const menu = document.getElementById("menu");
-  if (!menu) return;
-  // 화면을 옮길 때 메뉴가 다시 그려지므로 빠지면 다시 붙인다
-  if (!addCheongyakMenu.watching) {
-    addCheongyakMenu.watching = true;
-    new MutationObserver(() => addCheongyakMenu()).observe(menu, { childList: true });
-  }
-  if (menu.querySelector('[href="cheongyak/"]')) return;
-  const a = document.createElement("a");
-  a.className = "mi"; a.href = "cheongyak/"; a.style.textDecoration = "none"; a.style.color = "inherit";
-  a.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14v15H5zM5 9h14M9 3v4M15 3v4M8.5 13h2M13.5 13h2M8.5 16.5h2"/></svg>청약`;
-  menu.appendChild(a);
 }
 
 async function boot() {
@@ -87,7 +71,7 @@ async function boot() {
   if (saved) {
     $("hh-intro").textContent = "이 기기에서 기억한 열쇠로 여는 중…";
     try { await start(saved); return; } catch (e) { await forget(); msg(e.message); }
-    $("hh-intro").textContent = "우리 가계 숫자는 잠겨 있어요. 부부 비밀번호(청약 탭과 같은 것)로 열어 주세요.";
+    $("hh-intro").textContent = "우리 가계 숫자와 청약 전략은 잠겨 있어요. 부부 비밀번호로 열어 주세요.";
   }
   $("hh-form").addEventListener("submit", async (e) => {
     e.preventDefault();

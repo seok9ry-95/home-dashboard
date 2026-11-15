@@ -18,12 +18,11 @@ body:not(.hh-locked) > #hh-lock { display: none; }
 <div id="hh-lock">
   <form class="card" id="hh-form" autocomplete="off">
     <h1>내집마련 대시보드</h1>
-    <p id="hh-intro">우리 가계 숫자는 잠겨 있어요. 부부 비밀번호(청약 탭과 같은 것)로 열어 주세요.</p>
+    <p id="hh-intro">우리 가계 숫자와 청약 전략은 잠겨 있어요. 부부 비밀번호로 열어 주세요.</p>
     <input type="password" id="hh-pw" placeholder="부부 비밀번호" aria-label="부부 비밀번호" required>
     <label><input type="checkbox" id="hh-remember" checked> 이 기기에서 기억(비밀번호는 저장하지 않아요)</label>
     <button type="submit" id="hh-btn">열기</button>
     <div class="msg" id="hh-msg" role="status"></div>
-    <a href="cheongyak/">청약 달력은 잠금 없이 보기 →</a>
   </form>
 </div>
 
@@ -850,7 +849,7 @@ a:hover{color:var(--ink)}
 /* 화면 전환 150ms 흐릿하게, 펼치기·카드 안 탭 200ms 위에서 4px */
 @keyframes ui-fade{from{opacity:0}}
 @keyframes ui-rise{from{opacity:0;transform:translateY(-4px)}}
-main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]){animation:ui-fade .15s ease-out}
+main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]),#cy:not([hidden]){animation:ui-fade .15s ease-out}
 #assetMore:not([hidden]),#rtHist:not([hidden]),#rtBot:not([hidden]),#spDetail .dlist,.sheet{animation:ui-rise .2s ease-out}
 .cl.on .tip{animation:ui-fade .15s ease-out}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
@@ -867,6 +866,127 @@ main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]){anim
   main .kv{font-size:24px}
   main .gs{font-size:16px}
   main .tick span,main .lab{font-size:12px}
+}
+
+/* ===== 청약 (#cheongyak, 24-1) — 대시보드 안 화면. 색은 DESIGN.md 이름만, 글꼴은 Pretendard(body) ===== */
+#cy{max-width:1240px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:16px;font-size:14px;line-height:1.5}
+#cy .cy-c{background:var(--card);border-radius:18px;padding:20px;min-width:0;display:flex;flex-direction:column;gap:16px}
+#cy h1{margin:4px 0 0;font-size:20px;font-weight:700;letter-spacing:-0.02em;line-height:1.3}
+#cy h2{margin:0;font-size:16px;font-weight:600;letter-spacing:-0.01em}
+#cy .cy-eb{font-size:12px;color:var(--desc);font-weight:600}
+#cy .cy-s,#cy .small{font-size:12px}
+#cy .cy-s,#cy .muted{color:var(--desc)}
+#cy .cy-head .cy-s{margin-top:4px}
+#cy .cy-ctl{display:flex;flex-wrap:wrap;gap:8px}
+#cy .cy-stale{background:var(--sub);color:var(--warn);border-radius:12px;padding:12px 16px}
+#cy .cy-msg{margin:0}
+#cy .cy-calh{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#cy .cy-ib{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);cursor:pointer;padding:0}
+#cy .cy-ib svg{width:20px;height:20px}
+#cy .cy-ib:hover{background:var(--sub)}
+#cy .cy-legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;color:var(--desc)}
+#cy .cy-legend span{display:inline-flex;align-items:center;gap:8px}
+#cy .cy-sw{width:8px;height:8px;border-radius:2px;display:inline-block}
+#cy .cy-sw.special{background:var(--ink)}
+#cy .cy-sw.rank1{background:var(--ghost);box-shadow:inset 0 0 0 1px var(--mute)}
+#cy .cy-sw.rank2{background:var(--sub);box-shadow:inset 0 0 0 1px var(--line)}
+#cy .cy-sw.unsure{border:1px dashed var(--mute)}
+#cy .cy-cal{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line)}
+#cy .dow{font-size:12px;color:var(--mute);padding:8px;border-bottom:1px solid var(--line)}
+#cy .day{min-height:96px;padding:8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px;min-width:0}
+#cy .day:nth-child(5n){border-right:0}
+#cy .day.out{background:var(--sub)}
+#cy .day.out .dnum{color:var(--mute)}
+#cy .dnum{font-size:12px;align-self:flex-start;color:var(--desc)}
+#cy .day.today .dnum{background:var(--ink);color:var(--card);border-radius:999px;padding:0 8px;font-weight:600}
+#cy .cy-ev{display:block;width:100%;text-align:left;border:0;font:inherit;font-size:12px;font-weight:500;line-height:1.4;padding:2px 8px;border-radius:999px;cursor:pointer;color:var(--ink);background:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:transform .1s ease-out}
+#cy .cy-ev:active{transform:scale(.98)}
+#cy .cy-ev.special{background:var(--ink);color:var(--card);font-weight:600}
+#cy .cy-ev.rank1{background:var(--ghost)}
+#cy .cy-ev.rank2{background:var(--sub);color:var(--desc);box-shadow:inset 0 0 0 1px var(--line)}
+#cy .cy-ev.other,#cy .cy-ev.winner{background:transparent;color:var(--desc)}
+#cy .cy-ev.other{box-shadow:inset 0 0 0 1px var(--line)}
+#cy .cy-ev.unsure{background:transparent;color:var(--desc);border:1px dashed var(--mute);padding:1px 7px}
+#cy .cy-ev.dim,#cy .card.dim{opacity:.5}
+#cy .cy-ev .pick{font-weight:700}
+#cy .more{font-size:12px;color:var(--mute);padding-left:8px}
+#cy .cy-lh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+#cy .fchips{display:flex;flex-wrap:wrap;gap:8px}
+#cy .fchip{height:32px;padding:0 12px;border:0;border-radius:999px;background:var(--sub);color:var(--desc);font:inherit;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:transform .1s ease-out,background-color .15s ease-out}
+#cy .fchip:hover{color:var(--ink)}
+#cy .fchip:active{transform:scale(.98)}
+#cy .fchip[aria-pressed="true"]{background:var(--ink);color:var(--card);font-weight:600}
+#cy .fchip .c{margin-left:4px}
+#cy .fchip.reset{background:transparent;color:var(--desc)}
+#cy .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:12px;align-items:start}
+#cy .card{background:var(--sub);border-radius:12px;padding:16px;display:grid;gap:12px;align-content:start;min-width:0;scroll-margin-top:80px}
+#cy .card.no-interest{opacity:.5}
+#cy .card.flash{box-shadow:0 0 0 2px var(--ink)}
+#cy .card-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#cy .card .top{display:grid;gap:4px}
+#cy .marks{display:inline-flex;gap:4px}
+#cy .mark{height:32px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--desc);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+#cy .mark[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--card);font-weight:600}
+#cy .tags{display:flex;flex-wrap:wrap;gap:4px;font-size:12px}
+#cy .tag,#cy .badge{padding:2px 8px;border-radius:999px;background:var(--card);color:var(--desc);font-size:12px;font-weight:500}
+#cy .tag.ours,#cy .badge.fixed{background:var(--lime2);color:var(--ink);font-weight:600}
+#cy .tag.warn{background:var(--orange2);color:var(--ink);font-weight:600}
+#cy .tag.done{background:var(--ink);color:var(--card);font-weight:600}
+#cy .name{font-weight:600;font-size:16px;overflow-wrap:anywhere}
+#cy .facts{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0}
+#cy .facts dt{color:var(--desc)}
+#cy .facts dd{margin:0;min-width:0;overflow-wrap:anywhere}
+#cy .toggle{border:0;background:none;color:var(--desc);font:inherit;font-weight:600;cursor:pointer;padding:0;min-height:40px;text-align:left}
+#cy .toggle:hover{color:var(--ink)}
+#cy .detail{display:grid;gap:12px}
+#cy .cy-who{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:8px}
+#cy .cy-who b{font-weight:600}
+#cy .opts{display:flex;flex-wrap:wrap;gap:4px}
+#cy .o{font-size:12px;padding:2px 8px;border-radius:999px;background:var(--lime2);color:var(--ink);font-weight:600;border:1px solid transparent}
+#cy .o.check{background:transparent;color:var(--desc);font-weight:500;border:1px dashed var(--mute)}
+#cy .o.no{background:transparent;color:var(--mute);font-weight:500;text-decoration:line-through}
+#cy .why{font-size:12px;color:var(--desc);margin:0;padding-left:16px;display:grid;gap:4px}
+#cy .reco strong{font-weight:600;color:var(--ink)}
+#cy .cy-note{font-size:12px;color:var(--warn)}
+#cy .card a{color:var(--ink);font-weight:600}
+#cy .manual{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:8px}
+#cy .manual-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#cy .manual-head b{font-weight:600}
+#cy .manual pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.6;background:var(--card);border-radius:12px;padding:12px 16px;max-height:320px;overflow:auto}
+#cy .copy{height:40px;padding:0 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
+#cy .copy:hover{background:var(--sub)}
+#cy .pager{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
+#cy .pager:empty{display:none}
+#cy .pager button{min-width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-weight:500;cursor:pointer}
+#cy .pager button[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:var(--card);font-weight:600}
+#cy .pager button:disabled{color:var(--mute);cursor:default}
+#cy .pager .info{font-size:12px;color:var(--mute);width:100%;text-align:center}
+#cy .cy-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+#cy .cy-two > .cy-c[hidden] + .cy-c{grid-column:1 / -1}
+#cy .cy-ul{margin:0;padding-left:20px;display:grid;gap:4px}
+#cy .sub-row{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:8px 0;border-top:1px solid var(--line)}
+#cy .sub-row:first-child{border-top:0}
+#cy .cy-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+#cy .cy-row input{flex:1 1 220px;min-width:0;height:40px;border:0;border-radius:12px;background:var(--sub);padding:0 12px;font:inherit;color:var(--ink)}
+body.saving #cy{opacity:.5;pointer-events:none}
+#cy:not([hidden]){animation:ui-fade .15s ease-out}
+#cy .detail:not([hidden]){animation:ui-rise .2s ease-out}
+@media (max-width:860px){#cy .cy-two{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){
+  #cy .cy-cal{grid-template-columns:minmax(0,1fr)}
+  #cy .dow{display:none}
+  #cy .day{min-height:0;border-right:0;flex-direction:row;flex-wrap:wrap;align-items:flex-start}
+  #cy .day.empty-day,#cy .day.out{display:none}
+  #cy .dnum{width:100%;font-size:14px;font-weight:600;color:var(--ink)}
+  #cy .day.today .dnum{width:auto}
+  #cy .cy-ev{font-size:12px;padding:4px 8px}
+}
+@media (max-width:560px){
+  #cy{padding:12px 16px;gap:12px}
+  #cy .cy-c{padding:16px}
+  #cy .fchip,#cy .mark{height:40px;font-size:14px}
+  #cy .copy,#cy .pager button{height:44px}
+  #cy .cy-row input{height:44px;font-size:16px}
 }
 </style>
 
@@ -1003,6 +1123,80 @@ main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]){anim
 <div id="sim" hidden></div>
 <div id="stl" hidden></div>
 <div id="bas" hidden></div>
+<div id="cy" hidden>
+  <section class="cy-c cy-head">
+    <div class="cy-hl">
+      <div class="cy-eb">청약</div>
+      <h1>청약 달력</h1>
+      <div class="cy-s" id="cy-asof"></div>
+    </div>
+    <div class="cy-ctl">
+      <div class="seg" role="group" aria-label="혼인신고"><button type="button" id="cy-m-before" aria-pressed="true">혼인신고 전</button><button type="button" id="cy-m-after" aria-pressed="false">혼인신고 후</button></div>
+      <div class="seg" role="group" aria-label="입주 시점"><button type="button" id="cy-mv-all" aria-pressed="true">입주 전체</button><button type="button" id="cy-mv-near" aria-pressed="false">전세 만기 ±1년</button></div>
+      <div class="seg" role="group" aria-label="공고 종류"><button type="button" id="cy-k-apt" aria-pressed="true">분양만</button><button type="button" id="cy-k-all" aria-pressed="false">무순위·임의 포함</button></div>
+    </div>
+    <div class="cy-stale" id="cy-stale" hidden></div>
+    <p class="cy-msg" id="cy-msg" role="status" hidden></p>
+  </section>
+
+  <section class="cy-c" aria-label="월 달력">
+    <div class="cy-calh">
+      <button type="button" class="cy-ib" id="cy-prev" aria-label="이전 달"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <h2 id="cy-month"></h2>
+      <button type="button" class="cy-ib" id="cy-next" aria-label="다음 달"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="cy-legend">
+      <span><i class="cy-sw special"></i>특공</span>
+      <span><i class="cy-sw rank1"></i>1순위</span>
+      <span><i class="cy-sw rank2"></i>2순위</span>
+      <span><i class="cy-sw unsure"></i>공고문 확인(공공)</span>
+      <span>★ 우리가 넣을 만한 곳</span>
+      <span>흐린 칸 = 분양가 9억 초과</span>
+    </div>
+    <div class="cy-cal" id="cy-grid"></div>
+  </section>
+
+  <section class="cy-c">
+    <div class="cy-lh">
+      <h2 id="cy-list-title"></h2>
+      <div class="seg" role="group" aria-label="관심 표시"><button type="button" id="cy-i-all" aria-pressed="true">모두 보기</button><button type="button" id="cy-i-yes" aria-pressed="false">관심 있음</button><button type="button" id="cy-i-no" aria-pressed="false">관심 없음</button></div>
+    </div>
+    <div class="fchips" id="cy-fchips" role="group" aria-label="카테고리 필터"></div>
+    <div class="cy-s">필터는 달력과 목록에 함께 걸려요. 지역은 하나만 맞아도 보이고, 나머지 필터는 모두 맞아야 보여요.</div>
+    <div class="cards" id="cy-cards"></div>
+    <nav class="pager" id="cy-pager" aria-label="목록 페이지"></nav>
+  </section>
+
+  <div class="cy-two">
+    <section class="cy-c" id="cy-subs-sec" hidden>
+      <h2>넣은 청약 기록</h2>
+      <div id="cy-subs"></div>
+      <div class="cy-s">넣었거나 결과가 나오면 채팅으로 알려 주세요. Claude가 잠가서 추가해요.</div>
+    </section>
+    <section class="cy-c">
+      <h2>판정 기준</h2>
+      <ul class="cy-ul" id="cy-basis"></ul>
+      <div class="cy-s">판정은 보조예요. 넣기 전에 공고문 원문으로 확인해 주세요. 청약 규칙은 바뀔 수 있어요.</div>
+    </section>
+  </div>
+
+  <section class="cy-c" id="cy-token-sec" hidden>
+    <h2>관심 표시 저장 연결 <span class="badge" id="cy-token-state"></span></h2>
+    <div id="cy-token-help" class="cy-s">
+      <p style="margin:8px 0 0">관심 표시를 부부가 같이 보려면, 이 저장소에만 쓸 수 있는 GitHub 토큰을 한 번 연결해요. 토큰은 잠근 상태로 저장되고 부부 비밀번호로만 꺼낼 수 있어요. 채팅에는 보내지 마세요.</p>
+      <ol class="cy-ul">
+        <li>GitHub → 오른쪽 위 사진 → Settings → 맨 아래 Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate new token</li>
+        <li>Expiration: 1년 · Repository access: <b>Only select repositories → home-dashboard</b></li>
+        <li>Permissions → Repository permissions → <b>Contents: Read and write</b> (나머지는 그대로) → Generate</li>
+        <li>나온 토큰(github_pat_로 시작)을 아래에 붙여 넣고 연결</li>
+      </ol>
+      <form id="cy-token-form" class="cy-row" autocomplete="off">
+        <input id="cy-token" type="password" placeholder="github_pat_..." aria-label="GitHub 토큰">
+        <button class="btn-sub" type="submit">토큰 연결하기</button>
+      </form>
+    </div>
+  </section>
+</div>
 
 <nav class="tabbar" aria-label="탭" id="tabbar"></nav>
 
@@ -1026,7 +1220,7 @@ main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]){anim
     <button class="x" type="button" id="moreX" aria-label="닫기">✕</button>
     <div class="ct" id="moreT">더보기</div>
     <a class="more-i" href="#basis">계산 기준<span>정책·가정·출처·점검일·버전 이력</span></a>
-    <a class="more-i" href="cheongyak/">청약<span>달력·목록·우리 유형 판정</span></a>
+    <a class="more-i" href="#cheongyak">청약<span>달력·목록·우리 유형 판정</span></a>
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>

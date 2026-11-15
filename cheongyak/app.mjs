@@ -1,6 +1,8 @@
-// 청약 탭 (현황판 16번). 공고·규칙은 공개 데이터, 부부 정보·관심 표시·넣은 기록·확정 매뉴얼은 잠긴 기록(data/private)에서 연다.
+// 청약 화면 (현황판 16번 → 24-1에서 대시보드 안 화면 #cheongyak으로 합침).
+// 공고·규칙은 공개 데이터, 부부 정보·관심 표시·넣은 기록·확정 매뉴얼은 잠긴 기록(data/private)에서 연다.
+// 잠금은 대시보드 하나로: household/app.js가 mount(priv)를 부른다(따로 비밀번호 칸 없음).
 import { judgeNotice, applyOverrides, displaySchedule, sectorOf, monthsBetween } from "../scripts/lib/judge.mjs";
-import { unlock, openLog, seal } from "../scripts/lib/vault.mjs";
+import { openLog, seal } from "../scripts/lib/vault.mjs";
 
 const REPO = "seok9ry-95/home-dashboard";
 const RAW = `https://raw.githubusercontent.com/${REPO}/main/`;
@@ -11,32 +13,24 @@ let DATA, RULES, OVERRIDES, KEYS = null, LOG = { entries: [] };
 let PEOPLE = [], HOUSEHOLD = { married: false, engaged: false, children_under2: 0, pregnant: false, minor_children: 0, parent65_3y: false };
 let LEASE_END = null, MANUALS = {};
 const V = { priv: null, rows: {}, token: null, subs: [] };
+// 화면 요소 id는 모두 cy- 로 시작(대시보드의 다른 화면과 겹치지 않게)
+const $ = (id) => document.getElementById(`cy-${id}`);
 
 // 공개 데이터는 최신 원본(raw) → 실패하면 같은 사이트 사본
 async function getJson(path, { fresh = false } = {}) {
   const tries = fresh
-    ? [[`${API}${path}?ref=main&t=${Date.now()}`, { headers: { Accept: "application/vnd.github.raw+json" }, cache: "no-store" }], [`${RAW}${path}`, {}], [`../${path}`, {}]]
-    : [[`${RAW}${path}`, {}], [`../${path}`, {}]];
+    ? [[`${API}${path}?ref=main&t=${Date.now()}`, { headers: { Accept: "application/vnd.github.raw+json" }, cache: "no-store" }], [`${RAW}${path}`, {}], [`./${path}`, {}]]
+    : [[`${RAW}${path}`, {}], [`./${path}`, {}]];
   for (const [url, opt] of tries) {
     try { const r = await fetch(url, opt); if (r.ok) return await r.json(); } catch {}
   }
   return null;
 }
 
-// 열쇠를 이 기기에 기억: 꺼낼 수 없는 형태(CryptoKey)로 IndexedDB에 둔다. 비밀번호는 저장하지 않는다
-const idb = (mode, fn) => new Promise((res, rej) => {
-  const o = indexedDB.open("home-dashboard", 1);
-  o.onupgradeneeded = () => o.result.createObjectStore("kv");
-  o.onerror = () => rej(o.error);
-  o.onsuccess = () => { const tx = o.result.transaction("kv", mode); const q = fn(tx.objectStore("kv")); tx.oncomplete = () => res(q?.result); tx.onerror = () => rej(tx.error); };
-});
-const remembered = async () => { try { return await idb("readonly", (s) => s.get("priv")); } catch { return null; } };
-const remember = async (k) => { try { await idb("readwrite", (s) => s.put(k, "priv")); } catch {} };
-const forget = async () => { try { await idb("readwrite", (s) => s.delete("priv")); } catch {} };
 
 function flash(msg, bad = true) {
-  const el = document.getElementById("lock-msg");
-  el.textContent = msg; el.hidden = false; el.style.color = bad ? "var(--warn)" : "var(--muted)";
+  const el = $("msg");
+  el.textContent = msg; el.hidden = false; el.style.color = bad ? "var(--warn)" : "var(--desc)";
   clearTimeout(flash.t); flash.t = setTimeout(() => { el.hidden = true; }, 6000);
 }
 
@@ -62,17 +56,14 @@ const subsOf = (id) => V.subs.filter((s) => s.notice_id === id);
 
 function renderLock() {
   const on = Boolean(V.priv);
-  document.getElementById("unlock-form").hidden = on || !KEYS;
-  document.getElementById("unlocked").hidden = !on;
-  document.getElementById("subs-sec").hidden = !on;
-  document.getElementById("token-sec").hidden = !on;
-  if (!KEYS) flash("아직 열쇠가 없습니다. 처음 설정(../setup.html)을 먼저 해 주세요.", false);
+  $("subs-sec").hidden = !on;
+  $("token-sec").hidden = !on;
+  if (!KEYS) flash("아직 열쇠가 없어요. 처음 설정(setup.html)을 먼저 해 주세요.", false);
   if (!on) return;
-  document.getElementById("lock-status").textContent = `🔓 열림 · 기록 ${LOG.entries.length}줄 · ${V.token ? "관심 표시 부부 공유 중" : "관심 표시 저장 연결 필요(아래)"}`;
-  document.getElementById("token-state").textContent = V.token ? "연결됨" : "연결 안 됨";
-  document.getElementById("token-help").hidden = Boolean(V.token);
+  $("token-state").textContent = V.token ? "연결됨" : "연결 안 됨";
+  $("token-help").hidden = Boolean(V.token);
   const subs = [...V.subs].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
-  document.getElementById("subs").innerHTML = subs.length ? subs.map((s) => `<div class="sub-row num">
+  $("subs").innerHTML = subs.length ? subs.map((s) => `<div class="sub-row num">
       <span class="muted">${s.date ? md(s.date) : "-"}</span><span><b>${esc(s.name)}</b> · ${esc(s.who)} · ${esc(s.supply)}${s.type ? ` · ${esc(s.type)}` : ""}</span>
       <span class="muted">결과</span><span>${esc(s.result || "발표 전")}${s.winner_date ? ` <span class="muted">(발표 ${md(s.winner_date)})</span>` : ""}</span>
     </div>`).join("") : `<p class="empty">아직 넣은 청약이 없습니다.</p>`;
@@ -116,54 +107,41 @@ async function saveInterest(id, value) {
   } finally { document.body.classList.remove("saving"); }
 }
 
-async function onUnlock(priv, keep) {
+async function onUnlock(priv) {
   V.priv = priv;
-  if (keep) await remember(priv);
   LOG = (await getJson("data/private/log.json", { fresh: true })) || LOG;
   await applyVault();
   renderLock(); render();
 }
 
-async function boot() {
+// 대시보드가 잠금을 푼 뒤 처음 #cheongyak을 열 때 한 번 부른다
+let mounted = null;
+export function mount(priv) { return (mounted ||= boot(priv)); }
+
+async function boot(priv) {
   [DATA, RULES, OVERRIDES, KEYS, LOG] = await Promise.all([
     getJson("data/cheongyak.json"), getJson("data/cheongyak-rules.json"), getJson("data/cheongyak-overrides.json"),
     getJson("data/private/keys.json", { fresh: true }), getJson("data/private/log.json", { fresh: true }),
   ]);
   LOG = LOG || { entries: [] };
-  if (!DATA || !RULES) { document.getElementById("cards").innerHTML = `<p class="empty">청약 데이터를 불러오지 못했습니다. 잠시 뒤 새로고침해 주세요.</p>`; return; }
+  if (!DATA || !RULES) { $("cards").innerHTML = `<p class="empty">청약 정보를 불러오지 못했어요 · 1~2분 뒤 새로고침해 주세요</p>`; return; }
   OVERRIDES = OVERRIDES || { items: {} };
   state.near = false;
   init();
   renderLock();
-
-  document.getElementById("unlock-form").addEventListener("submit", async (e) => {
+  $("token-form").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const pw = document.getElementById("pw"), btn = document.getElementById("unlock-btn");
-    btn.disabled = true; btn.textContent = "여는 중…";
-    try { await onUnlock(await unlock(KEYS, pw.value), document.getElementById("remember").checked); pw.value = ""; }
-    catch (err) { flash(err.message); }
-    finally { btn.disabled = false; btn.textContent = "열기"; }
-  });
-  document.getElementById("lock-btn").addEventListener("click", async () => {
-    await forget(); V.priv = null; V.token = null; PEOPLE = []; MANUALS = {}; LEASE_END = null; state.interest = {}; state.near = false; V.subs = [];
-    renderLock(); render();
-  });
-  document.getElementById("token-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const t = document.getElementById("token").value.trim();
+    const t = $("token").value.trim();
     if (!/^github_pat_/.test(t)) return flash("github_pat_로 시작하는 Fine-grained 토큰을 넣어 주세요");
     try {
       await append({ key: "token", type: "token", data: { token: t } }, t);
-      document.getElementById("token").value = "";
-      await applyVault(); renderLock(); render(); flash("연결됐습니다. 이제 관심 표시가 부부에게 같이 보입니다.", false);
+      $("token").value = "";
+      await applyVault(); renderLock(); render(); flash("연결됐어요. 이제 관심 표시가 부부에게 같이 보여요.", false);
     } catch (err) { flash(err.message); }
   });
-
-  const saved = KEYS && await remembered();
-  if (saved) { try { await onUnlock(saved, false); } catch { await forget(); } }
+  if (priv && KEYS) { try { await onUnlock(priv); } catch (e) { flash(e.message); } }
 }
 
-const $ = (id) => document.getElementById(id);
 const store = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 const state = { married: store.get("cy.married", false), near: store.get("cy.near", false), all: store.get("cy.all", false), month: null,
@@ -258,7 +236,7 @@ function renderCalendar(rows) {
     if (dow === 0 || dow === 6) continue;
     const ev = (map.get(iso) || []).sort((a, b) => (b.r.ours - a.r.ours) || (a.r.dim - b.r.dim));
     const out = d.getUTCMonth() !== m - 1;
-    const shown = ev.slice(0, 6).map((e) => `<button class="chip ${e.cls}${e.r.dim ? " dim" : ""}" data-id="${e.r.it.id}" title="${e.r.it.name}">${e.r.ours ? '<span class="pick">★ </span>' : ""}${e.label} · ${e.short}</button>`).join("");
+    const shown = ev.slice(0, 6).map((e) => `<button class="cy-ev ${e.cls}${e.r.ours ? " ours" : ""}${e.r.dim ? " dim" : ""}" data-id="${e.r.it.id}" title="${e.r.it.name}">${e.r.ours ? '<span class="pick">★ </span>' : ""}${e.label} · ${e.short}</button>`).join("");
     const more = ev.length > 6 ? `<span class="more">외 ${ev.length - 6}건</span>` : "";
     parts.push(`<div class="day${out ? " out" : ""}${iso === today ? " today" : ""}${ev.length ? "" : " empty-day"}"><span class="dnum">${+iso.slice(8)}${window.innerWidth <= 640 ? ` (${"일월화수목금토"[dow]})` : ""}</span>${shown}${more}</div>`);
   }
@@ -304,11 +282,11 @@ function card(r) {
     const opts = p.options.map((o) => `<span class="o${o.ok === false ? " no" : o.ok === "check" ? " check" : ""}" title="${o.why}">${o.label}</span>`).join("");
     const conds = p.options.filter((o) => o.ok === "check").map((o) => `<li>${o.label}: ${o.why}</li>`).join("");
     const score = p.score ? ` · 가점 ${p.score.total}점${p.score.missing.length ? `(${p.score.missing.join(", ")} 빠짐)` : ""}` : "";
-    return `<div class="who"><div><b>${p.label}</b></div><div class="opts">${opts}</div>${conds ? `<ul class="why">${conds}</ul>` : ""}<div class="reco">추천 <strong>${p.pick.label}</strong> — ${p.pick.why}${score}</div></div>`;
+    return `<div class="cy-who"><div><b>${p.label}</b></div><div class="opts">${opts}</div>${conds ? `<ul class="why">${conds}</ul>` : ""}<div class="reco">추천 <strong>${p.pick.label}</strong> — ${p.pick.why}${score}</div></div>`;
   }).join("");
   const mark = state.interest[it.id];
   const open = state.open.has(it.id);
-  return `<article class="card${r.dim ? " dim" : ""}${mark === "no" ? " no-interest" : ""}" id="c-${it.id}">
+  return `<article class="card${r.dim ? " dim" : ""}${mark === "no" ? " no-interest" : ""}" id="cy-c-${it.id}">
     <div class="card-row">
       ${V.priv ? `<div class="marks" role="group" aria-label="관심 표시">
         <button class="mark yes" data-mark="yes" data-id="${it.id}" aria-pressed="${mark === "yes"}">관심 있음</button>
@@ -328,8 +306,8 @@ function card(r) {
     </dl>
     <button class="toggle" data-open="${it.id}" aria-expanded="${open}">${open ? "접기 ▴" : `${PEOPLE.length ? PEOPLE.map((q) => q.label).join("·") : "우리"} 청약 전략 ▾`}</button>
     <div class="detail"${open ? "" : " hidden"}>
-      ${V.priv ? who : '<div class="who small muted">🔒 잠금을 풀면 우리 청약 전략이 보입니다</div>'}
-      ${V.priv ? j.notes.map((n) => `<div class="note">${n}</div>`).join("") : ""}
+      ${V.priv ? who : '<div class="cy-who small muted">잠금을 풀면 우리 청약 전략이 보여요</div>'}
+      ${V.priv ? j.notes.map((n) => `<div class="cy-note">${n}</div>`).join("") : ""}
       <a href="${it.notice_url}" target="_blank" rel="noopener">공고문 보기(청약홈) ↗</a>
       ${V.priv ? manualBlock(r) : ""}
     </div>
@@ -397,7 +375,7 @@ function manualBlock(r) {
   const text = fixed || draftManual(r);
   return `<div class="manual">
     <div class="manual-head"><b>공고 접수 매뉴얼</b><span class="badge${fixed ? " fixed" : ""}">${fixed ? "확정본" : "자동 초안"}</span><button class="copy" data-copy="${r.it.id}">카톡용 복사</button></div>
-    <pre id="m-${r.it.id}">${esc(text)}</pre>
+    <pre id="cy-m-${r.it.id}">${esc(text)}</pre>
   </div>`;
 }
 
@@ -458,7 +436,7 @@ function init() {
   $("cards").addEventListener("click", (e) => {
     const cp = e.target.closest(".copy");
     if (cp) {
-      const pre = document.getElementById(`m-${cp.dataset.copy}`);
+      const pre = $(`m-${cp.dataset.copy}`);
       const done = (msg) => { cp.textContent = msg; setTimeout(() => { cp.textContent = "카톡용 복사"; }, 1800); };
       const selectIt = () => { const rg = document.createRange(); rg.selectNodeContents(pre); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(rg); done("선택됨 · 길게 눌러 복사"); };
       try { navigator.clipboard.writeText(pre.textContent).then(() => done("복사됨"), selectIt); } catch { selectIt(); }
@@ -475,16 +453,15 @@ function init() {
     $("list-title").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
   });
   $("grid").addEventListener("click", (e) => {
-    const b = e.target.closest(".chip"); if (!b) return;
+    const b = e.target.closest(".cy-ev"); if (!b) return;
     state.open.add(b.dataset.id);
     const idx = state.list.indexOf(b.dataset.id);
     if (idx >= 0) state.page = Math.floor(idx / PER_PAGE) + 1;
     render();
-    const el = document.getElementById(`c-${b.dataset.id}`); if (!el) return;
+    const el = $(`c-${b.dataset.id}`); if (!el) return;
     el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
     el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1600);
   });
   render();
 }
 
-boot();
