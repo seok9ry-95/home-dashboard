@@ -10,11 +10,13 @@ const engine = () => {
   return new Function(code + "\nreturn { RULES, ASSUME, BASIS, loan, affordable, PMT, PV, R2, e2, priceGap, needOf, pctOf };")();
 };
 
-test("계산 기준 10-3: 주담대 금리 4.88%, 버전 이력 맨 위, 월 상환 중간 금리도 같은 값", () => {
+test("계산 기준 11-1: 버전 이력 맨 위, 금리 4.88%는 10-3 그대로, 월 상환 중간 금리도 같은 값", () => {
   const E = engine();
   assert.equal(E.ASSUME.rate, 0.0488);
-  assert.equal(E.BASIS.history[0].v, "2026.10-3");
-  assert.equal(E.BASIS.history[1].v, "2026.10-2");
+  assert.equal(E.BASIS.history[0].v, "2026.11-1");
+  assert.equal(E.BASIS.history[0].from, "2026-11-15");
+  assert.equal(E.BASIS.history[1].v, "2026.10-3");
+  assert.equal(E.BASIS.history[2].v, "2026.10-2");
   assert.match(SRC, /mort: \[\.039, ASSUME\.rate, \.0564\]/);
 });
 
@@ -47,4 +49,21 @@ test("월 필요 저축은 반올림, 진행률은 내림(못 미치면 최대 9
   assert.equal(E.pctOf(79990, 80000), 99);
   assert.equal(E.pctOf(70640, 80000), 88);
   assert.equal(E.pctOf(80000, 80000), 100);
+});
+
+test("매수 전략(11/15): hh:strategy가 있으면 잔금일·대출 소득을 그것으로, 없으면 이전 기록 그대로 (가상 부부)", () => {
+  const code = SRC.slice(SRC.indexOf("const ST ="), SRC.indexOf("const asOf"));
+  const run = (DATA) => new Function("DATA", "M", code + "\nreturn { inc, T, incLabel };")(DATA, (v) => v / 10000);
+  const base = { income: { H: 50000000, W: 40000000 }, target: { price: 800000000, date: "2028-01", region: "서울", type: "생애최초", incomeBasis: "합산", label: "x" } };
+  const a = run(base);
+  assert.deepEqual(a.inc, { H: 5000, W: 4000 }); assert.equal(a.T.date, "2028-01"); assert.equal(a.incLabel, "지금");
+  const b = run({ ...base, strategy: { date: "2028-06", loanIncome: { H: 60000000, W: 45000000 } } });
+  assert.deepEqual(b.inc, { H: 6000, W: 4500 }); assert.equal(b.T.date, "2028-06"); assert.equal(b.T.price, 80000); assert.equal(b.incLabel, "2027 예상");
+  assert.equal(base.target.date, "2028-01");   // 목표 기록 자체는 바꾸지 않음
+});
+
+test("잔금 시점 버튼은 목표일 · 2030.1 갱신 만기, 모자랄 때 순서는 퇴직연금 → 신용대출", () => {
+  assert.match(SRC, /\['2030-01', '2030\.1 갱신 만기'\]/);
+  assert.ok(SRC.indexOf("① 퇴직연금(IRP) 인출") > 0 && SRC.indexOf("① 퇴직연금(IRP) 인출") < SRC.indexOf("② 신용대출"));
+  assert.doesNotMatch(SRC, /전세 연장은 지금 계약이 첫 계약일 때만/);
 });
