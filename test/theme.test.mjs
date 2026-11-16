@@ -6,6 +6,12 @@ import { readFile } from "node:fs/promises";
 
 const read = (p) => readFile(new URL(`../${p}`, import.meta.url), "utf8");
 const NOT_COLORS = new Set(["f", "hatch", "p", "c"]); // 글꼴·빗금 무늬·슬라이더 위치 같은 색 아닌 변수
+// 움직임 이름(24-2a)은 DESIGN.md '부드러움' 표에 있는 것만 — test/motion.test.mjs가 값까지 검사
+async function motionNames() {
+  const md = await read("DESIGN.md");
+  const sec = md.slice(md.indexOf("## 부드러움"));
+  return new Set([...sec.matchAll(/^\| ((?:dur|ease)-[\w-]+) \|/gm)].map((m) => m[1]));
+}
 
 async function design() {
   const md = await read("DESIGN.md");
@@ -37,11 +43,12 @@ test("라이트·다크 값이 DESIGN.md 색 표와 똑같다", async () => {
     if (v.dark.startsWith("#")) assert.equal(dark[name]?.toUpperCase(), v.dark.toUpperCase(), `다크 --${name}`);
     assert.ok(name in light && name in dark, `--${name}이 라이트·다크 둘 다 있어야 함`);
   }
-  for (const name of Object.keys(light)) if (!NOT_COLORS.has(name)) assert.ok(name in D, `DESIGN.md에 없는 색 이름: --${name}`);
+  const MOT = await motionNames();
+  for (const name of Object.keys(light)) if (!NOT_COLORS.has(name) && !MOT.has(name)) assert.ok(name in D, `DESIGN.md에 없는 색 이름: --${name}`);
 });
 
 test("화면 코드에 고정 색이 없고 DESIGN.md 색 이름만 쓴다 (홈·시뮬레이터·월 결산·계산 기준·청약·잠금)", async () => {
-  const D = await design();
+  const D = await design(), MOT = await motionNames();
   const files = { "index.html": stripRoots(await read("index.html")), "household/app.js": await read("household/app.js"), "cheongyak/app.mjs": await read("cheongyak/app.mjs") };
   for (const [f, src] of Object.entries(files)) {
     const code = src.replace(/<svg[\s\S]*?<\/svg>/g, "");
@@ -49,7 +56,7 @@ test("화면 코드에 고정 색이 없고 DESIGN.md 색 이름만 쓴다 (홈�
     assert.ok(!hex, `${f}: 고정 색 ${hex && hex[0]}`);
     const rgba = [...code.matchAll(/rgba?\(([^)]*)\)/g)].filter((m) => !/^0,0,0,/.test(m[1].replace(/\s/g, "")));
     assert.deepEqual(rgba.map((m) => m[0]), [], `${f}: 그림자(검정) 말고 rgba 색이 있음`);
-    for (const [, name] of code.matchAll(/var\(--([\w-]+)/g)) if (!NOT_COLORS.has(name)) assert.ok(name in D, `${f}: DESIGN.md에 없는 색 이름 --${name}`);
+    for (const [, name] of code.matchAll(/var\(--([\w-]+)/g)) if (!NOT_COLORS.has(name) && !MOT.has(name)) assert.ok(name in D, `${f}: DESIGN.md에 없는 이름 --${name}`);
   }
 });
 

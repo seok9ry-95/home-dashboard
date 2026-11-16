@@ -45,6 +45,6 @@ test("청약 화면은 Pretendard와 DESIGN.md 색 이름만 쓴다", async () =
   const css = page.slice(page.indexOf("/* ===== 청약 (#cheongyak"), page.lastIndexOf("</style>"));
   assert.ok(css.length > 1000, "청약 CSS를 찾지 못함");
   assert.ok(!/#[0-9a-fA-F]{3,6}\b/.test(css), "청약 CSS에 고정 색(#...)이 있음");
-  for (const [, name] of css.matchAll(/var\(--([\w-]+)\)/g)) assert.ok(DESIGN_COLORS.includes(name), `DESIGN.md에 없는 색 이름: --${name}`);
+  for (const [, name] of css.matchAll(/var\(--([\w-]+)\)/g)) assert.ok(DESIGN_COLORS.includes(name) || /^(dur|ease)-/.test(name), `DESIGN.md에 없는 색 이름: --${name}`);
   assert.ok(!/IBM Plex/.test(page + (await read("cheongyak/index.html"))), "IBM Plex가 남아 있음");
 });

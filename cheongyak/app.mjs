@@ -115,14 +115,18 @@ async function onUnlock(priv) {
 }
 
 // 대시보드가 잠금을 푼 뒤 처음 #cheongyak을 열 때 한 번 부른다
-let mounted = null;
+let mounted = null, loading = null;
 export function mount(priv) { return (mounted ||= boot(priv)); }
+// 24-2a 미리 불러오기: 대시보드가 홈을 그린 뒤 쉬는 틈에 부른다. 데이터만 받아 두고 화면은 그리지 않는다
+export function prefetch() { return (loading ||= Promise.all([
+  getJson("data/cheongyak.json"), getJson("data/cheongyak-rules.json"), getJson("data/cheongyak-overrides.json"),
+  getJson("data/private/keys.json", { fresh: true }), getJson("data/private/log.json", { fresh: true }),
+])); }
 
 async function boot(priv) {
-  [DATA, RULES, OVERRIDES, KEYS, LOG] = await Promise.all([
-    getJson("data/cheongyak.json"), getJson("data/cheongyak-rules.json"), getJson("data/cheongyak-overrides.json"),
-    getJson("data/private/keys.json", { fresh: true }), getJson("data/private/log.json", { fresh: true }),
-  ]);
+  let got = await prefetch();
+  if (!got[0] || !got[1]) { loading = null; got = await prefetch(); }   // 미리 받기가 실패했으면 열 때 한 번 더
+  [DATA, RULES, OVERRIDES, KEYS, LOG] = got;
   LOG = LOG || { entries: [] };
   if (!DATA || !RULES) { $("cards").innerHTML = `<p class="empty">청약 정보를 불러오지 못했어요 · 1~2분 뒤 새로고침해 주세요</p>`; return; }
   OVERRIDES = OVERRIDES || { items: {} };
@@ -445,7 +449,11 @@ function init() {
     const m = e.target.closest(".mark");
     if (m) { saveInterest(m.dataset.id, state.interest[m.dataset.id] === m.dataset.mark ? null : m.dataset.mark); return; }
     const t = e.target.closest(".toggle");
-    if (t) { const id = t.dataset.open; state.open.has(id) ? state.open.delete(id) : state.open.add(id); render(); }
+    if (t) {
+      const id = t.dataset.open, card = () => document.getElementById(`cy-c-${id}`), h = card()?.offsetHeight;
+      state.open.has(id) ? state.open.delete(id) : state.open.add(id); render();
+      window.__motion?.grow(card(), h);   // 24-2a: 펼친 카드 높이가 부드럽게(목록은 다시 그려져서 직접 부름)
+    }
   });
   $("pager").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-page]"); if (!b || b.disabled) return;

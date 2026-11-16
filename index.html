@@ -44,6 +44,9 @@ body:not(.hh-locked) > #hh-lock { display: none; }
   --lemon:#F3E25A; --lemon2:#F8F0A8; --orange:#F6A85C; --orange2:#F9C38F; --warn:#A85A16;
   --scrim:rgba(20,20,20,.35);
   --hatch:repeating-linear-gradient(135deg,rgba(255,255,255,.5) 0 1.5px,transparent 1.5px 6px);
+  /* 움직임 (DESIGN.md '부드러움', 24-2a) — 시간·감속은 이 이름만 쓴다 */
+  --dur-press:100ms; --dur-fade:150ms; --dur-rise:200ms; --dur-slide:320ms; --dur-grow:320ms; --dur-count:600ms;
+  --ease-out:cubic-bezier(.2,.8,.2,1);
   --f:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;
 }
 :root[data-theme="dark"]{
@@ -54,6 +57,7 @@ body:not(.hh-locked) > #hh-lock { display: none; }
   --lemon:#E8D64E; --lemon2:#4A4520; --orange:#F6A85C; --orange2:#6B4524; --warn:#F0965E;
   --scrim:rgba(0,0,0,.6);
 }
+@media (prefers-reduced-motion:reduce){:root{--dur-press:0ms;--dur-fade:0ms;--dur-rise:0ms;--dur-slide:0ms;--dur-grow:0ms;--dur-count:0ms}}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:13px;line-height:1.4;letter-spacing:-0.01em;word-break:keep-all;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 button{font-family:inherit;color:inherit}
@@ -156,10 +160,10 @@ section.card{background:var(--card);border-radius:18px;padding:20px;min-width:0;
 .cl{flex:1;position:relative;cursor:pointer;min-width:0}
 .chart,.dn-wrap{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .stack{position:absolute;left:50%;transform:translateX(-50%);width:min(56px,70%);display:flex;flex-direction:column;gap:3px}
-.stack div{border-radius:6px;transition:background-color .15s}
+.stack div{border-radius:6px;transition:background-color var(--dur-fade) var(--ease-out)}
 .lab{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:11px;color:var(--mute)}
 .cl.on .lab,.cl.cur .lab{color:var(--ink);font-weight:600}
-.vtop{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:700;opacity:0;transition:opacity .15s;white-space:nowrap}
+.vtop{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:700;opacity:0;transition:opacity var(--dur-fade) var(--ease-out);white-space:nowrap}
 .cl.on .vtop,.cl.cur .vtop{opacity:1}
 .tip{position:absolute;max-width:calc(100vw - 48px);background:var(--card);border-radius:10px;padding:10px 12px;box-shadow:0 6px 24px rgba(0,0,0,.10),0 0 0 1px var(--line);z-index:5;min-width:170px;pointer-events:none;display:none}
 .cl.on .tip{display:block}
@@ -196,7 +200,7 @@ section.card{background:var(--card);border-radius:18px;padding:20px;min-width:0;
 .donut .c b{font-size:20px;font-weight:700;letter-spacing:-0.03em}
 .donut .c span{font-size:11px;color:var(--mute);margin-top:2px}
 .dl{flex:1;min-width:180px;display:flex;flex-direction:column;gap:9px}
-.dr{display:flex;align-items:flex-start;gap:8px;border-radius:8px;margin:-4px -6px;padding:4px 6px;cursor:pointer;transition:opacity .18s,background .18s}
+.dr{display:flex;align-items:flex-start;gap:8px;border-radius:8px;margin:-4px -6px;padding:4px 6px;cursor:pointer;transition:opacity var(--dur-fade) var(--ease-out),background var(--dur-fade) var(--ease-out)}
 .dr.on{background:var(--sub)} .dr.dim{opacity:.5}
 .dr i{width:9px;height:9px;border-radius:3px;flex:none;margin-top:4px}
 .dr .n{flex:1;min-width:0}
@@ -273,7 +277,7 @@ section.card{background:var(--card);border-radius:18px;padding:20px;min-width:0;
 .sheet{background:var(--card);border-radius:18px;padding:22px;max-width:440px;width:100%;max-height:90vh;overflow-y:auto}
 .sheet ol{margin:12px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:13px}
 .sheet .x{float:right;width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--card);cursor:pointer}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--on-ink);padding:8px 16px;border-radius:99px;font-size:12px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:90}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--on-ink);padding:8px 16px;border-radius:99px;font-size:12px;opacity:0;transition:opacity var(--dur-rise) var(--ease-out);pointer-events:none;z-index:90}
 .toast.on{opacity:1}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
@@ -385,7 +389,7 @@ a.mi:hover{background:var(--sub);color:var(--ink)}
 #sim .av22{width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none}
 #sim .sw-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
 #sim .sw{flex:none;width:46px;height:28px;border-radius:14px;background:var(--zero);position:relative;cursor:pointer;border:0;padding:0}
-#sim .sw span{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.12);transition:left .15s}
+#sim .sw span{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.12);transition:left var(--dur-fade) var(--ease-out)}
 #sim .sw[aria-checked="true"]{background:var(--ink)}
 #sim .sw[aria-checked="true"] span{left:21px}
 #sim .res-h{display:flex;justify-content:space-between;align-items:flex-end;gap:8px 12px;flex-wrap:wrap;padding:8px 4px 0}
@@ -846,16 +850,30 @@ a.mi:hover,.mi.soon:hover{background:var(--sub);color:var(--ink)}
 .seg button:not([aria-pressed="true"]):not([aria-selected="true"]):not([aria-disabled="true"]):hover{color:var(--ink)}
 .seg button[aria-disabled="true"]{color:var(--mute);opacity:.6}
 /* 눌렀을 때 98%, 포커스는 ink 2px */
-.btn-dark,.btn-sub,.fold-btn,.seg button,.chips button,.ask button,.mi,.tabbar a,.tabbar button,.thm,.dr{transition:transform .1s ease-out,background-color .15s ease-out,color .15s ease-out}
+.btn-dark,.btn-sub,.fold-btn,.seg button,.chips button,.ask button,.mi,.tabbar a,.tabbar button,.thm,.dr{transition:transform var(--dur-press) var(--ease-out),background-color var(--dur-fade) var(--ease-out),color var(--dur-fade) var(--ease-out)}
 .btn-dark:active,.btn-sub:active,.fold-btn:active,.seg button:active,.chips button:active,.ask button:active,.mi:active,.thm:active,.tabbar a:active,.tabbar button:active{transform:scale(.98)}
 button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 a:hover{color:var(--ink)}
 /* 화면 전환 150ms 흐릿하게, 펼치기·카드 안 탭 200ms 위에서 4px */
 @keyframes ui-fade{from{opacity:0}}
 @keyframes ui-rise{from{opacity:0;transform:translateY(-4px)}}
-main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]),#cy:not([hidden]){animation:ui-fade .15s ease-out}
-#assetMore:not([hidden]),#rtHist:not([hidden]),#rtBot:not([hidden]),#spDetail .dlist,.sheet{animation:ui-rise .2s ease-out}
-.cl.on .tip{animation:ui-fade .15s ease-out}
+main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]),#cy:not([hidden]){animation:ui-fade var(--dur-fade) var(--ease-out)}
+#assetMore:not([hidden]),#rtHist:not([hidden]),#rtBot:not([hidden]),#spDetail .dlist,.sheet{animation:ui-rise var(--dur-rise) var(--ease-out)}
+.cl.on .tip{animation:ui-fade var(--dur-fade) var(--ease-out)}
+/* ===== 움직임 24-2a: 미끄러짐(.glide) · 펼치기(.growing) · 숫자 굴러가기(.roll) — 시간은 --dur-* 이름만 ===== */
+.seg,#menu{position:relative}
+.seg > button,#menu > .mi,#tabbar > a,#tabbar > button{position:relative;z-index:1}
+.glide{position:absolute;left:0;top:0;z-index:0;pointer-events:none;opacity:0;transition:transform var(--dur-slide) var(--ease-out),width var(--dur-slide) var(--ease-out),height var(--dur-slide) var(--ease-out)}
+.glide.still{transition:none}
+.seg > .glide{background:var(--ink);border-radius:999px}
+#menu > .glide{background:var(--sub);border-radius:12px}
+#tabbar > .glide{background:var(--sub);border-radius:999px}
+.seg.has-glide > button[aria-pressed="true"],.seg.has-glide > button[aria-selected="true"],#menu.has-glide > .mi.on,#tabbar.has-glide .on .tbi{background:transparent!important}
+.seg > button,.mi,#tabbar > a,#tabbar > button{transition:transform var(--dur-press) var(--ease-out),background-color var(--dur-fade) var(--ease-out),color var(--dur-slide) var(--ease-out)}
+.growing{overflow:hidden;transition:height var(--dur-grow) var(--ease-out)}
+.roll{white-space:nowrap}
+.roll-d{display:inline-block;height:1lh;overflow:hidden;vertical-align:top}
+.roll-s{display:block;white-space:pre;text-align:center;transition:transform var(--dur-count) var(--ease-out)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 /* 빈 상태: 무엇이 없는지 + 언제 채워지는지 */
 .empty{display:flex;align-items:center;justify-content:center;text-align:center;min-height:64px;padding:12px 16px;border-radius:12px;background:var(--sub);color:var(--desc);font-size:14px;margin-top:8px}
@@ -904,7 +922,7 @@ main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]),#cy:
 #cy .day.out .dnum{color:var(--mute)}
 #cy .dnum{font-size:12px;align-self:flex-start;color:var(--desc)}
 #cy .day.today .dnum{background:var(--ink);color:var(--card);border-radius:999px;padding:0 8px;font-weight:600}
-#cy .cy-ev{display:block;width:100%;text-align:left;border:0;font:inherit;font-size:12px;font-weight:500;line-height:1.4;padding:2px 8px;border-radius:999px;cursor:pointer;color:var(--ink);background:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:transform .1s ease-out}
+#cy .cy-ev{display:block;width:100%;text-align:left;border:0;font:inherit;font-size:12px;font-weight:500;line-height:1.4;padding:2px 8px;border-radius:999px;cursor:pointer;color:var(--ink);background:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:transform var(--dur-press) var(--ease-out)}
 #cy .cy-ev:active{transform:scale(.98)}
 #cy .cy-ev.special{background:var(--ink);color:var(--card);font-weight:600}
 #cy .cy-ev.rank1{background:var(--ghost)}
@@ -917,7 +935,7 @@ main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]),#cy:
 #cy .more{font-size:12px;color:var(--mute);padding-left:8px}
 #cy .cy-lh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
 #cy .fchips{display:flex;flex-wrap:wrap;gap:8px}
-#cy .fchip{height:32px;padding:0 12px;border:0;border-radius:999px;background:var(--sub);color:var(--desc);font:inherit;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:transform .1s ease-out,background-color .15s ease-out}
+#cy .fchip{height:32px;padding:0 12px;border:0;border-radius:999px;background:var(--sub);color:var(--desc);font:inherit;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:transform var(--dur-press) var(--ease-out),background-color var(--dur-fade) var(--ease-out)}
 #cy .fchip:hover{color:var(--ink)}
 #cy .fchip:active{transform:scale(.98)}
 #cy .fchip[aria-pressed="true"]{background:var(--ink);color:var(--card);font-weight:600}
@@ -974,8 +992,8 @@ main:not([hidden]),#sim:not([hidden]),#stl:not([hidden]),#bas:not([hidden]),#cy:
 #cy .cy-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 #cy .cy-row input{flex:1 1 220px;min-width:0;height:40px;border:0;border-radius:12px;background:var(--sub);padding:0 12px;font:inherit;color:var(--ink)}
 body.saving #cy{opacity:.5;pointer-events:none}
-#cy:not([hidden]){animation:ui-fade .15s ease-out}
-#cy .detail:not([hidden]){animation:ui-rise .2s ease-out}
+#cy:not([hidden]){animation:ui-fade var(--dur-fade) var(--ease-out)}
+#cy .detail:not([hidden]){animation:ui-rise var(--dur-rise) var(--ease-out)}
 @media (max-width:860px){#cy .cy-two{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){
   #cy .cy-cal{grid-template-columns:minmax(0,1fr)}
@@ -1227,6 +1245,7 @@ body.saving #cy{opacity:.5;pointer-events:none}
 </div>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="household/motion.js"></script>
 <script type="module" src="household/boot.mjs"></script>
 
 

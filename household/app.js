@@ -1369,6 +1369,8 @@ function route() {
 }
 document.querySelectorAll('[data-soon="시뮬레이터"]').forEach(el => { el.removeAttribute('data-soon'); el.addEventListener('click', () => { location.hash = '#simulator'; }); });
 addEventListener('hashchange', route);
+// 24-2a 청약 미리 불러오기: 홈을 그린 뒤 쉬는 틈에 청약 코드·데이터를 받아 둔다(메뉴를 누르면 바로 뜨게). 실패해도 열 때 다시 받음
+(window.requestIdleCallback || ((f) => setTimeout(f, 1200)))(() => { (cyMod ||= import(`./cheongyak/app.mjs?v=${Date.now()}`)).then(m => m.prefetch && m.prefetch()).catch(() => { cyMod = null; }); }, { timeout: 3000 });
 window.__sim = { calc, get S() { return S; }, upd, BASE, CREDIT, PAYRATE };
 route();
 })();
