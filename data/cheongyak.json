@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-16T19:50:16+09:00",
- "base_date": "2026-11-16",
- "window_from": "2026-09-17",
+ "collected_at": "2026-11-17T07:06:20+09:00",
+ "base_date": "2026-11-17",
+ "window_from": "2026-09-18",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
   "apt": 39,
-  "remndr": 35,
-  "opt": 37,
-  "total": 111
+  "remndr": 33,
+  "opt": 38,
+  "total": 110
  },
  "coverage": {
-  "with_types": 111,
-  "with_price": 111
+  "with_types": 110,
+  "with_price": 110
  },
  "items": [
   {
@@ -1335,124 +1335,6 @@
      "special_households": null,
      "special_by_kind": null,
      "price_top_manwon": 53400
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026910236-2026910236",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "무순위",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "철산자이 더 헤리티지",
-   "sido": "경기",
-   "sigungu": "광명시",
-   "address": "경기도 광명시 철산동 235번지 일원",
-   "total_households": 4,
-   "announce_date": "2026-09-17",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-22",
-     "end": "2026-09-22"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-29",
-    "contract": {
-     "start": "2026-10-07",
-     "end": "2026-10-07"
-    }
-   },
-   "move_in": "2026-10",
-   "flags": null,
-   "builder": "철산주공8,9단지주택재건축정비사업조합",
-   "phone": "0220520180",
-   "homepage": "https://xi.co.kr/csh",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910236&pblancNo=2026910236",
-   "price_max_manwon": 80800,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "059.9626",
-     "area_m2": null,
-     "general_households": 3,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 80800
-    },
-    {
-     "model_no": "02",
-     "type": "059.9353",
-     "area_m2": null,
-     "general_households": 1,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 75700
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026930031-2026930031",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "불법행위 재공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "철산자이 브리에르",
-   "sido": "경기",
-   "sigungu": "광명시",
-   "address": "경기도 광명시 철산동 105번지 일원",
-   "total_households": 2,
-   "announce_date": "2026-09-17",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-22",
-     "end": "2026-09-23"
-    },
-    "special": {
-     "start": "2026-09-22",
-     "end": "2026-09-22"
-    },
-    "rank1": null,
-    "rank2": null,
-    "general": {
-     "start": "2026-09-23",
-     "end": "2026-09-23"
-    },
-    "winner_date": "2026-09-30",
-    "contract": {
-     "start": "2026-10-07",
-     "end": "2026-10-07"
-    }
-   },
-   "move_in": "2026-10",
-   "flags": null,
-   "builder": "철산주공10과11단지 주택재건축정비사업조합",
-   "phone": "0220520180",
-   "homepage": "https://www.xi.co.kr/csx",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026930031&pblancNo=2026930031",
-   "price_max_manwon": 86670,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "059.9979A",
-     "area_m2": 81.3053,
-     "general_households": 0,
-     "special_households": 1,
-     "special_by_kind": null,
-     "price_top_manwon": 80170
-    },
-    {
-     "model_no": "02",
-     "type": "059.9960B",
-     "area_m2": 80.9982,
-     "general_households": 1,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 86670
     }
    ]
   },
@@ -10530,6 +10412,53 @@
      "special_households": null,
      "special_by_kind": null,
      "price_top_manwon": 56600
+    }
+   ]
+  },
+  {
+   "id": "opt-2026940256-2026940256",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "디에이치 신반포에스테라",
+   "sido": "서울",
+   "sigungu": "서초구",
+   "address": "서울특별시 서초구 잠원동 65-33번지 일대",
+   "total_households": 5,
+   "announce_date": "2026-11-16",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-18",
+     "end": "2026-11-19"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-24",
+    "contract": {
+     "start": "2026-11-27",
+     "end": "2026-11-27"
+    }
+   },
+   "move_in": "2028-01",
+   "flags": null,
+   "builder": "신반포22차아파트주택재건축정비사업조합",
+   "phone": "15336366",
+   "homepage": "https://www.the-h-newbanpoestella.co.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940256&pblancNo=2026940256",
+   "price_max_manwon": 439800,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9960",
+     "area_m2": null,
+     "general_households": 5,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 439800
     }
    ]
   },
