@@ -1,170 +1,24 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-17T19:26:16+09:00",
- "base_date": "2026-11-17",
- "window_from": "2026-09-18",
+ "collected_at": "2026-11-18T07:12:45+09:00",
+ "base_date": "2026-11-18",
+ "window_from": "2026-09-19",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 39,
+  "apt": 37,
   "remndr": 33,
-  "opt": 38,
-  "total": 110
+  "opt": 37,
+  "total": 107
  },
  "coverage": {
-  "with_types": 110,
-  "with_price": 110
+  "with_types": 107,
+  "with_price": 107
  },
  "items": [
-  {
-   "id": "apt-2026000307-2026000307",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "APT",
-   "house_detail": "국민",
-   "sale_type": "분양전환 가능임대",
-   "name": "군포대야미지구 A-1블록 6년 분양전환공공임대주택(본청약)",
-   "sido": "경기",
-   "sigungu": "군포시",
-   "address": "경기도 군포시 대야미동, 속달동, 둔대동 일원 군포대야미 공공주택지구내 A1블록",
-   "total_households": 377,
-   "announce_date": "2026-06-30",
-   "schedule": {
-    "receipt": {
-     "start": "2026-07-13",
-     "end": "2026-07-24"
-    },
-    "special": null,
-    "rank1": {
-     "start": "2026-07-13",
-     "end": "2026-07-23"
-    },
-    "rank2": {
-     "start": "2026-07-24",
-     "end": "2026-07-24"
-    },
-    "general": null,
-    "winner_date": "2026-08-07",
-    "contract": {
-     "start": "2026-11-12",
-     "end": "2026-11-17"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-07-13",
-      "end": "2026-07-23"
-     },
-     "기타지역": {
-      "start": "2026-07-13",
-      "end": "2026-07-23"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-07-24",
-      "end": "2026-07-24"
-     },
-     "기타지역": {
-      "start": "2026-07-24",
-      "end": "2026-07-24"
-     }
-    }
-   },
-   "move_in": "2029-12",
-   "flags": {
-    "투기과열": false,
-    "조정대상": false,
-    "분양가상한제": false,
-    "공공주택지구": true,
-    "대규모택지": false
-   },
-   "builder": "(주)까뮤이앤씨",
-   "phone": "0312975229",
-   "homepage": "https://apply.lh.or.kr/",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000307&pblancNo=2026000307",
-   "price_max_manwon": 9629,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "055.0000A",
-     "area_m2": 77.858,
-     "general_households": 1,
-     "special_households": 21,
-     "special_by_kind": {
-      "다자녀": 2,
-      "신혼부부": 2,
-      "생애최초": 2,
-      "청년": 4,
-      "신생아": 7,
-      "노부모부양": 1,
-      "기관추천": 3,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 8561
-    },
-    {
-     "model_no": "02",
-     "type": "059.0000A",
-     "area_m2": 83.467,
-     "general_households": 4,
-     "special_households": 67,
-     "special_by_kind": {
-      "다자녀": 7,
-      "신혼부부": 7,
-      "생애최초": 7,
-      "청년": 11,
-      "신생아": 21,
-      "노부모부양": 4,
-      "기관추천": 10,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 9629
-    },
-    {
-     "model_no": "03",
-     "type": "059.0000B",
-     "area_m2": 83.2861,
-     "general_households": 1,
-     "special_households": 26,
-     "special_by_kind": {
-      "다자녀": 3,
-      "신혼부부": 3,
-      "생애최초": 3,
-      "청년": 4,
-      "신생아": 8,
-      "노부모부양": 2,
-      "기관추천": 3,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 9589
-    },
-    {
-     "model_no": "04",
-     "type": "059.0000C",
-     "area_m2": 83.4531,
-     "general_households": 1,
-     "special_households": 27,
-     "special_by_kind": {
-      "다자녀": 3,
-      "신혼부부": 3,
-      "생애최초": 3,
-      "청년": 4,
-      "신생아": 8,
-      "노부모부양": 1,
-      "기관추천": 5,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 9581
-    }
-   ]
-  },
   {
    "id": "apt-2026000320-2026000320",
    "kind": "apt",
@@ -1209,136 +1063,6 @@
    ]
   },
   {
-   "id": "opt-2026940202-2026940202",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "서수원 에피트 센트럴마크(M2BL)(3차)",
-   "sido": "경기",
-   "sigungu": "수원시",
-   "address": "경기도 수원시 권선구 당수동 3002번지 일원 (수원당수 공공주택지구 M2BL)",
-   "total_households": 12,
-   "announce_date": "2026-09-18",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-22",
-     "end": "2026-09-23"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-30",
-    "contract": {
-     "start": "2026-10-01",
-     "end": "2026-10-01"
-    }
-   },
-   "move_in": "2028-09",
-   "flags": null,
-   "builder": "코리아신탁(주)",
-   "phone": "18992888",
-   "homepage": "https://brand.hldni.com/suwon-efete/",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940202&pblancNo=2026940202",
-   "price_max_manwon": 88300,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "074.9800",
-     "area_m2": null,
-     "general_households": 5,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 72100
-    },
-    {
-     "model_no": "02",
-     "type": "084.9900B",
-     "area_m2": null,
-     "general_households": 3,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 78800
-    },
-    {
-     "model_no": "03",
-     "type": "103.9500A",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 86600
-    },
-    {
-     "model_no": "04",
-     "type": "103.6500B",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 88300
-    }
-   ]
-  },
-  {
-   "id": "opt-2026940207-2026940207",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "중앙하이츠 원종역(2차)",
-   "sido": "경기",
-   "sigungu": "부천시",
-   "address": "경기도 부천시 오정구 원종동 276-2",
-   "total_households": 10,
-   "announce_date": "2026-09-18",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-22",
-     "end": "2026-09-28"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-10-01",
-    "contract": {
-     "start": "2026-10-12",
-     "end": "2026-10-12"
-    }
-   },
-   "move_in": "2028-03",
-   "flags": null,
-   "builder": "원종동성락아파트가로주택정비사업조합",
-   "phone": "0326782399",
-   "homepage": "https://중앙하이츠원종역.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940207&pblancNo=2026940207",
-   "price_max_manwon": 53400,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "060.2700E",
-     "area_m2": null,
-     "general_households": 5,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 47100
-    },
-    {
-     "model_no": "02",
-     "type": "068.6700B",
-     "area_m2": null,
-     "general_households": 5,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 53400
-    }
-   ]
-  },
-  {
    "id": "opt-2026940208-2026940208",
    "kind": "opt",
    "kind_label": "임의공급",
@@ -1409,89 +1133,6 @@
      "special_households": null,
      "special_by_kind": null,
      "price_top_manwon": 55332
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026910247-2026910247",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "무순위",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "신천역 에피트(2차)",
-   "sido": "경기",
-   "sigungu": "시흥시",
-   "address": "경기도 시흥시 시흥대로 1110",
-   "total_households": 15,
-   "announce_date": "2026-09-18",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-23",
-     "end": "2026-09-23"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-30",
-    "contract": {
-     "start": "2026-10-02",
-     "end": "2026-10-02"
-    }
-   },
-   "move_in": "2026-10",
-   "flags": null,
-   "builder": "(주)다우개발",
-   "phone": "0313110230",
-   "homepage": "http://halla-shincheon.co.kr/",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910247&pblancNo=2026910247",
-   "price_max_manwon": 85290,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.7050A",
-     "area_m2": null,
-     "general_households": 1,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 66460
-    },
-    {
-     "model_no": "02",
-     "type": "084.7324C",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 68060
-    },
-    {
-     "model_no": "03",
-     "type": "084.0616D",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 67190
-    },
-    {
-     "model_no": "04",
-     "type": "111.6914A",
-     "area_m2": null,
-     "general_households": 4,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 84430
-    },
-    {
-     "model_no": "05",
-     "type": "111.9114B",
-     "area_m2": null,
-     "general_households": 6,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 85290
     }
    ]
   },
@@ -1747,212 +1388,6 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 492800
-    }
-   ]
-  },
-  {
-   "id": "apt-2026000453-2026000453",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "APT",
-   "house_detail": "민영",
-   "sale_type": "분양주택",
-   "name": "광명 시티프라디움 에듀하임",
-   "sido": "경기",
-   "sigungu": "광명시",
-   "address": "경기도 광명시 소하동 광명 구름산지구 도시개발사업지구 A6BL",
-   "total_households": 426,
-   "announce_date": "2026-09-18",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-29",
-     "end": "2026-10-02"
-    },
-    "special": {
-     "start": "2026-09-29",
-     "end": "2026-09-29"
-    },
-    "rank1": {
-     "start": "2026-09-30",
-     "end": "2026-10-01"
-    },
-    "rank2": {
-     "start": "2026-10-02",
-     "end": "2026-10-02"
-    },
-    "general": null,
-    "winner_date": "2026-10-12",
-    "contract": {
-     "start": "2026-10-24",
-     "end": "2026-10-26"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-09-30",
-      "end": "2026-09-30"
-     },
-     "기타지역": {
-      "start": "2026-10-01",
-      "end": "2026-10-01"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-10-02",
-      "end": "2026-10-02"
-     },
-     "기타지역": {
-      "start": "2026-10-02",
-      "end": "2026-10-02"
-     }
-    }
-   },
-   "move_in": "2029-03",
-   "flags": {
-    "투기과열": true,
-    "조정대상": true,
-    "분양가상한제": false,
-    "공공주택지구": false,
-    "대규모택지": false
-   },
-   "builder": "(주)시티건설, (주)시티종합건설, (주)시티",
-   "phone": "18996851",
-   "homepage": "https://광명시티프라디움.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000453&pblancNo=2026000453",
-   "price_max_manwon": 119800,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "059.9742A",
-     "area_m2": 78.5038,
-     "general_households": 10,
-     "special_households": 11,
-     "special_by_kind": {
-      "다자녀": 2,
-      "신혼부부": 3,
-      "생애최초": 1,
-      "청년": 0,
-      "신생아": 2,
-      "노부모부양": 1,
-      "기관추천": 2,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 87900
-    },
-    {
-     "model_no": "02",
-     "type": "059.7421B",
-     "area_m2": 78.3014,
-     "general_households": 42,
-     "special_households": 45,
-     "special_by_kind": {
-      "다자녀": 8,
-      "신혼부부": 13,
-      "생애최초": 6,
-      "청년": 0,
-      "신생아": 8,
-      "노부모부양": 2,
-      "기관추천": 8,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 87700
-    },
-    {
-     "model_no": "03",
-     "type": "084.8481A",
-     "area_m2": 109.1804,
-     "general_households": 36,
-     "special_households": 50,
-     "special_by_kind": {
-      "다자녀": 9,
-      "신혼부부": 13,
-      "생애최초": 7,
-      "청년": 0,
-      "신생아": 9,
-      "노부모부양": 3,
-      "기관추천": 9,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 118500
-    },
-    {
-     "model_no": "04",
-     "type": "084.9648B",
-     "area_m2": 109.1521,
-     "general_households": 10,
-     "special_households": 11,
-     "special_by_kind": {
-      "다자녀": 2,
-      "신혼부부": 3,
-      "생애최초": 1,
-      "청년": 0,
-      "신생아": 2,
-      "노부모부양": 1,
-      "기관추천": 2,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 119700
-    },
-    {
-     "model_no": "05",
-     "type": "084.9558C",
-     "area_m2": 109.1838,
-     "general_households": 44,
-     "special_households": 61,
-     "special_by_kind": {
-      "다자녀": 11,
-      "신혼부부": 16,
-      "생애최초": 8,
-      "청년": 0,
-      "신생아": 11,
-      "노부모부양": 3,
-      "기관추천": 12,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 118000
-    },
-    {
-     "model_no": "06",
-     "type": "084.9796D",
-     "area_m2": 109.5564,
-     "general_households": 10,
-     "special_households": 11,
-     "special_by_kind": {
-      "다자녀": 2,
-      "신혼부부": 3,
-      "생애최초": 1,
-      "청년": 0,
-      "신생아": 2,
-      "노부모부양": 1,
-      "기관추천": 2,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 119800
-    },
-    {
-     "model_no": "07",
-     "type": "084.9149E",
-     "area_m2": 110.275,
-     "general_households": 38,
-     "special_households": 47,
-     "special_by_kind": {
-      "다자녀": 9,
-      "신혼부부": 13,
-      "생애최초": 6,
-      "청년": 0,
-      "신생아": 9,
-      "노부모부양": 2,
-      "기관추천": 8,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 118000
     }
    ]
   },
@@ -10537,6 +9972,62 @@
    ]
   },
   {
+   "id": "opt-2026940260-2026940260",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "더샵 분당센트로(7차)",
+   "sido": "경기",
+   "sigungu": "성남시",
+   "address": "경기도 성남시 분당구 미금로 66",
+   "total_households": 6,
+   "announce_date": "2026-11-17",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-20",
+     "end": "2026-11-24"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-27",
+    "contract": {
+     "start": "2026-11-28",
+     "end": "2026-11-28"
+    }
+   },
+   "move_in": "2027-04",
+   "flags": null,
+   "builder": "무지개마을4단지리모델링주택조합",
+   "phone": "18335255",
+   "homepage": "https://더샵분당센트로.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940260&pblancNo=2026940260",
+   "price_max_manwon": 205900,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "078.4400N",
+     "area_m2": null,
+     "general_households": 5,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 196300
+    },
+    {
+     "model_no": "02",
+     "type": "084.0800N",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 205900
+    }
+   ]
+  },
+  {
    "id": "apt-2026000457-2026000457",
    "kind": "apt",
    "kind_label": "APT",
@@ -10896,6 +10387,77 @@
       "기타": 0
      },
      "price_top_manwon": 140840
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026930045-2026930045",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "불법행위 재공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "잠실 래미안아이파크",
+   "sido": "서울",
+   "sigungu": "송파구",
+   "address": "서울특별시 송파구 신천동 20-4번지 일대(잠실진주주택재건축정비사업)",
+   "total_households": 3,
+   "announce_date": "2026-11-17",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-23",
+     "end": "2026-11-24"
+    },
+    "special": {
+     "start": "2026-11-23",
+     "end": "2026-11-23"
+    },
+    "rank1": null,
+    "rank2": null,
+    "general": {
+     "start": "2026-11-24",
+     "end": "2026-11-24"
+    },
+    "winner_date": "2026-11-27",
+    "contract": {
+     "start": "2026-12-04",
+     "end": "2026-12-04"
+    }
+   },
+   "move_in": "2027-01",
+   "flags": null,
+   "builder": "잠실진주아파트주택재건축정비사업조합",
+   "phone": "0264167795",
+   "homepage": "https://www.raemian.co.kr/sales/s/jamsiljinju",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026930045&pblancNo=2026930045",
+   "price_max_manwon": 185607,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "043.7300",
+     "area_m2": 68.98,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 110548
+    },
+    {
+     "model_no": "02",
+     "type": "059.4700A",
+     "area_m2": 88.17,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 157939
+    },
+    {
+     "model_no": "03",
+     "type": "084.9600D",
+     "area_m2": 113.37,
+     "general_households": 0,
+     "special_households": 1,
+     "special_by_kind": null,
+     "price_top_manwon": 185607
     }
    ]
   },
