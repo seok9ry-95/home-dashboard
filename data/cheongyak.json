@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-18T19:28:03+09:00",
- "base_date": "2026-11-18",
- "window_from": "2026-09-19",
+ "collected_at": "2026-11-19T07:08:25+09:00",
+ "base_date": "2026-11-19",
+ "window_from": "2026-09-20",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
   "apt": 37,
-  "remndr": 33,
-  "opt": 37,
-  "total": 107
+  "remndr": 34,
+  "opt": 39,
+  "total": 110
  },
  "coverage": {
-  "with_types": 107,
-  "with_price": 107
+  "with_types": 110,
+  "with_price": 110
  },
  "items": [
   {
@@ -10024,6 +10024,177 @@
      "special_households": null,
      "special_by_kind": null,
      "price_top_manwon": 205900
+    }
+   ]
+  },
+  {
+   "id": "opt-2026940263-2026940263",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "이천역 예미지 센트럴파크(4차)",
+   "sido": "경기",
+   "sigungu": "이천시",
+   "address": "경기도 이천시 중리지구 B3블록(중리동 518번지)",
+   "total_households": 15,
+   "announce_date": "2026-11-18",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-20",
+     "end": "2026-11-20"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-25",
+    "contract": {
+     "start": "2026-11-26",
+     "end": "2026-11-26"
+    }
+   },
+   "move_in": "2026-11",
+   "flags": null,
+   "builder": "(주)금성백조주택",
+   "phone": "0316380518",
+   "homepage": "https://ic-yemizi.com/",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940263&pblancNo=2026940263",
+   "price_max_manwon": 54700,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.7884A",
+     "area_m2": null,
+     "general_households": 15,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 54700
+    }
+   ]
+  },
+  {
+   "id": "opt-2026940255-2026940255",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "광명 시티프라디움 에듀하임",
+   "sido": "경기",
+   "sigungu": "광명시",
+   "address": "경기도 광명시 소하동 광명 구름산지구 도시개발사업지구 A6BL",
+   "total_households": 30,
+   "announce_date": "2026-11-18",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-23",
+     "end": "2026-11-23"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-26",
+    "contract": {
+     "start": "2026-11-28",
+     "end": "2026-11-28"
+    }
+   },
+   "move_in": "2029-03",
+   "flags": null,
+   "builder": "(주)시티글로벌",
+   "phone": "18996851",
+   "homepage": "https://광명시티프라디움.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940255&pblancNo=2026940255",
+   "price_max_manwon": 118000,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.8481A",
+     "area_m2": null,
+     "general_households": 6,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 117500
+    },
+    {
+     "model_no": "02",
+     "type": "084.9558C",
+     "area_m2": null,
+     "general_households": 13,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 118000
+    },
+    {
+     "model_no": "03",
+     "type": "084.9149E",
+     "area_m2": null,
+     "general_households": 11,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 118000
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026930046-2026930046",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "불법행위 재공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "광주 송정 중흥S-클래스 파크뷰",
+   "sido": "경기",
+   "sigungu": "광주시",
+   "address": "경기도 광주시 광주대로 142",
+   "total_households": 2,
+   "announce_date": "2026-11-18",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-23",
+     "end": "2026-11-23"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": {
+     "start": "2026-11-23",
+     "end": "2026-11-23"
+    },
+    "winner_date": "2026-11-26",
+    "contract": {
+     "start": "2026-12-03",
+     "end": "2026-12-03"
+    }
+   },
+   "move_in": "2026-12",
+   "flags": null,
+   "builder": "송정파크 주식회사",
+   "phone": "0312163840",
+   "homepage": "https://www.s-class.co.kr/",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026930046&pblancNo=2026930046",
+   "price_max_manwon": 41668,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.8670A",
+     "area_m2": 79.4728,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 41668
+    },
+    {
+     "model_no": "02",
+     "type": "059.7670C",
+     "area_m2": 79.8797,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 40968
     }
    ]
   },
