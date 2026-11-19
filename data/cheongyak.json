@@ -1,235 +1,24 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-19T19:26:26+09:00",
- "base_date": "2026-11-19",
- "window_from": "2026-09-20",
+ "collected_at": "2026-11-20T07:08:43+09:00",
+ "base_date": "2026-11-20",
+ "window_from": "2026-09-21",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 37,
+  "apt": 38,
   "remndr": 34,
-  "opt": 39,
-  "total": 110
+  "opt": 41,
+  "total": 113
  },
  "coverage": {
-  "with_types": 110,
-  "with_price": 110
+  "with_types": 113,
+  "with_price": 113
  },
  "items": [
-  {
-   "id": "apt-2026000320-2026000320",
-   "kind": "apt",
-   "kind_label": "APT",
-   "house_type": "APT",
-   "house_detail": "국민",
-   "sale_type": "분양주택",
-   "name": "고양창릉 S-4블록 공공분양주택(본청약)",
-   "sido": "경기",
-   "sigungu": "고양시",
-   "address": "경기도 고양시 덕양구 도내동 외 8개동 일원 고양창릉 공공주택지구 내 S-4블록",
-   "total_households": 1024,
-   "announce_date": "2026-06-30",
-   "schedule": {
-    "receipt": {
-     "start": "2026-07-20",
-     "end": "2026-07-29"
-    },
-    "special": null,
-    "rank1": {
-     "start": "2026-07-20",
-     "end": "2026-07-21"
-    },
-    "rank2": {
-     "start": "2026-07-27",
-     "end": "2026-07-29"
-    },
-    "general": null,
-    "winner_date": "2026-08-19",
-    "contract": {
-     "start": "2026-11-16",
-     "end": "2026-11-19"
-    },
-    "rank1_by_area": {
-     "해당지역": {
-      "start": "2026-07-20",
-      "end": "2026-07-21"
-     },
-     "경기": {
-      "start": "2026-07-20",
-      "end": "2026-07-21"
-     },
-     "기타지역": {
-      "start": "2026-07-20",
-      "end": "2026-07-21"
-     }
-    },
-    "rank2_by_area": {
-     "해당지역": {
-      "start": "2026-07-27",
-      "end": "2026-07-29"
-     },
-     "경기": {
-      "start": "2026-07-27",
-      "end": "2026-07-29"
-     },
-     "기타지역": {
-      "start": "2026-07-27",
-      "end": "2026-07-29"
-     }
-    }
-   },
-   "move_in": "2030-03",
-   "flags": {
-    "투기과열": false,
-    "조정대상": false,
-    "분양가상한제": true,
-    "공공주택지구": true,
-    "대규모택지": true
-   },
-   "builder": "요진건설산업(주)",
-   "phone": "0319410730",
-   "homepage": "https://apply.lh.or.kr",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000320&pblancNo=2026000320",
-   "price_max_manwon": 86719,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "059.0000A",
-     "area_m2": 82.9797,
-     "general_households": 31,
-     "special_households": 103,
-     "special_by_kind": {
-      "다자녀": 13,
-      "신혼부부": 13,
-      "생애최초": 19,
-      "청년": 0,
-      "신생아": 26,
-      "노부모부양": 6,
-      "기관추천": 18,
-      "이전기관": 0,
-      "기타": 8
-     },
-     "price_top_manwon": 62771
-    },
-    {
-     "model_no": "02",
-     "type": "059.0000B",
-     "area_m2": 82.4456,
-     "general_households": 4,
-     "special_households": 14,
-     "special_by_kind": {
-      "다자녀": 2,
-      "신혼부부": 2,
-      "생애최초": 3,
-      "청년": 0,
-      "신생아": 3,
-      "노부모부양": 1,
-      "기관추천": 2,
-      "이전기관": 0,
-      "기타": 1
-     },
-     "price_top_manwon": 62384
-    },
-    {
-     "model_no": "03",
-     "type": "059.0000C",
-     "area_m2": 82.5839,
-     "general_households": 9,
-     "special_households": 29,
-     "special_by_kind": {
-      "다자녀": 3,
-      "신혼부부": 3,
-      "생애최초": 6,
-      "청년": 0,
-      "신생아": 8,
-      "노부모부양": 2,
-      "기관추천": 5,
-      "이전기관": 0,
-      "기타": 2
-     },
-     "price_top_manwon": 62468
-    },
-    {
-     "model_no": "04",
-     "type": "074.0000A",
-     "area_m2": 103.6656,
-     "general_households": 6,
-     "special_households": 19,
-     "special_by_kind": {
-      "다자녀": 2,
-      "신혼부부": 2,
-      "생애최초": 3,
-      "청년": 0,
-      "신생아": 5,
-      "노부모부양": 1,
-      "기관추천": 3,
-      "이전기관": 0,
-      "기타": 3
-     },
-     "price_top_manwon": 76566
-    },
-    {
-     "model_no": "05",
-     "type": "074.0000B",
-     "area_m2": 103.2645,
-     "general_households": 2,
-     "special_households": 4,
-     "special_by_kind": {
-      "다자녀": 1,
-      "신혼부부": 0,
-      "생애최초": 1,
-      "청년": 0,
-      "신생아": 1,
-      "노부모부양": 0,
-      "기관추천": 1,
-      "이전기관": 0,
-      "기타": 0
-     },
-     "price_top_manwon": 76249
-    },
-    {
-     "model_no": "06",
-     "type": "084.0000A",
-     "area_m2": 117.4435,
-     "general_households": 0,
-     "special_households": 12,
-     "special_by_kind": {
-      "다자녀": 0,
-      "신혼부부": 0,
-      "생애최초": 0,
-      "청년": 0,
-      "신생아": 0,
-      "노부모부양": 0,
-      "기관추천": 1,
-      "이전기관": 0,
-      "기타": 11
-     },
-     "price_top_manwon": 86719
-    },
-    {
-     "model_no": "07",
-     "type": "084.0000B",
-     "area_m2": 117.0146,
-     "general_households": 3,
-     "special_households": 9,
-     "special_by_kind": {
-      "다자녀": 1,
-      "신혼부부": 1,
-      "생애최초": 2,
-      "청년": 0,
-      "신생아": 2,
-      "노부모부양": 0,
-      "기관추천": 1,
-      "이전기관": 0,
-      "기타": 2
-     },
-     "price_top_manwon": 86402
-    }
-   ]
-  },
   {
    "id": "apt-2026000313-2026000313",
    "kind": "apt",
@@ -10763,6 +10552,127 @@
    ]
   },
   {
+   "id": "opt-2026940261-2026940261",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "e편한세상 헤이리",
+   "sido": "경기",
+   "sigungu": "파주시",
+   "address": "경기도 파주시 탄현면 헤이리로 372",
+   "total_households": 15,
+   "announce_date": "2026-11-19",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-23",
+     "end": "2026-11-23"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-27",
+    "contract": {
+     "start": "2026-12-05",
+     "end": "2026-12-05"
+    }
+   },
+   "move_in": "2026-12",
+   "flags": null,
+   "builder": "신한자산신탁(주)",
+   "phone": "0319417740",
+   "homepage": null,
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940261&pblancNo=2026940261",
+   "price_max_manwon": 43600,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9820A",
+     "area_m2": null,
+     "general_households": 3,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 43600
+    },
+    {
+     "model_no": "02",
+     "type": "084.9563B",
+     "area_m2": null,
+     "general_households": 12,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 43100
+    }
+   ]
+  },
+  {
+   "id": "opt-2026940257-2026940257",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "강동한강 디에트르",
+   "sido": "서울",
+   "sigungu": "강동구",
+   "address": "서울특별시 강동구 암사동 447-8번지",
+   "total_households": 13,
+   "announce_date": "2026-11-19",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-24",
+     "end": "2026-11-25"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-30",
+    "contract": {
+     "start": "2026-12-01",
+     "end": "2026-12-02"
+    }
+   },
+   "move_in": "2027-04",
+   "flags": null,
+   "builder": "대명아파트가로주택정비사업조합",
+   "phone": "024271192",
+   "homepage": "https://detre-hangang.co.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940257&pblancNo=2026940257",
+   "price_max_manwon": 141500,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.5900B",
+     "area_m2": null,
+     "general_households": 10,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 113500
+    },
+    {
+     "model_no": "02",
+     "type": "079.7500A",
+     "area_m2": null,
+     "general_households": 2,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 141500
+    },
+    {
+     "model_no": "03",
+     "type": "080.1500A",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 139500
+    }
+   ]
+  },
+  {
    "id": "apt-2026000505-2026000505",
    "kind": "apt",
    "kind_label": "APT",
@@ -10908,6 +10818,274 @@
       "기타": 0
      },
      "price_top_manwon": 251744
+    }
+   ]
+  },
+  {
+   "id": "apt-2026000585-2026000585",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "APT",
+   "house_detail": "민영",
+   "sale_type": "분양주택",
+   "name": "고양 한신더휴 퍼스트원",
+   "sido": "경기",
+   "sigungu": "고양시",
+   "address": "경기도 고양시 덕양구 행신동 173-1번지 일원",
+   "total_households": 102,
+   "announce_date": "2026-11-19",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-30",
+     "end": "2026-12-02"
+    },
+    "special": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    },
+    "rank1": {
+     "start": "2026-12-01",
+     "end": "2026-12-01"
+    },
+    "rank2": {
+     "start": "2026-12-02",
+     "end": "2026-12-02"
+    },
+    "general": null,
+    "winner_date": "2026-12-09",
+    "contract": {
+     "start": "2026-12-21",
+     "end": "2026-12-23"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-12-01",
+      "end": "2026-12-01"
+     },
+     "기타지역": {
+      "start": "2026-12-01",
+      "end": "2026-12-01"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-12-02",
+      "end": "2026-12-02"
+     },
+     "기타지역": {
+      "start": "2026-12-02",
+      "end": "2026-12-02"
+     }
+    }
+   },
+   "move_in": "2029-05",
+   "flags": {
+    "투기과열": false,
+    "조정대상": false,
+    "분양가상한제": false,
+    "공공주택지구": false,
+    "대규모택지": false
+   },
+   "builder": "한신공영 주식회사",
+   "phone": "0231593428",
+   "homepage": "https://gy-thehue.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000585&pblancNo=2026000585",
+   "price_max_manwon": 84579,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.8728",
+     "area_m2": 79.7293,
+     "general_households": 7,
+     "special_households": 19,
+     "special_by_kind": {
+      "다자녀": 3,
+      "신혼부부": 5,
+      "생애최초": 3,
+      "청년": 0,
+      "신생아": 4,
+      "노부모부양": 1,
+      "기관추천": 3,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 64472
+    },
+    {
+     "model_no": "02",
+     "type": "071.9348",
+     "area_m2": 92.7098,
+     "general_households": 21,
+     "special_households": 24,
+     "special_by_kind": {
+      "다자녀": 4,
+      "신혼부부": 6,
+      "생애최초": 3,
+      "청년": 0,
+      "신생아": 4,
+      "노부모부양": 2,
+      "기관추천": 5,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 72944
+    },
+    {
+     "model_no": "03",
+     "type": "084.9614",
+     "area_m2": 106.6083,
+     "general_households": 13,
+     "special_households": 18,
+     "special_by_kind": {
+      "다자녀": 4,
+      "신혼부부": 5,
+      "생애최초": 2,
+      "청년": 0,
+      "신생아": 3,
+      "노부모부양": 1,
+      "기관추천": 3,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 84579
+    }
+   ]
+  },
+  {
+   "id": "apt-2026000575-2026000575",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "APT",
+   "house_detail": "국민",
+   "sale_type": "분양주택",
+   "name": "왕숙 한신더휴 센텀(남양주 왕숙 A-17BL) 공공분양주택",
+   "sido": "경기",
+   "sigungu": "남양주시",
+   "address": "경기도 남양주시 진건읍 진관리 일원 남양주 왕숙 공공주택지구 A-17BL",
+   "total_households": 379,
+   "announce_date": "2026-11-19",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-30",
+     "end": "2026-12-02"
+    },
+    "special": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    },
+    "rank1": {
+     "start": "2026-12-01",
+     "end": "2026-12-01"
+    },
+    "rank2": {
+     "start": "2026-12-02",
+     "end": "2026-12-02"
+    },
+    "general": null,
+    "winner_date": "2026-12-08",
+    "contract": {
+     "start": "2027-02-15",
+     "end": "2027-02-17"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-12-01",
+      "end": "2026-12-01"
+     },
+     "경기": {
+      "start": "2026-12-01",
+      "end": "2026-12-01"
+     },
+     "기타지역": {
+      "start": "2026-12-01",
+      "end": "2026-12-01"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-12-02",
+      "end": "2026-12-02"
+     },
+     "경기": {
+      "start": "2026-12-02",
+      "end": "2026-12-02"
+     },
+     "기타지역": {
+      "start": "2026-12-02",
+      "end": "2026-12-02"
+     }
+    }
+   },
+   "move_in": "2029-07",
+   "flags": {
+    "투기과열": false,
+    "조정대상": false,
+    "분양가상한제": true,
+    "공공주택지구": true,
+    "대규모택지": true
+   },
+   "builder": "한신공영(주),쌍용건설(주),(주)대승글로벌,(주)고덕종합건설,(주)지아이",
+   "phone": "18336650",
+   "homepage": "https://ws-thehue.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000575&pblancNo=2026000575",
+   "price_max_manwon": 60750,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.9600A",
+     "area_m2": 82.4891,
+     "general_households": 57,
+     "special_households": 184,
+     "special_by_kind": {
+      "다자녀": 22,
+      "신혼부부": 22,
+      "생애최초": 33,
+      "청년": 0,
+      "신생아": 42,
+      "노부모부양": 7,
+      "기관추천": 33,
+      "이전기관": 0,
+      "기타": 25
+     },
+     "price_top_manwon": 60750
+    },
+    {
+     "model_no": "02",
+     "type": "059.7100B",
+     "area_m2": 82.1451,
+     "general_households": 15,
+     "special_households": 48,
+     "special_by_kind": {
+      "다자녀": 6,
+      "신혼부부": 6,
+      "생애최초": 9,
+      "청년": 0,
+      "신생아": 12,
+      "노부모부양": 2,
+      "기관추천": 8,
+      "이전기관": 0,
+      "기타": 5
+     },
+     "price_top_manwon": 60496
+    },
+    {
+     "model_no": "03",
+     "type": "059.1400C",
+     "area_m2": 81.361,
+     "general_households": 19,
+     "special_households": 56,
+     "special_by_kind": {
+      "다자녀": 6,
+      "신혼부부": 6,
+      "생애최초": 12,
+      "청년": 0,
+      "신생아": 16,
+      "노부모부양": 2,
+      "기관추천": 9,
+      "이전기관": 0,
+      "기타": 5
+     },
+     "price_top_manwon": 59919
     }
    ]
   }
