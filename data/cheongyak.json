@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-20T19:25:52+09:00",
- "base_date": "2026-11-20",
- "window_from": "2026-09-21",
+ "collected_at": "2026-11-21T07:06:44+09:00",
+ "base_date": "2026-11-21",
+ "window_from": "2026-09-22",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 38,
+  "apt": 39,
   "remndr": 34,
   "opt": 41,
-  "total": 113
+  "total": 114
  },
  "coverage": {
-  "with_types": 113,
-  "with_price": 113
+  "with_types": 114,
+  "with_price": 114
  },
  "items": [
   {
@@ -852,80 +852,6 @@
    ]
   },
   {
-   "id": "opt-2026940208-2026940208",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "부천역 에피트 어바닉(4차)",
-   "sido": "경기",
-   "sigungu": "부천시",
-   "address": "경기도 부천시 원미구 원미동 150-1외 2필지",
-   "total_households": 8,
-   "announce_date": "2026-09-21",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-23",
-     "end": "2026-09-23"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-09-30",
-    "contract": {
-     "start": "2026-10-01",
-     "end": "2026-10-01"
-    }
-   },
-   "move_in": "2028-07",
-   "flags": null,
-   "builder": "장미연립가로주택정비사업조합",
-   "phone": "0326110105",
-   "homepage": "https://brand.hldni.com/bucheon-urbanic/",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940208&pblancNo=2026940208",
-   "price_max_manwon": 55332,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "052.1088",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 43890
-    },
-    {
-     "model_no": "02",
-     "type": "055.0641",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 46564
-    },
-    {
-     "model_no": "03",
-     "type": "064.5397A",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 54755
-    },
-    {
-     "model_no": "04",
-     "type": "064.2641B",
-     "area_m2": null,
-     "general_households": 2,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 55332
-    }
-   ]
-  },
-  {
    "id": "remndr-2026930036-2026930036",
    "kind": "remndr",
    "kind_label": "무순위·잔여세대",
@@ -1177,62 +1103,6 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 492800
-    }
-   ]
-  },
-  {
-   "id": "opt-2026940203-2026940203",
-   "kind": "opt",
-   "kind_label": "임의공급",
-   "house_type": "임의공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "회천중앙역 파라곤",
-   "sido": "경기",
-   "sigungu": "양주시",
-   "address": "경기도 양주시 회천지구 A10-1BL",
-   "total_households": 39,
-   "announce_date": "2026-09-21",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-29",
-     "end": "2026-09-30"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-10-07",
-    "contract": {
-     "start": "2026-10-08",
-     "end": "2026-10-08"
-    }
-   },
-   "move_in": "2028-02",
-   "flags": null,
-   "builder": "주식회사 이지건설",
-   "phone": "15518450",
-   "homepage": "http://회천중앙역파라곤.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940203&pblancNo=2026940203",
-   "price_max_manwon": 51800,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.6189A",
-     "area_m2": null,
-     "general_households": 22,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 51800
-    },
-    {
-     "model_no": "02",
-     "type": "084.4918B",
-     "area_m2": null,
-     "general_households": 17,
-     "special_households": null,
-     "special_by_kind": null,
-     "price_top_manwon": 51700
     }
    ]
   },
@@ -10673,6 +10543,145 @@
    ]
   },
   {
+   "id": "opt-2026940264-2026940264",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "용인 고림 동문 디 이스트",
+   "sido": "경기",
+   "sigungu": "용인시",
+   "address": "경기도 용인시 처인구 고림동 620번지 일원",
+   "total_households": 23,
+   "announce_date": "2026-11-20",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-24",
+     "end": "2026-11-24"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-11-27",
+    "contract": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    }
+   },
+   "move_in": "2028-10",
+   "flags": null,
+   "builder": "신영부동산신탁 주식회사",
+   "phone": "0312760525",
+   "homepage": "http://yongin-dmapt.co.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940264&pblancNo=2026940264",
+   "price_max_manwon": 71570,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "075.7753A",
+     "area_m2": null,
+     "general_households": 9,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 67770
+    },
+    {
+     "model_no": "02",
+     "type": "075.7218B",
+     "area_m2": null,
+     "general_households": 4,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 66930
+    },
+    {
+     "model_no": "03",
+     "type": "084.7910A",
+     "area_m2": null,
+     "general_households": 6,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 71570
+    },
+    {
+     "model_no": "04",
+     "type": "084.7677B",
+     "area_m2": null,
+     "general_households": 4,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 70570
+    }
+   ]
+  },
+  {
+   "id": "opt-2026940258-2026940258",
+   "kind": "opt",
+   "kind_label": "임의공급",
+   "house_type": "임의공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "중앙하이츠 원종역(4차)",
+   "sido": "경기",
+   "sigungu": "부천시",
+   "address": "경기도 부천시 오정구 원종동 276-2",
+   "total_households": 10,
+   "announce_date": "2026-11-20",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-24",
+     "end": "2026-11-26"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-12-01",
+    "contract": {
+     "start": "2026-12-08",
+     "end": "2026-12-08"
+    }
+   },
+   "move_in": "2028-03",
+   "flags": null,
+   "builder": "원종동성락아파트 가로주택정비사업조합",
+   "phone": "0326782399",
+   "homepage": "https://www.중앙하이츠원종역.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026940258&pblancNo=2026940258",
+   "price_max_manwon": 52700,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "060.2700E",
+     "area_m2": null,
+     "general_households": 2,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 46200
+    },
+    {
+     "model_no": "02",
+     "type": "063.7900H",
+     "area_m2": null,
+     "general_households": 5,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 51340
+    },
+    {
+     "model_no": "03",
+     "type": "068.1800F",
+     "area_m2": null,
+     "general_households": 3,
+     "special_households": null,
+     "special_by_kind": null,
+     "price_top_manwon": 52700
+    }
+   ]
+  },
+  {
    "id": "apt-2026000505-2026000505",
    "kind": "apt",
    "kind_label": "APT",
@@ -10948,6 +10957,212 @@
       "기타": 0
      },
      "price_top_manwon": 84579
+    }
+   ]
+  },
+  {
+   "id": "apt-2026000591-2026000591",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "APT",
+   "house_detail": "민영",
+   "sale_type": "분양주택",
+   "name": "소사 휴먼빌",
+   "sido": "경기",
+   "sigungu": "부천시",
+   "address": "경기도 부천시 소사구 소사본동 277-30번지 일원",
+   "total_households": 45,
+   "announce_date": "2026-11-20",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-30",
+     "end": "2026-12-02"
+    },
+    "special": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    },
+    "rank1": {
+     "start": "2026-12-01",
+     "end": "2026-12-01"
+    },
+    "rank2": {
+     "start": "2026-12-02",
+     "end": "2026-12-02"
+    },
+    "general": null,
+    "winner_date": "2026-12-08",
+    "contract": {
+     "start": "2026-12-21",
+     "end": "2026-12-23"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-12-01",
+      "end": "2026-12-01"
+     },
+     "기타지역": {
+      "start": "2026-12-01",
+      "end": "2026-12-01"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-12-02",
+      "end": "2026-12-02"
+     },
+     "기타지역": {
+      "start": "2026-12-02",
+      "end": "2026-12-02"
+     }
+    }
+   },
+   "move_in": "2028-05",
+   "flags": {
+    "투기과열": false,
+    "조정대상": false,
+    "분양가상한제": false,
+    "공공주택지구": false,
+    "대규모택지": false
+   },
+   "builder": "일신건영(주)",
+   "phone": "0326750022",
+   "homepage": "https://www.소사휴먼빌.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000591&pblancNo=2026000591",
+   "price_max_manwon": 78847,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.9906A",
+     "area_m2": 80.3427,
+     "general_households": 4,
+     "special_households": 5,
+     "special_by_kind": {
+      "다자녀": 1,
+      "신혼부부": 1,
+      "생애최초": 1,
+      "청년": 0,
+      "신생아": 1,
+      "노부모부양": 0,
+      "기관추천": 1,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 55932
+    },
+    {
+     "model_no": "02",
+     "type": "059.2735B",
+     "area_m2": 81.1004,
+     "general_households": 6,
+     "special_households": 6,
+     "special_by_kind": {
+      "다자녀": 1,
+      "신혼부부": 2,
+      "생애최초": 1,
+      "청년": 0,
+      "신생아": 1,
+      "노부모부양": 0,
+      "기관추천": 1,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 54986
+    },
+    {
+     "model_no": "03",
+     "type": "059.2599C",
+     "area_m2": 81.0979,
+     "general_households": 2,
+     "special_households": 0,
+     "special_by_kind": {
+      "다자녀": 0,
+      "신혼부부": 0,
+      "생애최초": 0,
+      "청년": 0,
+      "신생아": 0,
+      "노부모부양": 0,
+      "기관추천": 0,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 55051
+    },
+    {
+     "model_no": "04",
+     "type": "059.1615D",
+     "area_m2": 80.9618,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": {
+      "다자녀": 0,
+      "신혼부부": 0,
+      "생애최초": 0,
+      "청년": 0,
+      "신생아": 0,
+      "노부모부양": 0,
+      "기관추천": 0,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 49355
+    },
+    {
+     "model_no": "05",
+     "type": "084.5869A",
+     "area_m2": 112.3305,
+     "general_households": 4,
+     "special_households": 6,
+     "special_by_kind": {
+      "다자녀": 1,
+      "신혼부부": 2,
+      "생애최초": 1,
+      "청년": 0,
+      "신생아": 1,
+      "노부모부양": 0,
+      "기관추천": 1,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 78256
+    },
+    {
+     "model_no": "06",
+     "type": "084.6433B",
+     "area_m2": 113.7312,
+     "general_households": 4,
+     "special_households": 6,
+     "special_by_kind": {
+      "다자녀": 1,
+      "신혼부부": 2,
+      "생애최초": 1,
+      "청년": 0,
+      "신생아": 1,
+      "노부모부양": 0,
+      "기관추천": 1,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 78307
+    },
+    {
+     "model_no": "07",
+     "type": "084.9848C",
+     "area_m2": 114.4169,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": {
+      "다자녀": 0,
+      "신혼부부": 0,
+      "생애최초": 0,
+      "청년": 0,
+      "신생아": 0,
+      "노부모부양": 0,
+      "기관추천": 0,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 78847
     }
    ]
   },
