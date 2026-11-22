@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-22T19:06:32+09:00",
- "base_date": "2026-11-22",
- "window_from": "2026-09-23",
+ "collected_at": "2026-11-23T07:00:34+09:00",
+ "base_date": "2026-11-23",
+ "window_from": "2026-09-24",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
   "apt": 39,
-  "remndr": 34,
+  "remndr": 30,
   "opt": 41,
-  "total": 114
+  "total": 110
  },
  "coverage": {
-  "with_types": 114,
-  "with_price": 114
+  "with_types": 110,
+  "with_price": 110
  },
  "items": [
   {
@@ -852,106 +852,6 @@
    ]
   },
   {
-   "id": "remndr-2026930036-2026930036",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "불법행위 재공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "과천 푸르지오 라비엔오",
-   "sido": "경기",
-   "sigungu": "과천시",
-   "address": "경기도 과천시 과천지식정보타운 공공주택지구 S4BL (과천대로8길 15, 과천푸르지오라비엔오)",
-   "total_households": 2,
-   "announce_date": "2026-09-23",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-28",
-     "end": "2026-09-28"
-    },
-    "special": {
-     "start": "2026-09-28",
-     "end": "2026-09-28"
-    },
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-10-02",
-    "contract": {
-     "start": "2026-10-13",
-     "end": "2026-10-13"
-    }
-   },
-   "move_in": "2026-12",
-   "flags": null,
-   "builder": "(주)대우건설",
-   "phone": "16701000",
-   "homepage": null,
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026930036&pblancNo=2026930036",
-   "price_max_manwon": 80338,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.7450D",
-     "area_m2": 110.3239,
-     "general_households": 0,
-     "special_households": 2,
-     "special_by_kind": null,
-     "price_top_manwon": 80338
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026930037-2026930037",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "불법행위 재공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "과천 푸르지오 벨라르테",
-   "sido": "경기",
-   "sigungu": "과천시",
-   "address": "경기도 과천시 과천지식정보타운 공공주택지구 S6BL (과천대로8길 65, 과천푸르지오벨라르테)",
-   "total_households": 1,
-   "announce_date": "2026-09-23",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-28",
-     "end": "2026-09-28"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": {
-     "start": "2026-09-28",
-     "end": "2026-09-28"
-    },
-    "winner_date": "2026-10-02",
-    "contract": {
-     "start": "2026-10-13",
-     "end": "2026-10-13"
-    }
-   },
-   "move_in": "2026-12",
-   "flags": null,
-   "builder": "(주)대우건설",
-   "phone": "16701000",
-   "homepage": null,
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026930037&pblancNo=2026930037",
-   "price_max_manwon": 95218,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "099.9842B",
-     "area_m2": 129.9614,
-     "general_households": 1,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 95218
-    }
-   ]
-  },
-  {
    "id": "apt-2026820011-2026820011",
    "kind": "apt",
    "kind_label": "APT",
@@ -1060,53 +960,6 @@
    ]
   },
   {
-   "id": "remndr-2026910220-2026910220",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "무순위",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "아크로 리버스카이(2차)",
-   "sido": "서울",
-   "sigungu": "동작구",
-   "address": "서울특별시 동작구 대방동 23-61번지 일대",
-   "total_households": 3,
-   "announce_date": "2026-09-23",
-   "schedule": {
-    "receipt": {
-     "start": "2026-09-28",
-     "end": "2026-09-28"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-10-06",
-    "contract": {
-     "start": "2026-10-12",
-     "end": "2026-10-12"
-    }
-   },
-   "move_in": "2029-08",
-   "flags": null,
-   "builder": "노량진8재정비촉진구역주택재개발정비사업조합",
-   "phone": "025290205",
-   "homepage": "https://www.acro.co.kr",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910220&pblancNo=2026910220",
-   "price_max_manwon": 492800,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "140.8560P",
-     "area_m2": null,
-     "general_households": 3,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 492800
-    }
-   ]
-  },
-  {
    "id": "opt-2026940215-2026940215",
    "kind": "opt",
    "kind_label": "임의공급",
@@ -1177,56 +1030,6 @@
      "special_households": null,
      "special_by_kind": null,
      "price_top_manwon": 84650
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026930040-2026930040",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "불법행위 재공급",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "강변역 센트럴 아이파크",
-   "sido": "서울",
-   "sigungu": "광진구",
-   "address": "서울특별시 광진구 구의동 592-39번지 일원",
-   "total_households": 1,
-   "announce_date": "2026-09-23",
-   "schedule": {
-    "receipt": {
-     "start": "2026-10-06",
-     "end": "2026-10-06"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": {
-     "start": "2026-10-06",
-     "end": "2026-10-06"
-    },
-    "winner_date": "2026-10-12",
-    "contract": {
-     "start": "2026-10-23",
-     "end": "2026-10-23"
-    }
-   },
-   "move_in": "2026-11",
-   "flags": null,
-   "builder": "(주)한국토지신탁",
-   "phone": "15513560",
-   "homepage": "https://www.i-park.com/gangbyeon",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026930040&pblancNo=2026930040",
-   "price_max_manwon": 122202,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.9811C",
-     "area_m2": 105.8939,
-     "general_households": 1,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 122202
     }
    ]
   },
