@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-23T19:32:00+09:00",
- "base_date": "2026-11-23",
- "window_from": "2026-09-24",
+ "collected_at": "2026-11-24T07:11:05+09:00",
+ "base_date": "2026-11-24",
+ "window_from": "2026-09-25",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
   "apt": 39,
-  "remndr": 30,
+  "remndr": 36,
   "opt": 41,
-  "total": 110
+  "total": 116
  },
  "coverage": {
-  "with_types": 110,
-  "with_price": 110
+  "with_types": 116,
+  "with_price": 116
  },
  "items": [
   {
@@ -10764,6 +10764,195 @@
    ]
   },
   {
+   "id": "remndr-2026910304-2026910304",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "더샵 분당하이스트(2차)",
+   "sido": "경기",
+   "sigungu": "성남시",
+   "address": "경기도 성남시 분당구 정자동 90번지",
+   "total_households": 34,
+   "announce_date": "2026-11-23",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-12-03",
+    "contract": {
+     "start": "2026-12-05",
+     "end": "2026-12-05"
+    }
+   },
+   "move_in": "2027-12",
+   "flags": null,
+   "builder": "느티마을4단지 리모델링주택조합",
+   "phone": "18001430",
+   "homepage": "https://더샵분당하이스트.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910304&pblancNo=2026910304",
+   "price_max_manwon": 298100,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "074.0000A",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 234200
+    },
+    {
+     "model_no": "02",
+     "type": "074.4400D",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 230200
+    },
+    {
+     "model_no": "03",
+     "type": "084.0000A",
+     "area_m2": null,
+     "general_households": 18,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 298100
+    },
+    {
+     "model_no": "04",
+     "type": "084.0000C",
+     "area_m2": null,
+     "general_households": 2,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 273900
+    },
+    {
+     "model_no": "05",
+     "type": "084.6400G",
+     "area_m2": null,
+     "general_households": 12,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 292000
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026930048-2026930048",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "불법행위 재공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "동탄신도시 금강펜테리움 7차 센트럴파크 불법행위재공급",
+   "sido": "경기",
+   "sigungu": "화성시",
+   "address": "경기도 화성시 신동 동탄2택지개발지구(A57-2블럭)",
+   "total_households": 1,
+   "announce_date": "2026-11-23",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    },
+    "winner_date": "2026-12-03",
+    "contract": {
+     "start": "2026-12-10",
+     "end": "2026-12-10"
+    }
+   },
+   "move_in": "2027-01",
+   "flags": null,
+   "builder": "주식회사 하이아트이앤씨",
+   "phone": "0234687746",
+   "homepage": "https://blog.naver.com/kkvista",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026930048&pblancNo=2026930048",
+   "price_max_manwon": 55320,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9676A",
+     "area_m2": 111.6975,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 55320
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910303-2026910303",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "동탄신도시 금강펜테리움 7차 센트럴파크(2차)",
+   "sido": "경기",
+   "sigungu": "화성시",
+   "address": "경기도 화성시 동탄구 동탄신리천로8길 17, 동탄신도시 금강펜테리움 7차 센트럴파크",
+   "total_households": 4,
+   "announce_date": "2026-11-23",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-12-03",
+    "contract": {
+     "start": "2026-12-10",
+     "end": "2026-12-10"
+    }
+   },
+   "move_in": "2027-01",
+   "flags": null,
+   "builder": "주식회사 하이아트이앤씨",
+   "phone": "0234687746",
+   "homepage": "https://blog.naver.com/kkvista",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910303&pblancNo=2026910303",
+   "price_max_manwon": 55810,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9676A",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 55320
+    },
+    {
+     "model_no": "02",
+     "type": "084.9264B",
+     "area_m2": null,
+     "general_households": 3,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 55810
+    }
+   ]
+  },
+  {
    "id": "apt-2026000591-2026000591",
    "kind": "apt",
    "kind_label": "APT",
@@ -11104,6 +11293,165 @@
       "기타": 5
      },
      "price_top_manwon": 59919
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910305-2026910305",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "판교TH212(2차)",
+   "sido": "경기",
+   "sigungu": "성남시",
+   "address": "경기도 성남시 분당구 판교대장지구 B2, B3BL",
+   "total_households": 1,
+   "announce_date": "2026-11-23",
+   "schedule": {
+    "receipt": {
+     "start": "2026-11-30",
+     "end": "2026-11-30"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-12-03",
+    "contract": {
+     "start": "2026-12-10",
+     "end": "2026-12-10"
+    }
+   },
+   "move_in": "2027-01",
+   "flags": null,
+   "builder": "(주)하이아트",
+   "phone": "0234687746",
+   "homepage": "https://blog.naver.com/kkvista",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910305&pblancNo=2026910305",
+   "price_max_manwon": 159300,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "128.8329C",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 159300
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910301-2026910301",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "이천 서희스타힐스 SKY (조합원 취소분)",
+   "sido": "경기",
+   "sigungu": "이천시",
+   "address": "경기도 이천시 안흥동 279-1번지 일원",
+   "total_households": 3,
+   "announce_date": "2026-11-23",
+   "schedule": {
+    "receipt": {
+     "start": "2026-12-01",
+     "end": "2026-12-01"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-12-04",
+    "contract": {
+     "start": "2026-12-08",
+     "end": "2026-12-08"
+    }
+   },
+   "move_in": "2029-01",
+   "flags": null,
+   "builder": "안흥동 지역주택조합",
+   "phone": "15776803",
+   "homepage": "http://www.이천서희스타힐스스카이.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910301&pblancNo=2026910301",
+   "price_max_manwon": 65460,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "084.9800A",
+     "area_m2": null,
+     "general_households": 2,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 65460
+    },
+    {
+     "model_no": "02",
+     "type": "084.9900C",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 63050
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910302-2026910302",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "한화포레나 영흥숲(4차)",
+   "sido": "경기",
+   "sigungu": "수원시",
+   "address": "경기도 수원시 영통구 원천동 333-1번지 일원",
+   "total_households": 2,
+   "announce_date": "2026-11-23",
+   "schedule": {
+    "receipt": {
+     "start": "2026-12-01",
+     "end": "2026-12-01"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-12-04",
+    "contract": {
+     "start": "2026-12-11",
+     "end": "2026-12-11"
+    }
+   },
+   "move_in": "2026-12",
+   "flags": null,
+   "builder": "(주)한화",
+   "phone": "0318989447",
+   "homepage": null,
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910302&pblancNo=2026910302",
+   "price_max_manwon": 57600,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "066.8113",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 51220
+    },
+    {
+     "model_no": "02",
+     "type": "068.9883",
+     "area_m2": null,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 57600
     }
    ]
   }
