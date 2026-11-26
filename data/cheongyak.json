@@ -1,22 +1,22 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-26T19:28:16+09:00",
- "base_date": "2026-11-26",
- "window_from": "2026-09-27",
+ "collected_at": "2026-11-27T07:15:55+09:00",
+ "base_date": "2026-11-27",
+ "window_from": "2026-09-28",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 39,
-  "remndr": 36,
+  "apt": 40,
+  "remndr": 38,
   "opt": 41,
-  "total": 116
+  "total": 119
  },
  "coverage": {
-  "with_types": 116,
-  "with_price": 116
+  "with_types": 119,
+  "with_price": 119
  },
  "items": [
   {
@@ -11452,6 +11452,344 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 57600
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026910311-2026910311",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "무순위",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "향남역 그로브 스위첸",
+   "sido": "경기",
+   "sigungu": "화성특례시",
+   "address": "경기도 화성특례시 만세구 향남읍 하길리 404-2번지 일원",
+   "total_households": 2,
+   "announce_date": "2026-11-26",
+   "schedule": {
+    "receipt": {
+     "start": "2026-12-01",
+     "end": "2026-12-01"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": null,
+    "winner_date": "2026-12-04",
+    "contract": {
+     "start": "2026-12-11",
+     "end": "2026-12-11"
+    }
+   },
+   "move_in": "2029-06",
+   "flags": null,
+   "builder": "대신자산신탁 주식회사",
+   "phone": "18441050",
+   "homepage": "https://향남역스위첸.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910311&pblancNo=2026910311",
+   "price_max_manwon": 44940,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "071.8178",
+     "area_m2": null,
+     "general_households": 2,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 44940
+    }
+   ]
+  },
+  {
+   "id": "remndr-2026930047-2026930047",
+   "kind": "remndr",
+   "kind_label": "무순위·잔여세대",
+   "house_type": "불법행위 재공급",
+   "house_detail": null,
+   "sale_type": null,
+   "name": "청량리 롯데캐슬 하이루체",
+   "sido": "서울",
+   "sigungu": "동대문구",
+   "address": "서울특별시 동대문구 청량리동 199번지 일원",
+   "total_households": 1,
+   "announce_date": "2026-11-26",
+   "schedule": {
+    "receipt": {
+     "start": "2026-12-02",
+     "end": "2026-12-02"
+    },
+    "special": null,
+    "rank1": null,
+    "rank2": null,
+    "general": {
+     "start": "2026-12-02",
+     "end": "2026-12-02"
+    },
+    "winner_date": "2026-12-07",
+    "contract": {
+     "start": "2026-12-10",
+     "end": "2026-12-10"
+    }
+   },
+   "move_in": "2026-12",
+   "flags": null,
+   "builder": "청량리제7구역주택재개발정비사업조합",
+   "phone": "0232955769",
+   "homepage": "https://www.lottecastle.co.kr/APT/AT00395/main/index.do",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026930047&pblancNo=2026930047",
+   "price_max_manwon": 82383,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.9314B",
+     "area_m2": 81.5514,
+     "general_households": 1,
+     "special_households": 0,
+     "special_by_kind": null,
+     "price_top_manwon": 82383
+    }
+   ]
+  },
+  {
+   "id": "apt-2026000611-2026000611",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "APT",
+   "house_detail": "국민",
+   "sale_type": "분양주택",
+   "name": "병점복합타운 주복1블록 공공분양",
+   "sido": "경기",
+   "sigungu": "화성시",
+   "address": "경기도 화성시 병점구 병점동, 진안동 일원 병점복합타운 내 주복1블록",
+   "total_households": 726,
+   "announce_date": "2026-11-26",
+   "schedule": {
+    "receipt": {
+     "start": "2026-12-07",
+     "end": "2026-12-10"
+    },
+    "special": null,
+    "rank1": {
+     "start": "2026-12-07",
+     "end": "2026-12-08"
+    },
+    "rank2": {
+     "start": "2026-12-09",
+     "end": "2026-12-10"
+    },
+    "general": null,
+    "winner_date": "2026-12-23",
+    "contract": {
+     "start": "2027-03-09",
+     "end": "2027-03-12"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-12-07",
+      "end": "2026-12-08"
+     },
+     "기타지역": {
+      "start": "2026-12-07",
+      "end": "2026-12-08"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-12-09",
+      "end": "2026-12-10"
+     },
+     "기타지역": {
+      "start": "2026-12-09",
+      "end": "2026-12-10"
+     }
+    }
+   },
+   "move_in": "2030-06",
+   "flags": {
+    "투기과열": false,
+    "조정대상": false,
+    "분양가상한제": true,
+    "공공주택지구": false,
+    "대규모택지": false
+   },
+   "builder": "(주)태왕이앤씨,우경건설(주), 토브디엔씨(주)",
+   "phone": "03180777989",
+   "homepage": "https://apply.lh.or.kr",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000611&pblancNo=2026000611",
+   "price_max_manwon": 69218,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "061.9800A",
+     "area_m2": 85.8818,
+     "general_households": 10,
+     "special_households": 26,
+     "special_by_kind": {
+      "다자녀": 3,
+      "신혼부부": 3,
+      "생애최초": 6,
+      "청년": 0,
+      "신생아": 7,
+      "노부모부양": 1,
+      "기관추천": 6,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 50089
+    },
+    {
+     "model_no": "02",
+     "type": "063.8300A",
+     "area_m2": 88.4452,
+     "general_households": 14,
+     "special_households": 40,
+     "special_by_kind": {
+      "다자녀": 5,
+      "신혼부부": 5,
+      "생애최초": 8,
+      "청년": 0,
+      "신생아": 11,
+      "노부모부양": 2,
+      "기관추천": 9,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 51584
+    },
+    {
+     "model_no": "03",
+     "type": "065.9900A",
+     "area_m2": 91.4382,
+     "general_households": 20,
+     "special_households": 58,
+     "special_by_kind": {
+      "다자녀": 8,
+      "신혼부부": 8,
+      "생애최초": 11,
+      "청년": 0,
+      "신생아": 15,
+      "노부모부양": 2,
+      "기관추천": 14,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 53858
+    },
+    {
+     "model_no": "04",
+     "type": "066.9700A",
+     "area_m2": 92.7961,
+     "general_households": 9,
+     "special_households": 29,
+     "special_by_kind": {
+      "다자녀": 4,
+      "신혼부부": 4,
+      "생애최초": 6,
+      "청년": 0,
+      "신생아": 7,
+      "노부모부양": 1,
+      "기관추천": 7,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 54657
+    },
+    {
+     "model_no": "05",
+     "type": "071.8800A",
+     "area_m2": 99.5996,
+     "general_households": 30,
+     "special_households": 89,
+     "special_by_kind": {
+      "다자녀": 12,
+      "신혼부부": 12,
+      "생애최초": 18,
+      "청년": 0,
+      "신생아": 24,
+      "노부모부양": 3,
+      "기관추천": 20,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 58665
+    },
+    {
+     "model_no": "06",
+     "type": "072.9800A",
+     "area_m2": 101.1238,
+     "general_households": 30,
+     "special_households": 90,
+     "special_by_kind": {
+      "다자녀": 12,
+      "신혼부부": 12,
+      "생애최초": 18,
+      "청년": 0,
+      "신생아": 24,
+      "노부모부양": 4,
+      "기관추천": 20,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 59562
+    },
+    {
+     "model_no": "07",
+     "type": "072.9800B",
+     "area_m2": 101.1238,
+     "general_households": 30,
+     "special_households": 90,
+     "special_by_kind": {
+      "다자녀": 12,
+      "신혼부부": 12,
+      "생애최초": 18,
+      "청년": 0,
+      "신생아": 24,
+      "노부모부양": 4,
+      "기관추천": 20,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 59562
+    },
+    {
+     "model_no": "08",
+     "type": "073.9900A",
+     "area_m2": 102.5233,
+     "general_households": 30,
+     "special_households": 89,
+     "special_by_kind": {
+      "다자녀": 12,
+      "신혼부부": 12,
+      "생애최초": 18,
+      "청년": 0,
+      "신생아": 24,
+      "노부모부양": 3,
+      "기관추천": 20,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 60388
+    },
+    {
+     "model_no": "09",
+     "type": "084.8100A",
+     "area_m2": 117.5159,
+     "general_households": 10,
+     "special_households": 32,
+     "special_by_kind": {
+      "다자녀": 4,
+      "신혼부부": 4,
+      "생애최초": 6,
+      "청년": 0,
+      "신생아": 9,
+      "노부모부양": 2,
+      "기관추천": 7,
+      "이전기관": 0,
+      "기타": 0
+     },
+     "price_top_manwon": 69218
     }
    ]
   }
