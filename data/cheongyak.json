@@ -1,16 +1,16 @@
 {
  "schema": 1,
  "source": "청약홈 분양정보 조회 서비스(한국부동산원, 공공데이터포털)",
- "collected_at": "2026-11-27T19:26:39+09:00",
- "base_date": "2026-11-27",
- "window_from": "2026-09-28",
+ "collected_at": "2026-11-28T07:14:24+09:00",
+ "base_date": "2026-11-28",
+ "window_from": "2026-09-29",
  "sido": [
   "서울",
   "경기"
  ],
  "counts": {
-  "apt": 40,
-  "remndr": 38,
+  "apt": 41,
+  "remndr": 37,
   "opt": 41,
   "total": 119
  },
@@ -1142,62 +1142,6 @@
      "special_households": 0,
      "special_by_kind": null,
      "price_top_manwon": 71900
-    }
-   ]
-  },
-  {
-   "id": "remndr-2026910251-2026910251",
-   "kind": "remndr",
-   "kind_label": "무순위·잔여세대",
-   "house_type": "무순위",
-   "house_detail": null,
-   "sale_type": null,
-   "name": "충정로역자이르네",
-   "sido": "서울",
-   "sigungu": "중구",
-   "address": "서울특별시 중구 중림동 157-2번지 일원",
-   "total_households": 35,
-   "announce_date": "2026-09-28",
-   "schedule": {
-    "receipt": {
-     "start": "2026-10-06",
-     "end": "2026-10-06"
-    },
-    "special": null,
-    "rank1": null,
-    "rank2": null,
-    "general": null,
-    "winner_date": "2026-10-12",
-    "contract": {
-     "start": "2026-10-17",
-     "end": "2026-10-17"
-    }
-   },
-   "move_in": "2030-05",
-   "flags": null,
-   "builder": "(주)이노디앤씨",
-   "phone": "16601245",
-   "homepage": "https://충정로역자이르네.com",
-   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=2026910251&pblancNo=2026910251",
-   "price_max_manwon": 243300,
-   "types": [
-    {
-     "model_no": "01",
-     "type": "084.9972A",
-     "area_m2": null,
-     "general_households": 21,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 243300
-    },
-    {
-     "model_no": "02",
-     "type": "084.9965B",
-     "area_m2": null,
-     "general_households": 14,
-     "special_households": 0,
-     "special_by_kind": null,
-     "price_top_manwon": 229500
     }
    ]
   },
@@ -11790,6 +11734,155 @@
       "기타": 0
      },
      "price_top_manwon": 69218
+    }
+   ]
+  },
+  {
+   "id": "apt-2026000612-2026000612",
+   "kind": "apt",
+   "kind_label": "APT",
+   "house_type": "APT",
+   "house_detail": "민영",
+   "sale_type": "분양주택",
+   "name": "용인반도체클러스터 동일하이빌 파크밸리 2단지(D1-2블록)",
+   "sido": "경기",
+   "sigungu": "용인시",
+   "address": "경기도 용인시 처인구 원삼면 용인 반도체 클러스터 일반산업단지 D1-2BL",
+   "total_households": 661,
+   "announce_date": "2026-11-27",
+   "schedule": {
+    "receipt": {
+     "start": "2026-12-07",
+     "end": "2026-12-10"
+    },
+    "special": {
+     "start": "2026-12-07",
+     "end": "2026-12-08"
+    },
+    "rank1": {
+     "start": "2026-12-09",
+     "end": "2026-12-09"
+    },
+    "rank2": {
+     "start": "2026-12-10",
+     "end": "2026-12-10"
+    },
+    "general": null,
+    "winner_date": "2026-12-16",
+    "contract": {
+     "start": "2026-12-28",
+     "end": "2026-12-30"
+    },
+    "rank1_by_area": {
+     "해당지역": {
+      "start": "2026-12-09",
+      "end": "2026-12-09"
+     },
+     "기타지역": {
+      "start": "2026-12-09",
+      "end": "2026-12-09"
+     }
+    },
+    "rank2_by_area": {
+     "해당지역": {
+      "start": "2026-12-10",
+      "end": "2026-12-10"
+     },
+     "기타지역": {
+      "start": "2026-12-10",
+      "end": "2026-12-10"
+     }
+    }
+   },
+   "move_in": "2029-05",
+   "flags": {
+    "투기과열": false,
+    "조정대상": false,
+    "분양가상한제": true,
+    "공공주택지구": false,
+    "대규모택지": false
+   },
+   "builder": "(주)동일토건",
+   "phone": "15330589",
+   "homepage": "https://용인동일하이빌파크밸리2단지.com",
+   "notice_url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000612&pblancNo=2026000612",
+   "price_max_manwon": 56800,
+   "types": [
+    {
+     "model_no": "01",
+     "type": "059.9390A",
+     "area_m2": 80.8197,
+     "general_households": 36,
+     "special_households": 214,
+     "special_by_kind": {
+      "다자녀": 25,
+      "신혼부부": 38,
+      "생애최초": 43,
+      "청년": 0,
+      "신생아": 25,
+      "노부모부양": 8,
+      "기관추천": 25,
+      "이전기관": 50,
+      "기타": 0
+     },
+     "price_top_manwon": 44300
+    },
+    {
+     "model_no": "02",
+     "type": "059.8977B",
+     "area_m2": 80.4519,
+     "general_households": 16,
+     "special_households": 103,
+     "special_by_kind": {
+      "다자녀": 12,
+      "신혼부부": 18,
+      "생애최초": 21,
+      "청년": 0,
+      "신생아": 12,
+      "노부모부양": 4,
+      "기관추천": 12,
+      "이전기관": 24,
+      "기타": 0
+     },
+     "price_top_manwon": 43200
+    },
+    {
+     "model_no": "03",
+     "type": "071.8211B",
+     "area_m2": 95.6642,
+     "general_households": 14,
+     "special_households": 102,
+     "special_by_kind": {
+      "다자녀": 12,
+      "신혼부부": 18,
+      "생애최초": 20,
+      "청년": 0,
+      "신생아": 12,
+      "노부모부양": 4,
+      "기관추천": 12,
+      "이전기관": 24,
+      "기타": 0
+     },
+     "price_top_manwon": 49500
+    },
+    {
+     "model_no": "04",
+     "type": "084.7577A",
+     "area_m2": 112.6368,
+     "general_households": 23,
+     "special_households": 153,
+     "special_by_kind": {
+      "다자녀": 18,
+      "신혼부부": 27,
+      "생애최초": 30,
+      "청년": 0,
+      "신생아": 18,
+      "노부모부양": 6,
+      "기관추천": 18,
+      "이전기관": 36,
+      "기타": 0
+     },
+     "price_top_manwon": 56800
     }
    ]
   }
